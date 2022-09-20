@@ -2611,7 +2611,7 @@ class InternalController extends Controller
                     ->get();
 
         //dd($data);
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div'));
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','search'));
     }
 
     public function get_barcode_value($bnum)

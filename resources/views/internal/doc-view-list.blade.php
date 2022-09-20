@@ -147,6 +147,16 @@ border: 1px solid #e6e6e6;
     .thedatenavs li:hover{
         background: #f1f1f1;
     }
+
+    .selected {
+        background: #486f99;
+        color: #fff !important;
+        font-weight: bold;
+    }
+
+    .selected:hover {
+        background: #486f99 !important;
+    }
 </style>
 
 <input type="hidden" name="type_input" id="type_input" value="internal">
@@ -196,18 +206,60 @@ border: 1px solid #e6e6e6;
                                     <tr>
                                         <input type="hidden" id="q_user_level" name="q_user_level" class="form-control" value="{{ Auth::user()->access_level }}">
 
-                                        <?php $date = date("Y-m-d"); $today = "?date=".$date; ?>
-                                        <td class="d-flex" style='padding-left: 0px !important; padding-top: 0px !important; overflow-x: auto;'>
+                                        <!-- filter-date/Nov 15, 2021 -->
+
+                                        <?php $date = date("M d, Y"); $today = "/filter-date/".$date; // date("M d, Y"); ?>
+                                        <td style='padding-left: 0px !important; padding-top: 0px !important; overflow-x: auto;' colspan="10">
+                                            <p style="font-size: 18px; color: #3b5998; font-weight: normal; margin-bottom: 10px;"> Displaying Documents 
+                                                <?php 
+                                                    if (isset($search)) {
+                                                        $whattodisplay = null;
+                                                        if (date("M. d, Y", strtotime($search)) == date("M. d, Y")) {
+                                                            $whattodisplay = "for Today";
+                                                        } else {
+                                                            $whattodisplay = "for ".date("M. d, Y", strtotime($search));
+                                                        }
+                                                        echo $whattodisplay;
+                                                    }
+                                                ?>
+                                            </p>
                                             <ul class='thedatenavs'>
-                                                <a href='<?php echo $today; ?>'/> <li style="font-size: 15px;font-weight: bold;color: #f2f2f2;background: #18a43b;"> Today - <?php echo date("M. d, Y"); ?></li> </a>
+                                                <a href="{{url('internal-document-list-view')}}">
+                                                    <li> 
+                                                        All
+                                                    </li>
+                                                </a>
+                                                <a href="{{ url('internal-document/filter-date/') }}/{{$date}}"/> 
+                                                    <?php 
+                                                        $todate = null;
+
+                                                        if (isset($search)) {
+                                                            if (date("M. d, Y") == date("M. d, Y",strtotime($search))) {
+                                                                $todate = "selected";
+                                                            }
+                                                        }
+                                                    ?>
+                                                    <li style="font-size: 14px;" class='{{$todate}}'> Today - <?php echo date("M. d, Y"); ?></li> 
+                                                </a>
                                                 <?php
                                                     for($i = 1 ; $i <= 4; $i++) {
-                                                        $thedates = date("Y-m-d", strtotime("-{$i} days"));
-                                                        echo "<a href='?date={$thedates}'/><li>";
+                                                        $thedates = date("M d, Y", strtotime("-{$i} days"));
+                                                        $datelink = url('internal-document/filter-date/')."/".$thedates;
+
+                                                        $selecteddate = null;
+
+                                                        if (isset($search)) {
+                                                            if ($thedates == date("M d, Y", strtotime($search))) {
+                                                                $selecteddate = "selected";
+                                                            }
+                                                        }
+
+                                                        echo "<a href='{$datelink}' /><li class='{$selecteddate}'>";
                                                             echo date("D - M. d, Y", strtotime("-{$i} days"));
                                                         echo "</li></a>";
                                                     }
                                                 ?>
+                                                <input type='date' id='thedatefilterinput' style="font-family: arial;font-size: 13px;padding: 8px;border: 1px solid #ccc;"/>
                                             </ul>
                                         </td>
                                         <td>
@@ -966,6 +1018,19 @@ border: 1px solid #e6e6e6;
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script>
     $(document).ready(function() {
+
+        $(document).find("#thedatefilterinput").on("change",function(){
+            var thedateval = $(this).val();
+
+            // 2022-09-21
+            var themonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+            var year  = thedateval.split("-")[0];
+            var month = themonths[thedateval.split("-")[1]-1];
+            var day   = thedateval.split("-")[2];
+
+            var datelink = "{{ url('internal-document/filter-date/') }}/"+month+" "+day+","+year;
+            window.location.href =datelink ;
+        });
 
         // set the default value
             // division            
