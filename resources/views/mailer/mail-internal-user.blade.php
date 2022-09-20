@@ -1,12 +1,17 @@
 		<table style="width: 50%; margin: auto;border: 10px solid #ccc;padding: 15px 25px;">
 			<tr>
 				<td>
-					<table style='border-collapse: collapse; font-size: 16px; font-family: calibri;'>
+					<table style='border-collapse: collapse; font-size: 16px; font-family: calibri; width: 100%;'>
 						<tr style='border-bottom:1px solid #ccc;'>
 							<td colspan=2 style='text-align: center;'>
 								<h2 style='margin-bottom: 0px;'> MinDA Doctracking System </h2>
 								<span style="font-size: 14px;font-style: italic;"> Please do not reply to this email </span>
 								<div style='margin-bottom: 20px;'> </div>
+							</td>
+						</tr>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td style='padding:15px;'>
+								Internal Document
 							</td>
 						</tr>
 						<tr style='border-bottom:1px solid #ccc;'>
@@ -71,7 +76,8 @@
 							<td> &nbsp; </td>
 							<td style='padding:15px;'>
 								<p style="background: #79dfea;float: left;padding: 10px;">
-									<a href="#" style="text-decoration: none;color: #fff;font-size: 16px;"> View document </a>
+									<!-- http://office.minda.gov.ph:9004/internal-document-track-list-view/view-document-tracking/3 -->
+									<a href="http://office.minda.gov.ph:9004/internal-document-track-list-view/view-document-tracking/<?php echo $theid; ?>" style="text-decoration: none;color: #fff;font-size: 16px;"> View document </a>
 								</p>
 							</td>
 						</tr>

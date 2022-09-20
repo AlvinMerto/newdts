@@ -1099,12 +1099,28 @@ class ExternalController extends Controller
             $docs = DB::table('externals')
                     ->where(['externals.id'=>$id])
                     ->get();
+            
+            $name       = null;
+            $agency     = null;
+            $desc       = null;
+            $class      = null;
+            $prevdate   = null;
 
                 foreach ($docs as $i)
                     {
                         $prevdate = $i->doc_date_ff;
+                        $name     = $i->signatory;
+                        $agency   = $i->agency;
+                        $desc     = $i->description;
+                        $class    = $request->get('_classification');
                     }
 
+                /*
+                foreach ($docs as $i)
+                    {
+                        $prevdate = $i->doc_date_ff;
+                    }
+                */
             //echo $prevdate;
 
             $curdate = Carbon::now();
@@ -1112,6 +1128,7 @@ class ExternalController extends Controller
             $diff = Carbon::parse($curdate)->diffInDays($prevdate);
 
             $action_remarks = "";
+            $actions_only   = "";
 
             if($request->get('for_appro_action') == 1){
                 $action_remarks = '*for appropriate action*, <br>';
@@ -1144,7 +1161,13 @@ class ExternalController extends Controller
             }
 
             if($request->get('remarks') !=""){
+                $actions_only   = $action_remarks;
                 $action_remarks = $action_remarks.($request->get('remarks'));
+            }
+
+             if($request->get('remarks') !=""){
+                $actions_only   = $action_remarks;
+                $action_remarks = $action_remarks;
 
             }
 
@@ -1157,7 +1180,7 @@ class ExternalController extends Controller
                 $diff,
                 $request->get('division'),
                 'pending',
-                Auth::user()->f_name. ' from '. Auth::user()->division.' Forwared to '.$request->get('division'),
+                Auth::user()->f_name. ' forwarded to '.$request->get('confi'),
                 0,
             ]);
 
@@ -1175,11 +1198,45 @@ class ExternalController extends Controller
                         'status'=>'on-going',
                     ]);
 
+
+            if(is_null($request->get('confi'))){ // mark here 1
+                $this->send_email($request->get('division'),$request->get('_classification'),$id);
+            }else{
+                $pr = null;
+
+                if($class==1){
+                        $pr="Confidential";
+                    }elseif ($class==2) {
+                        $pr="High Priority";
+                    }elseif ($class==3) {
+                        $pr="Moderate Priority";
+                    }elseif ($class==4) {
+                        $pr="Low Priority";
+                    }elseif ($class==0) {
+                        $pr="Undefined";
+                    }
+
+                $theinfo = [
+                    "name"      => $name,
+                    "agency"    => $agency,
+                    "desc"      => $desc,
+                    "date"      => $prevdate,
+                    "class"     => $pr,
+                    "theid"     => $id,
+                    "actions"   => $actions_only,
+                    "othins"    => $request->get('remarks')
+                ];
+
+                $this->send_to_user($request->get('confi'),$request->get('_classification'),$id, $theinfo);
+            }
+
+            /*
             if(is_null($request->get('confi'))){
                 $this->send_email($request->get('division'),$request->get('_classification'),$id);
             }else{
                 $this->send_to_user($request->get('confi'),$request->get('_classification'),$id);
             }
+            */
 
             return response()->JSON(['data' => $data]);
         }
@@ -1395,7 +1452,7 @@ class ExternalController extends Controller
                 //}
    }
 
-   public function send_to_user($name,$class,$id){
+   public function send_to_user($name,$class,$id,$theinfo = false){
         $subscriber_emails = DB::table('users')
                     ->where(['users.f_name' => $name])
                     ->get();
@@ -1418,7 +1475,7 @@ class ExternalController extends Controller
                 }
 
                 
-                Mail::send('mailer.mail-external-user', $mdata, function($message) use ($receiptient,$pr){
+                Mail::send('mailer.mail-external-user', $theinfo, function($message) use ($receiptient,$pr){
                       $message->from('no-reply@minda.gov.ph');
                       $message->to($receiptient);
                       $message->subject($pr.' Mail from Document Tracking System');

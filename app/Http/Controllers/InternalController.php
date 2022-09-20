@@ -1439,7 +1439,6 @@ class InternalController extends Controller
             if($request->get('remarks') !=""){
                 $actions_only   = $action_remarks;
                 $action_remarks = $action_remarks.($request->get('remarks'));
-
             }
 
             $data = DB::insert('insert into internal_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination,classification,actioned) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
@@ -1516,6 +1515,7 @@ class InternalController extends Controller
                         "desc"      => $desc,
                         "date"      => $prevdate,
                         "class"     => $pr,
+                        "theid"     => $id,
                         "actions"   => $actions_only,
                         "othins"    => $request->get('remarks')
                     ];

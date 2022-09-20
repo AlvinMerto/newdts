@@ -111,6 +111,7 @@ border-radius: 4px;
 .theboxtab {
     width: 100%;
     /*overflow-x: auto; */
+    border-bottom: 1px solid #b3b7bb;
 }
     
 .theboxtab ul {
@@ -127,6 +128,7 @@ border-radius: 4px;
     border-radius: 0px;
     text-align: center;
     font-size: 15px;
+    position: relative;
 }
 
 .theboxtab ul li a {
@@ -143,12 +145,17 @@ font-weight: normal;
 
 .perrow {
 display: flex;
-border-bottom: 2px solid #3490dc;
+
+border-bottom: 1px solid #b3b7bb;
+/*
 border-left: 2px solid #3490dc;
 border-right: 2px solid #3490dc;
 border-radius: 0px 6px 6px 0px;
-margin-top: -2px;
-border-top: 2px solid #3490dc;
+*/
+
+margin-top: 0px;
+/*border-top: 2px solid #3490dc;*/
+background: #eee;
 }
 
 .perrow div{
@@ -178,14 +185,27 @@ margin-left: -1px;
 font-size: 12px;
 font-weight: bold;
 letter-spacing: 0.1px;
-color: #3490dc;
+color: #486f99;
 }
 
 .dateselected {
-    background-color: #3490dc !important;
-border-radius: 9px 9px 0px 0px !important;
+    background-color: #486f99 !important;
+/*border-radius: 9px 9px 0px 0px !important;*/
 box-shadow: 0px -2px 3px #cecece;
-border-top: 1px solid #eaeaea;
+/*border-top: 1px solid #eaeaea;*/
+}
+
+.dateselected::after {
+    content: '';
+position: absolute;
+left: 39%;
+top: 100%;
+width: 0;
+height: 0;
+border-left: 13px solid transparent;
+border-right: 13px solid transparent;
+border-top: 9px solid #486f99;
+clear: both;
 }
 
 .dateselected a {
@@ -213,10 +233,13 @@ margin-top: 10px;
                 <!--div class="card-header bg-default" style="font-size: 17px; font-weight: normal; color: #666;"-->
                 <?php if ($window == "external") { ?>
                     <input type="hidden" name="type_input" id="type_input" value="external">
-                    <h4 style="margin-left: 14px; margin-top: 18px;border-bottom: 1px solid #ccc;padding-bottom: 15px; margin-bottom:0px;"> External Document Lists </h4>
-                <?php } else { ?>
+                    <h4 style="margin-left: 14px; margin-top: 18px;border-bottom: 1px solid #ccc;padding-bottom: 15px; margin-bottom:0px;"> External Documents List </h4>
+                <?php } else if ($window == "internal") { ?>
                     <input type="hidden" name="type_input" id="type_input" value="internal">
-                    <h4 style="margin-left: 14px; margin-top: 18px;border-bottom: 1px solid #ccc;padding-bottom: 15px; margin-bottom:0px;"> Internal Document Lists </h4>
+                    <h4 style="margin-left: 14px; margin-top: 18px;border-bottom: 1px solid #ccc;padding-bottom: 15px; margin-bottom:0px;"> Internal Documents List </h4>
+                <?php } else if ($window == "outgoing") { ?>
+                    <input type="hidden" name="type_input" id="type_input" value="outgoing">
+                    <h4 style="margin-left: 14px; margin-top: 18px;border-bottom: 1px solid #ccc;padding-bottom: 15px; margin-bottom:0px;"> Outgoing Documents List </h4>
                 <?php } ?>
                     <div class="card-body" style="display: flex; justify-content: center; padding-top:0px;">
 
@@ -325,7 +348,54 @@ margin-top: 10px;
                                         </tr>
 
                                     </table>
-                                    <h4 style='margin-top:25px;'> History of Actions </h4>
+
+                                    <table>
+                                            <tr>
+                                            @if(Auth::user()->access_level == 5)
+                                                <td colspan="5" style="padding: 0px;padding-bottom: 15px; padding-top: 0px;">
+                                                     <div style="border-color: #ccc;padding: 13px;border-bottom: 1px solid #ccc;/*! margin-top: 8px; */background: #ddd;"/>
+                                                     <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px; float: left;"><i class="fa fa-file-excel-o"></i> Export to Excel</button> 
+                                                       <button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> Action</button>
+                                                       <?php if ($window == "external") { ?>
+                                                            <a href="{{url('/external-document-list-view')}}" style="font-size: 12px; " class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a>
+                                                        <?php } else if ($window == "internal") { ?>
+                                                            <a href="{{url('/internal-document-list-view')}}" style="font-size: 12px; " class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a>
+                                                        <?php } else if ($window == "outgoing") { ?>
+                                                            <a href="{{url('/outgoing-document-list-view')}}" style="font-size: 12px; " class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a>
+                                                        <?php } ?>
+
+                                                       
+                                                    <?php if ($window == "external") { ?>
+                                                        <a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a>
+                                                    <?php } else { ?>
+                                                        <a href="{{ url('/internal-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a>
+                                                    <?php } //else { ?>
+                                                        <!--a href="{{ url('/outgoing-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a-->
+                                                    <?php //} ?>
+                                                    </div>
+
+                                                    <?php if ($window == "external") { ?>
+                                                        <!--a href="{{url('/external-document-list-view')}}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a-->
+                                                    <?php } else { ?>
+                                                        <!--a href="{{url('/internal-document-list-view')}}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a-->
+                                                    <?php } ?>
+                                                    <!--a href="{{url('/internal-document-list-view')}}" style="font-size: 12px; float: right; margin-right: 10px;" class="btn btn-medium btn-default"><i class="fa fa-chevron-left"></i> Back</a-->
+                                                </td>
+                                            @else
+                                                <!--td colspan="5" style="padding: 0px;padding-bottom: 15px; padding-top: 10px;"-->
+                                                    <!--button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px; float: left;"><i class="fa fa-file-excel-o"></i> Export to Excel</button-->
+
+                                                    <?php if ($window == "external") { ?>
+                                                        <!--a href="{{url('/external-document-list-view')}}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a-->
+                                                    <?php } else { ?>
+                                                        <!--a href="{{url('/internal-document-list-view')}}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a-->
+                                                    <?php } ?>
+                                            @endif
+                                            <!--button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> Action</button-->
+                                        </tr>
+                                    </table>
+
+                                    <h4 style='margin-top:0px;'> History of Actions </h4>
                                     <?php // var_dump($data); 
                                         // $data_arr = (array) $data;
                                     ?>
@@ -515,7 +585,9 @@ margin-top: 10px;
                                         <?php } ?>
                                        </div>
 
-                                        <h4 style='margin-top:25px;'> History of Actions </h4>
+                                        
+
+                                        <h4 style='margin-top:0px;'> History of Actions </h4>
                                         @if($data->count()>0)
                                             <?php 
                                                 $display = [];
@@ -602,13 +674,22 @@ margin-top: 10px;
                                         
                                     @endif
 
-                                    
-                                <table>
+                                <table style='display:none;'>
                                     <tr>
                                         @if(Auth::user()->access_level == 5)
                                             <td colspan="5" style="padding: 0px;padding-bottom: 15px; padding-top: 10px;">
-                                                <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px; float: left;"><i class="fa fa-file-excel-o"></i> Export to Excel</button> 
+                                                 <div style="border-color: #ccc;padding: 13px 0px;border-bottom: 1px solid #ccc;/*! margin-top: 8px; */background: #ddd;"/>
+                                                 <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px; float: left;"><i class="fa fa-file-excel-o"></i> Export to Excel</button> 
+                                                   <button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> Action</button>
+                                                   <?php if ($window == "external") { ?>
+                                                        <a href="{{url('/external-document-list-view')}}" style="font-size: 12px; " class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a>
+                                                    <?php } else if ($window == "internal") { ?>
+                                                        <a href="{{url('/internal-document-list-view')}}" style="font-size: 12px; " class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a>
+                                                    <?php } else if ($window == "outgoing") { ?>
+                                                        <a href="{{url('/outgoing-document-list-view')}}" style="font-size: 12px; " class="btn btn-medium btn-default"><i class="fa fa-edit"></i> Back</a>
+                                                    <?php } ?>
 
+                                                   </div>
                                                  <?php if ($window == "external") { ?>
                                                     <a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a>
                                                 <?php } else { ?>
@@ -626,7 +707,7 @@ margin-top: 10px;
                                                 <!--a href="{{url('/internal-document-list-view')}}" style="font-size: 12px; float: right; margin-right: 10px;" class="btn btn-medium btn-default"><i class="fa fa-chevron-left"></i> Back</a-->
                                             </td>
                                         @else
-                                            <td colspan="5" style="padding: 0px;padding-bottom: 15px; padding-top: 10px;">
+                                            <!--td colspan="5" style="padding: 0px;padding-bottom: 15px; padding-top: 10px;"-->
                                                 <!--button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px; float: left;"><i class="fa fa-file-excel-o"></i> Export to Excel</button-->
 
                                                 <?php if ($window == "external") { ?>
@@ -697,7 +778,7 @@ margin-top: 10px;
 <div class="modal fade" id="doc-ff" tabindex="-1" role="dialog" aria-labelledby="ff-modal-label" aria-hidden="true">
   <div class="modal-dialog  modal-lg" style="min-width: auto; max-width: 50%"  role="document">
     <div class="modal-content">
-      <div class="modal-header"><span style="font-size: 17px; color: #97918F; text-align: center;"><strong>DOCUMENT TRACKING SYSTEMmmm</strong></span>
+      <div class="modal-header"><span style="font-size: 17px; color: #97918F; text-align: center;"><strong>DOCUMENT TRACKING SYSTEM</strong></span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload();">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -992,6 +1073,9 @@ margin-top: 10px;
 
                 $("#container").height($(document).height());
 
+        var typeofinput = null;
+        typeofinput = $(document).find("#type_input").val();
+
         // set the default value
         // division            
             var defval = $(document).find("#divisionselect").val();
@@ -1122,8 +1206,17 @@ margin-top: 10px;
     
     function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,confiname,pr) {
 
+        var theurl = null;
+        if (typeofinput == "internal") {
+            theurl = "{{ url('/internal-document/forward') }}/"+x_id;
+        } else if (typeofinput == "external") {
+            theurl = "{{ url('/external-document/forward') }}/"+x_id;
+        } else if (typeofinput == "outgoing") {
+            theurl = "{{ url('/outgoing-document/forward') }}/"+x_id;
+        }
+
         $.ajax({
-                url: "{{ url('/internal-document/forward') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,
                        _id: x_id,

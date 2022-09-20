@@ -751,9 +751,21 @@ border: 1px solid #e6e6e6;
                                     @endif
                                         <td align="center" >
                                             @if($d->confi_name == Auth::user()->f_name && $d->classification == 1 || $d->classification == 1 && Auth::user()->access_level==5)
-                                                <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
+                                                <?php if ($window == "internal") { ?>
+                                                    <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
+                                                <?php } else if ($window == "external") { ?>
+                                                    <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
+                                                <?php } else if ($window == "outgoing") { ?>
+                                                    <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
+                                                <?php } ?>
                                             @elseif($d->classification != 1)
-                                                <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
+                                                <?php if ($window == "internal") { ?>
+                                                    <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
+                                                <?php } else if ($window == "external") { ?>
+                                                    <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
+                                                <?php } else if ($window == "outgoing") { ?>
+                                                    <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
+                                                <?php } ?>
                                             @endif
                                             @if($d->status=='complete' && Auth::user()->division == $d->dept)
                                                 @if(Auth::user()->access_level==5)
@@ -1082,6 +1094,10 @@ border: 1px solid #e6e6e6;
             }
         });
 
+        // internal, external, outgoing
+        var typeinput = null;
+            typeinput = $(document).find("#type_input").val();
+
         $(document).find("#thedatefilterinput").on("change",function(){
             var thedateval = $(this).val();
 
@@ -1141,10 +1157,20 @@ border: 1px solid #e6e6e6;
 
             //alert(alvel);
 
+            var theurl = null;
+
+            if (typeinput == "internal") {
+                theurl = "{{ url('/internal-document/document-return-category') }}/"+id;
+            } else if (typeinput == "external") {
+                theurl = "{{ url('/external-document/document-return-category') }}/"+id;
+            } else if (typeinput == "outgoing") {
+                theurl = "{{ url('/outgoing-document/document-return-category') }}/"+id;
+            }
+
             $.ajax({
-                url: "{{ url('/internal-document/document-return-category') }}/"+id,
+                url: theurl,
                 type: "GET",
-                data: {_token: CSRF_TOKEN,_id: id},
+                data: {_token: CSRF_TOKEN,_id: id, typeinput : typeinput},
 
                 success: function(response){
                     console.log(response);
@@ -1319,8 +1345,22 @@ border: 1px solid #e6e6e6;
     
     function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,confiname,pr) {
 
+        var typeinput = null;
+            typeinput = $(document).find("#type_input").val();
+
+
+        var theurl = null;
+
+            if (typeinput == "internal") {
+                theurl = "{{ url('/internal-document/forward') }}/"+x_id;
+            } else if (typeinput == "external") {
+                theurl = "{{ url('/external-document/forward') }}/"+x_id;
+            } else if (typeinput == "outgoing") {
+                theurl = "{{ url('/outgoing-document/forward') }}/"+x_id;
+            }
+
         $.ajax({
-                url: "{{ url('/internal-document/forward') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,
                        _id: x_id,

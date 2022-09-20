@@ -1,8 +1,87 @@
-<h3 style="color: #045FB4;">New Document sent to you, please check your document tracking list</h3><br>
-{{ url('/outgoing-document-list-view') }}<br><br>
-<p>Auto-generated email, please do not reply</p>
-<p style="color: #DF0101; font-weight: bold;">MinDA Auto Email Service<br><br></p>
-<p style="color: #A4A4A4; font-weight: bold; font-family: Georgia, serif;">Old Airport Bldg., Old Airport Road, <br>
-Km. 9, Sasa, Davao City 8000 Philippines<br></p>
-<p>www.minda.gov.ph<br><br></p>
-<p style="color: #A4A4A4;">Telefax No.: (082) 221-7060/(082) 221-6929</p>
+		<table style="width: 50%; margin: auto;border: 10px solid #ccc;padding: 15px 25px;">
+			<tr>
+				<td>
+					<table style='border-collapse: collapse; font-size: 16px; font-family: calibri; width: 100%;'>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td colspan=2 style='text-align: center;'>
+								<h2 style='margin-bottom: 0px;'> MinDA Doctracking System </h2>
+								<span style="font-size: 14px;font-style: italic;"> Please do not reply to this email </span>
+								<div style='margin-bottom: 20px;'> </div>
+							</td>
+						</tr>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td style='padding:15px;'> 
+								Outgoing Document
+							</td>
+						</tr>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td style='padding:15px;'>
+								From
+							</td>
+							<td style='padding:15px;'>
+								<?php echo $name; ?>
+							</td>
+						</tr>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td style='padding:15px;'>
+								Agency
+							</td>
+							<td style='padding:15px;'>
+								<?php echo $agency; ?>
+							</td>
+						</tr>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td style='padding:15px;'>
+								Description
+							</td>
+							<td style='padding:15px;'>
+								<?php echo $desc; ?>
+							</td>
+						</tr>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td style='padding:15px;'>
+								Date 
+							</td>
+							<td style='padding:15px;'>
+								<?php echo date("F d, Y", strtotime($date)); ?>
+							</td>
+						</tr>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td style='padding:15px;'>
+								Classification
+							</td>
+							<td style='padding:15px;'>
+								<?php echo $class; ?>
+							</td>
+						</tr>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td style='padding:15px;'>
+								Actions
+							</td>
+							<td style='padding:15px;'>
+								<div>
+									<?php echo $actions; ?>
+								</div>
+							</td>
+						</tr>
+						<tr style='border-bottom:1px solid #ccc;'>
+							<td style='width:200px; padding:15px;'>
+								Other Instruction
+							</td>
+							<td style='padding:15px;'>
+								<?php echo $othins; ?>
+							</td>
+						</tr>
+						<tr>
+							<td> &nbsp; </td>
+							<td style='padding:15px;'>
+								<p style="background: #79dfea;float: left;padding: 10px;">
+									<!-- http://office.minda.gov.ph:9004/internal-document-track-list-view/view-document-tracking/3 -->
+									<a href="http://office.minda.gov.ph:9004/outgoing-document-track-list-view/view-document-tracking/<?php echo $theid; ?>" style="text-decoration: none;color: #fff;font-size: 16px;"> View document </a>
+								</p>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
