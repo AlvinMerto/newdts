@@ -676,8 +676,8 @@ class InternalController extends Controller
         */
         //dd($div);
 
-
-    	return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib'));
+        $window = "internal";
+        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window'));
     }
 
     public function list_document_ascending()
@@ -2611,7 +2611,8 @@ class InternalController extends Controller
                     ->get();
 
         //dd($data);
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','search'));
+        $window = "internal";
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','search','window'));
     }
 
     public function get_barcode_value($bnum)

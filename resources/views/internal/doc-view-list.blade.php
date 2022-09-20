@@ -83,7 +83,7 @@ border: 1px solid #e6e6e6;
     }
 
     .whiteboxes input[type="text"]{
-        background: none !important;
+        background: #fff !important;
     }
 
     .input-group-btn button {
@@ -137,7 +137,7 @@ border: 1px solid #e6e6e6;
 
     .thedatenavs li{
         display: inline-block;
-        margin-right: 2px;
+        margin-right: -1px;
         font-size: 14px;
         color: #737373;
         border: 1px solid #ccc;
@@ -173,15 +173,31 @@ border: 1px solid #e6e6e6;
         border-top: 9px solid #486f99;
         clear: both;
     }
+
+    #theheaderdiv {
+        height: 41px;
+        overflow: hidden;
+
+        transition: background 1s;
+        -webkit-transition: background 1s;
+        -o-transition: background 1s;
+
+
+    }
+
+    #theheaderdiv:hover {
+        background: #e1dede;
+        cursor: pointer;
+    }
 </style>
 
-<input type="hidden" name="type_input" id="type_input" value="internal">
+<input type="hidden" name="type_input" id="type_input" value="<?php echo $window; ?>">
 <div class="content-wrapper ml-2" style="width: 115%">
     <div class="row justify-content-center" style="width: 100%">
         <div class="col-md-8" style="width: 100%">
             <div class="card mt-3">
-                <div style="font-size: 18px; color: #3b5998; font-weight: normal;" class="card-header"> Internal Document Lists 
-                                            <div style='display: flex;'>
+                <div style="font-size: 18px; color: #3b5998; font-weight: normal;" class="card-header" id='theheaderdiv'> <p style='margin: 0px;'> <?php echo ucfirst($window)." Documents"; ?> </p>
+                                            <div style='display: flex;'> 
                                                 <div class="sidebar-form borderwhite" style="width: 200px; margin-left: 5px;">
                                                     <div class="input-group whiteboxes">
                                                         <input type="text" id="q" name="q" class="form-control" placeholder="Barcode search...">
@@ -193,7 +209,7 @@ border: 1px solid #e6e6e6;
                                                     </div>
                                                 </div>
 
-                                                <div class="sidebar-form borderwhite" style="width: 200px; margin-left: 5px;">
+                                                <!--div class="sidebar-form borderwhite" style="width: 200px; margin-left: 5px;">
                                                     <div class="input-group whiteboxes">
                                                         <input type="text" list="datelist" placeholder="Filter by date" name="ff_date" id="ff_date" class="form-control">
                                                         <span class="input-group-btn">
@@ -209,7 +225,7 @@ border: 1px solid #e6e6e6;
                                                                 @endif
                                                             </datalist>
                                                     </div>
-                                                </div>
+                                                </div-->
                                             </div>
                 </div>
                 	<div class="card-body" style="display: flex; justify-content: center;">
@@ -226,26 +242,39 @@ border: 1px solid #e6e6e6;
 
                                         <?php $date = date("M d, Y"); $today = "/filter-date/".$date; // date("M d, Y"); ?>
                                         <td style='padding-left: 0px !important; padding-top: 0px !important; overflow-x: auto;' colspan="10">
-                                            <p style="font-size: 18px; color: #3b5998; font-weight: normal; margin-bottom: 10px;"> Displaying Documents 
+                                            <p style="font-size: 18px; color: #3b5998; font-weight: normal; margin-bottom: 10px;">  
                                                 <?php 
                                                     if (isset($search)) {
                                                         $whattodisplay = null;
                                                         if (date("M. d, Y", strtotime($search)) == date("M. d, Y")) {
-                                                            $whattodisplay = "for Today";
+                                                            $whattodisplay = "Displaying Documents for Today";
                                                         } else {
-                                                            $whattodisplay = "for ".date("M. d, Y", strtotime($search));
+                                                            $whattodisplay = "Displaying Documents last ".date("l - M. d, Y", strtotime($search));
                                                         }
                                                         echo $whattodisplay;
                                                     }
                                                 ?>
                                             </p>
                                             <ul class='thedatenavs'>
-                                                <a href="{{url('internal-document-list-view')}}">
-                                                    <li> 
+                                                <?php if ($window == "internal") { ?>
+                                                    <a href="{{url('internal-document-list-view')}}">
+                                                <?php } else if($window == "external") { ?>
+                                                    <a href="{{url('external-document-list-view')}}">
+                                                <?php } else if($window == "outgoing") { ?>
+                                                    <a href="{{url('outgoing-document-list-view')}}">
+                                                <?php } ?>
+                                                    <li>
                                                         All
                                                     </li>
                                                 </a>
-                                                <a href="{{ url('internal-document/filter-date/') }}/{{$date}}"/> 
+
+                                                <?php if ($window == "internal") { ?>
+                                                    <a href="{{ url('internal-document/filter-date/') }}/{{$date}}"/> 
+                                                <?php } else if($window == "external") { ?>
+                                                    <a href="{{ url('external-document/filter-date/') }}/{{$date}}"/> 
+                                                <?php } else if($window == "outgoing") { ?>
+                                                    <a href="{{ url('outgoing-document/filter-date/') }}/{{$date}}"/> 
+                                                <?php } ?>
                                                     <?php 
                                                         $todate = null;
 
@@ -255,12 +284,19 @@ border: 1px solid #e6e6e6;
                                                             }
                                                         }
                                                     ?>
-                                                    <li style="font-size: 14px;" class='{{$todate}}'> Today - <?php echo date("M. d, Y"); ?></li> 
+                                                    <li style="font-size: 14px;" class='{{$todate}}'> Today - <?php echo date("M. d, Y"); ?></li>
                                                 </a>
                                                 <?php
                                                     for($i = 1 ; $i <= 4; $i++) {
                                                         $thedates = date("M d, Y", strtotime("-{$i} days"));
-                                                        $datelink = url('internal-document/filter-date/')."/".$thedates;
+
+                                                        if ($window == "internal") {
+                                                            $datelink = url('internal-document/filter-date/')."/".$thedates;
+                                                        } else if ($window == "external") {
+                                                            $datelink = url('external-document/filter-date/')."/".$thedates;
+                                                        } else if ($window == "outgoing") {
+                                                            $datelink = url('outgoing-document/filter-date/')."/".$thedates;
+                                                        }
 
                                                         $selecteddate = null;
 
@@ -747,7 +783,7 @@ border: 1px solid #e6e6e6;
     						</table>
 
                             @else
-                                <div style="font-size: 16px; color: #7b7b7b; width: 70vw; text-align: center;border: 4px dotted #ccc;" class="justify-content-center p-5">No Record Found</div>
+                                <div style="font-size: 16px; color: #7b7b7b; width: 100%; text-align: center;border: 4px dotted #ccc;" class="justify-content-center p-5">No Record Found</div>
                             @endif
 
     						@if($data->count() > 0)
@@ -1034,6 +1070,17 @@ border: 1px solid #e6e6e6;
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script>
     $(document).ready(function() {
+
+        var opened = false;
+        $(document).find("#theheaderdiv").on("click",function(){
+            if (opened == false) {
+                opened = true;
+                $("#theheaderdiv").css("height","auto");
+            } else {
+                opened = false;
+                $("#theheaderdiv").css("height","41px");
+            }
+        });
 
         $(document).find("#thedatefilterinput").on("change",function(){
             var thedateval = $(this).val();

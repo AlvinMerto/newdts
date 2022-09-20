@@ -76,7 +76,8 @@ body {
             @endif
             <li>
               <span id="total-doc" class="label label-primary pull-right">0</span>
-              <a href="{{url('/external-document-list-view')}}" style="font-size: 12px;"><i class="fa fa-file-o" aria-hidden="true"></i> External Document Lists</a></li>
+              <?php $date = date("M d, Y"); ?>
+              <a href="{{url('/external-document/filter-date')}}/{{$date}}" style="font-size: 12px;"><i class="fa fa-file-o" aria-hidden="true"></i> External Document Lists</a></li>
             <li>
               <span id="total-pending" class="label label-warning pull-right">0</span>
               <a href="{{ url('/external-document-list-view/pending') }}" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> Pending</a></li>
@@ -119,8 +120,9 @@ body {
             @endif
             <li>
             <li>
+                <?php $date = date("M d, Y"); ?>
                 <span id="outgoing-total-doc" class="label label-primary pull-right">0</span>
-              <a href="{{url('/outgoing-document-list-view')}}" style="font-size: 12px;"><i class="fa fa-file-o" aria-hidden="true"></i> Outgoing Document Lists</a></li>
+              <a href="{{url('/outgoing-document/filter-date')}}/{{$date}}" style="font-size: 12px;"><i class="fa fa-file-o" aria-hidden="true"></i> Outgoing Document Lists</a></li>
             <li>
             <li>
               <span id="outgoing-total-pending" class="label label-warning pull-right">0</span>

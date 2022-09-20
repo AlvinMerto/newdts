@@ -727,7 +727,9 @@ class ExternalController extends Controller
                         ->get();
 
 
-    	return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','div','lib'));
+        $window = "external";
+    	// return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','div','lib','window'));
+        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window','tplist','papcode'));
     }
 
     public function edit_docs_details($ref_id)
@@ -2128,12 +2130,15 @@ class ExternalController extends Controller
                         ->orderBy('externals.id','asc')
                         ->get();
         //dd($data);
-        return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div'));
+
+        $window = "external";
+        //return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div'));
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window','search'));
     }
 
     public function filter_type($type)
     {
-        //$search = date('Y-m-d', strtotime($date));
+        $search = date('Y-m-d', strtotime($date));
         $userlist = DB::table('users')
                     ->orderBy('users.f_name')
                     ->get();
@@ -2172,7 +2177,9 @@ class ExternalController extends Controller
                         ->orderBy('externals.id','asc')
                         ->get();
         //dd($data);
-        return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div'));
+        $window = "external";
+        // return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div'));
+        return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window','search'));
     }
 
     public function list_document_ascending()

@@ -593,7 +593,7 @@ class OutgoingController extends Controller
         $window = "outgoing";
         $docimages = array();
 
-         return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','courier','div'));
+         return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','courier','div','window'));
         //return view('internal.doc-view-track-list', compact('papcode','data','docimages','userlist','lib','courier','div','window'));
     	//return view('outgoing.doc-view-list',compact('data','papcode','userlist','datefilter','lib','courier','div'));
     }
@@ -2385,7 +2385,10 @@ class OutgoingController extends Controller
                     ->get();
 
         //dd($data);
-        return view('outgoing.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','courier'));
+
+        $window = "outgoing";
+        // return view('outgoing.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','courier'));
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','courier','window','search'));
     }
 
     public function get_barcode_value($bnum)
