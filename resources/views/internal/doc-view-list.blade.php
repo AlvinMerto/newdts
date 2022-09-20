@@ -149,13 +149,29 @@ border: 1px solid #e6e6e6;
     }
 
     .selected {
-        background: #486f99;
+      background: #486f99;
         color: #fff !important;
         font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+        position: relative;
     }
 
     .selected:hover {
         background: #486f99 !important;
+    }
+
+    .selected::after {
+        content: '';
+        position: absolute;
+        left: 39%;
+        top: 100%;
+        width: 0;
+        height: 0;
+        border-left: 13px solid transparent;
+        border-right: 13px solid transparent;
+        border-top: 9px solid #486f99;
+        clear: both;
     }
 </style>
 
@@ -731,7 +747,7 @@ border: 1px solid #e6e6e6;
     						</table>
 
                             @else
-                                <div class="justify-content-center bg-danger p-5" style="font-size: 16px; color: #fff; width: 70vw; text-align: center;">No Record Found</div>
+                                <div style="font-size: 16px; color: #7b7b7b; width: 70vw; text-align: center;border: 4px dotted #ccc;" class="justify-content-center p-5">No Record Found</div>
                             @endif
 
     						@if($data->count() > 0)
