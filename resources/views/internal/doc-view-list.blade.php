@@ -247,9 +247,9 @@ border: 1px solid #e6e6e6;
                                                     if (isset($search)) {
                                                         $whattodisplay = null;
                                                         if (date("M. d, Y", strtotime($search)) == date("M. d, Y")) {
-                                                            $whattodisplay = "Displaying your documents for Today";
+                                                            $whattodisplay = "Displaying documents routed to you for Today";
                                                         } else {
-                                                            $whattodisplay = "Displaying your documents last ".date("l - M. d, Y", strtotime($search));
+                                                            $whattodisplay = "Displaying documents routed to you last ".date("l - M. d, Y", strtotime($search));
                                                         }
                                                         echo $whattodisplay;
                                                     }
