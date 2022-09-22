@@ -280,7 +280,7 @@ $(document).ready(function(e){
 
                                         <?php $date = date("M d, Y"); $today = "/filter-date/".$date; // date("M d, Y"); ?>
                                         <td style='padding-left: 0px !important; padding-top: 0px !important; padding-bottom: 0px !important; overflow-x: auto;' colspan="10">
-                                            <p style="font-size: 18px; color: #3b5998; font-weight: normal; margin-bottom: 10px;">  
+                                            <p style="font-size: 18px; color: #3b5998; font-weight: normal; margin-bottom: 10px; margin-left: 11px;margin-top: 10px;">  
                                                 <?php 
                                                     if (isset($search)) {
                                                         $whattodisplay = null;
