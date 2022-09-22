@@ -38,7 +38,9 @@ $(document).ready(function(e){
 
 <style>
     table th td,table th,table td {
-        padding-left: 16px;
+        padding-left: 10px;
+        font-size: 13px !important;
+        color: #717171;
     }
 
     table td p {
@@ -58,20 +60,22 @@ $(document).ready(function(e){
     }
 
     .theinnertbl {
-
+        margin-top: -7px;
     }
 
     .theinnertbl tr {
+        /*
         border-left: 1px solid #e6e6e6;
         border-right: 1px solid #e6e6e6;
+        */
         border-bottom: 1px solid #e6e6e6;
     }
 
     .theinnertbl tr th{
-        font-size: 12px;
-font-weight: bold;
-color: #86898a;
-border: 1px solid #e6e6e6;
+        font-size: 15px !important;
+        font-weight: bold;
+        color: #486f99;
+        padding: 10px;
     }
 
     .borderwhite {
@@ -133,6 +137,7 @@ border: 1px solid #e6e6e6;
     .thedatenavs {
         padding: 0px;
         margin: 0px;
+        margin-left: 10px;
     }
 
     .thedatenavs li{
@@ -149,7 +154,7 @@ border: 1px solid #e6e6e6;
     }
 
     .selected {
-      background: #486f99;
+        background: #486f99;
         color: #fff !important;
         font-weight: bold;
         margin-bottom: 20px;
@@ -188,6 +193,39 @@ border: 1px solid #e6e6e6;
     #theheaderdiv:hover {
         background: #e1dede;
         cursor: pointer;
+    }
+
+    .dontdisplay {
+        display: none;
+        background: #f0f0f0 !important;
+    }
+
+    .displaythis {
+        display: table-row;
+    }
+
+    .theinnertbl tr:nth-child(4n+2) {
+        background-color: #f2f2f2 !important;
+    }
+
+    .theinnertbl tbody tr:hover {
+        cursor: pointer;
+        background: #ddd;
+    }
+
+    tr:nth-child(2n) {
+        background: none;
+    }
+
+    .selectedtr {
+        border-left: 4px solid rgb(72, 111, 153) !important;
+        box-shadow: 0px 0px 13px #cecece;
+    }
+
+    .selectedtr td {
+        padding: 15px;
+        font-size: 15px !important;
+        color: #000;
     }
 </style>
 
@@ -228,7 +266,7 @@ border: 1px solid #e6e6e6;
                                                 </div-->
                                             </div>
                 </div>
-                	<div class="card-body" style="display: flex; justify-content: center;">
+                	<div class="card-body" style="display: flex; justify-content: center; padding:0px;">
 
     					<section style="width: 100%">
                             
@@ -241,7 +279,7 @@ border: 1px solid #e6e6e6;
                                         <!-- filter-date/Nov 15, 2021 -->
 
                                         <?php $date = date("M d, Y"); $today = "/filter-date/".$date; // date("M d, Y"); ?>
-                                        <td style='padding-left: 0px !important; padding-top: 0px !important; overflow-x: auto;' colspan="10">
+                                        <td style='padding-left: 0px !important; padding-top: 0px !important; padding-bottom: 0px !important; overflow-x: auto;' colspan="10">
                                             <p style="font-size: 18px; color: #3b5998; font-weight: normal; margin-bottom: 10px;">  
                                                 <?php 
                                                     if (isset($search)) {
@@ -257,23 +295,23 @@ border: 1px solid #e6e6e6;
                                             </p>
                                             <ul class='thedatenavs'>
                                                 <?php if ($window == "internal") { ?>
-                                                    <a href="{{url('internal-document-list-view')}}">
+                                                    <a href="{{url('internal-document-list-view')}}" style='margin-right: -3px;'>
                                                 <?php } else if($window == "external") { ?>
-                                                    <a href="{{url('external-document-list-view')}}">
+                                                    <a href="{{url('external-document-list-view')}}" style='margin-right: -3px;'>
                                                 <?php } else if($window == "outgoing") { ?>
-                                                    <a href="{{url('outgoing-document-list-view')}}">
+                                                    <a href="{{url('outgoing-document-list-view')}}" style='margin-right: -3px;'>
                                                 <?php } ?>
-                                                    <li>
+                                                    <li class = '<?php if(!isset($search)){ echo "selected";} ?>' style='padding: 7px 40px; '>
                                                         All
                                                     </li>
                                                 </a>
 
                                                 <?php if ($window == "internal") { ?>
-                                                    <a href="{{ url('internal-document/filter-date/') }}/{{$date}}"/> 
+                                                    <a href="{{ url('internal-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
                                                 <?php } else if($window == "external") { ?>
-                                                    <a href="{{ url('external-document/filter-date/') }}/{{$date}}"/> 
+                                                    <a href="{{ url('external-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
                                                 <?php } else if($window == "outgoing") { ?>
-                                                    <a href="{{ url('outgoing-document/filter-date/') }}/{{$date}}"/> 
+                                                    <a href="{{ url('outgoing-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
                                                 <?php } ?>
                                                     <?php 
                                                         $todate = null;
@@ -311,7 +349,7 @@ border: 1px solid #e6e6e6;
                                                         echo "</li></a>";
                                                     }
                                                 ?>
-                                                <input type='date' id='thedatefilterinput' style="font-family: arial;font-size: 13px;padding: 8px;border: 1px solid #ccc;"/>
+                                                <input type='date' id='thedatefilterinput' style="font-family: arial;font-size: 13px;padding: 8px;border: 1px solid #ccc; margin-left: -3px;background: #eee;"/>
                                             </ul>
                                         </td>
                                         <td>
@@ -333,7 +371,8 @@ border: 1px solid #e6e6e6;
                             @if($data->count()>0)
 
     						<table class='theinnertbl'>
-    							<tr class="border_bottom">
+                                <thead>
+    							<tr class="border_bottom" style="box-shadow: 0px 2px 5px #ccc;position: relative;">
                                     <th>Document Date</th>
     								<th>Barcode</th>
     								<th>Document Category/Type</th>
@@ -342,12 +381,13 @@ border: 1px solid #e6e6e6;
     								<th>Status</th>
     								<th># Days</th>
                                     <th>Classification</th>
-    								<th>Action</th>
+    								<!--th>Action</th-->
     							</tr>
-
+                            </thead>
+                            <tbody>
                                 <?php $priority = null; ?>
     							@foreach($data as $d)
-                                <tr>
+                                <tr class='withcontent'>
                                     @if($d->actioned == 0)
                                         @if($d->classification == 1 && $d->confi_name == Auth::user()->f_name)
                                              @if($d->days_count>5)
@@ -749,49 +789,50 @@ border: 1px solid #e6e6e6;
                                             @endif
                                         </td-->
                                     @endif
-                                        <td align="center" >
-                                            @if($d->confi_name == Auth::user()->f_name && $d->classification == 1 || $d->classification == 1 && Auth::user()->access_level==5)
-                                                <?php if ($window == "internal") { ?>
-                                                    <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
-                                                <?php } else if ($window == "external") { ?>
-                                                    <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
-                                                <?php } else if ($window == "outgoing") { ?>
-                                                    <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
-                                                <?php } ?>
-                                            @elseif($d->classification != 1)
-                                                <?php if ($window == "internal") { ?>
-                                                    <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
-                                                <?php } else if ($window == "external") { ?>
-                                                    <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
-                                                <?php } else if ($window == "outgoing") { ?>
-                                                    <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-default pl-4 pr-4"><span class="fa fa-envelope-open-o" aria-hidden="true"></span> View</a>
-                                                <?php } ?>
-                                            @endif
-                                            @if($d->status=='complete' && Auth::user()->division == $d->dept)
-                                                @if(Auth::user()->access_level==5)
-                                                    <br>
-                                                    <a href="javascript:void(0);" id="{{$d->ref_id}}" class="go_edit_btn btn btn-small btn-default mt-2  pl-4 pr-4"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit </a>
-                                                @endif
-                                            @else
-                                                    <br>
-                                                @if($d->confi_name == Auth::user()->f_name && $d->classification == 1)
-                                                    <a href="#" id="{{$d->ref_id}}" class="btn-ff btn btn-default mt-2  pl-3 pr-3"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> Action</a>
-                                                @elseif($d->confi_name != Auth::user()->f_name && $d->classification == 1)
-                                                    <a href="#" id="{{$d->ref_id}}" class="btn-ff btn btn-default mt-2  pl-3 pr-3"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> Action</a>
+                                    </tr>
+                                    <tr class='dontdisplay'>
+                                        <td style="text-align: left;" colspan="8">
+                                            <div style='display: flex;'>
+                                                @if($d->confi_name == Auth::user()->f_name && $d->classification == 1 || $d->classification == 1 && Auth::user()->access_level==5)
+                                                    <?php if ($window == "internal") { ?>
+                                                        <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                    <?php } else if ($window == "external") { ?>
+                                                        <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                    <?php } else if ($window == "outgoing") { ?>
+                                                        <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                    <?php } ?>
                                                 @elseif($d->classification != 1)
-                                                    <a href="#" id="{{$d->ref_id}}" class="btn-ff btn btn-default mt-2  pl-3 pr-3"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> Action</a>
+                                                    <?php if ($window == "internal") { ?>
+                                                        <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                    <?php } else if ($window == "external") { ?>
+                                                        <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                    <?php } else if ($window == "outgoing") { ?>
+                                                        <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                    <?php } ?>
                                                 @endif
+                                                @if($d->status=='complete' && Auth::user()->division == $d->dept)
+                                                    @if(Auth::user()->access_level==5)
+                                                        <a href="javascript:void(0);" id="{{$d->ref_id}}" class="go_edit_btn btn btn-small btn-default mt-2  pl-4 pr-4"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit </a>
+                                                    @endif
+                                                @else
+                                                    @if($d->confi_name == Auth::user()->f_name && $d->classification == 1)
+                                                        <a href="#" id="{{$d->ref_id}}" class="btn-ff btn btn-default"><span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward </a>
+                                                    @elseif($d->confi_name != Auth::user()->f_name && $d->classification == 1)
+                                                        <a href="#" id="{{$d->ref_id}}" class="btn-ff btn btn-default"><span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward</a>
+                                                    @elseif($d->classification != 1)
+                                                        <a href="#" id="{{$d->ref_id}}" class="btn-ff btn btn-default"><span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward</a>
+                                                    @endif
 
-                                                @if(Auth::user()->access_level==5)
-                                                    <br>
-                                                    <a href="javascript:void(0);" id="{{$d->ref_id}}" class="go_edit_btn btn btn-small btn-default mt-2  pl-4 pr-4"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit </a>
+                                                    @if(Auth::user()->access_level==5)
+                                                        <a href="javascript:void(0);" id="{{$d->ref_id}}" class="go_edit_btn btn btn-small btn-default"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit </a>
+                                                    @endif
                                                 @endif
-                                            @endif
+                                            </div>
                                         </td>
                                 </tr>
     							@endforeach
 
-    	
+    	                       </tbody>
     						</table>
 
                             @else
@@ -821,7 +862,7 @@ border: 1px solid #e6e6e6;
 <div class="modal fade" id="doc-ff" tabindex="-1" role="dialog" aria-labelledby="ff-modal-label" aria-hidden="true">
   <div class="modal-dialog  modal-lg" style="min-width: auto; max-width: 50%"  role="document">
     <div class="modal-content">
-      <div class="modal-header"><span style="font-size: 17px; color: #97918F; text-align: center;"><strong>DOCUMENT TRACKING SYSTEM</strong></span>
+      <div class="modal-header"><span style="font-size: 17px; color: #97918F; text-align: center;"><strong>Forwarding of document</strong></span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload();">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -838,7 +879,7 @@ border: 1px solid #e6e6e6;
                 </tr>
                 <tr>
                     <th style="font-size: 15px; color: #0B3861;" text-align="left">Forward to:</th>
-                    <td class="p-3" style="border-bottom: none; background: #f2f2f2">
+                    <td class="p-3" style="border-bottom: none;">
                         <p> Division </p>
                         <select id='divisionselect' class='btn btn-default' style='width: 100%;'>
                             <?php 
@@ -1092,6 +1133,14 @@ border: 1px solid #e6e6e6;
                 opened = false;
                 $("#theheaderdiv").css("height","41px");
             }
+        });
+
+        $(document).find(".theinnertbl tbody tr.withcontent").on("click",function(){
+            $(this).siblings().removeAttr("style");
+            $(this).siblings().removeClass("selectedtr");
+
+            $(this).addClass("selectedtr");
+            $(this).next().addClass("selectedtr").show();
         });
 
         // internal, external, outgoing
@@ -1422,8 +1471,6 @@ border: 1px solid #e6e6e6;
         var dept        =   $('input#ff_divisions').val();
         var x_id        =   $('input#_id').val();
 
-    
-
             $.ajax({
                 url: "{{ url('/internal-document/doc-tracking-complete') }}/"+x_id,
                 type: "POST",
@@ -1582,8 +1629,21 @@ border: 1px solid #e6e6e6;
         $(document).on("click", ".go_edit_btn", function(e) {
             var x_id        =   this.id;
 
+            var typeinput = null;
+                typeinput = $(document).find("#type_input").val();
+
+            var theurl = null;
+
+            if (typeinput == "external") {
+                theurl = "{{ url('/external-document/edit-document-details') }}/"+x_id;
+            } else if (typeinput == 'internal') {
+                theurl = "{{ url('/internal-document/edit-document-details') }}/"+x_id;
+            } else if (typeinput == 'outgoing') {
+                theurl = "{{ url('/outgoing-document/edit-document-details') }}/"+x_id;
+            }
+
              $.ajax({
-                url: "{{ url('/internal-document/edit-document-details') }}/"+x_id,
+                url: theurl,
                 type: "GET",
                 data: {_token: CSRF_TOKEN,_id: x_id},
 
