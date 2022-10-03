@@ -41,7 +41,7 @@ $(document).ready(function(e){
 <div class="content-wrapper">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card" style="margin-bottom: 50px;">
+            <div class="card" style="margin-bottom: 50px; flex-direction: unset;">
                 <div class="card-header bg-danger" style="font-size: 16px; font-weight: bold; color: #fff;">New Outgoing Document</div>
                 <div class="card-body" style="display: flex; justify-content: center;">
                    <!-- content --> 

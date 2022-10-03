@@ -56,7 +56,7 @@ $(document).ready(function(e){
         <div class="col-md-8" style='margin-top: 10px;'>
             <div class="card" style='flex-direction: unset;'>
                 <div class="card-header bg-primary" style="font-size: 20px;  color: #fff;">New Internal Document</div>
-                <div class="card-body" style="display: flex; justify-content: center;">
+                <div class="card-body" style="display: flex; justify-content: center; ">
                    <!-- content --> 
                    		<form method="POST" action="{{ url('/internal-document/save-entry')}}" accept-charset="utf-8" enctype="multipart/form-data">
 						@csrf
