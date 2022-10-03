@@ -149,7 +149,7 @@ $(document).ready(function(e){
 			                        <b>Sending mails... Please wait...</b></span>
 			                    </td>
 			                </tr>
-				    		<tr>
+				    		<tr style="background: none;">
 				    			<td colspan="2"><button type="submit" class="btn btn-success" style="padding-left: 20px; padding-right: 20px; float: right;" onclick="document.getElementById('busywait').style.display = 'table-row'; window.scrollTo(0,document.querySelector('.scrollingContainer').scrollHeight);"><span class="fa fa-floppy-o" aria-hidden="true"></span> Save</button></td>
 				    		</tr>
 				    	</table>
