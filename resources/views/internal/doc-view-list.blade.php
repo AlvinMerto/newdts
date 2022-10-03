@@ -197,7 +197,8 @@ $(document).ready(function(e){
 
     .dontdisplay {
         display: none;
-        background: #f0f0f0 !important;
+        background: #f9f9f9 !important;
+        box-shadow: 0px 9px 10px #cecece !important;
     }
 
     .displaythis {
