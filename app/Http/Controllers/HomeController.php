@@ -287,7 +287,7 @@ class HomeController extends Controller
     public function addname(Request $req) {
         if (request()->ajax()) {
             
-             $data = DB::insert('insert into users (f_name) values (?)',[$req->input("fullname")]);
+             $data = DB::insert('insert into users (name, f_name) values (?,?)',[$req->input("username"),$req->input("fullname")]);
 
              return response()->json(['inserted' => $data]);
         }

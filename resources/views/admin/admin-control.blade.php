@@ -334,6 +334,11 @@ $(document).ready(function(e){
                 </td>
             </tr>
             <tr>
+                <td>
+                    <input type='text' id='theusername_modal' class='form-control' placeholder="username" />
+                </td>
+            </tr>
+            <tr>
                 <td> 
                     <button class='btn btn-primary' id='addnewemp'> Add </button>
                 </td>
@@ -491,13 +496,14 @@ $(document).ready(function(e){
 
     function addnewempfunc() {
         var thefullname = $(document).find("#thefullname_modal").val();
+        var theusername = $(document).find("#theusername_modal").val();
 
         var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
 
             $.ajax({
                 url : "{{ url('/admin/addname') }}",
                 type: "POST",
-                data : { _token: CSRF_TOKEN , fullname: thefullname },
+                data : { _token: CSRF_TOKEN , fullname: thefullname, username : theusername },
                 dataType: "json",
                 success : function(data) {
                     alert("New employee added");
