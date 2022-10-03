@@ -1006,6 +1006,11 @@ class OutgoingController extends Controller
                 ->onEachSide(2);
         }
 
+        $div = DB::table('users')
+                    ->groupBy('users.division')
+                    ->orderBy('users.division', 'asc')
+                    ->get();
+
         $datefilter = DB::table('outgoings')
                         ->groupBy('outgoings.doc_date_ff')
                         ->orderBy('outgoings.id','asc')
@@ -1028,7 +1033,11 @@ class OutgoingController extends Controller
                     ->orderBy('courier.id','asc')
                     ->get();
 
-        return view('outgoing.doc-view-list',compact('data','papcode','datefilter','userlist','lib','courier'));
+        $window = "outgoing";
+        $sort   = "Pending";
+
+        return view('internal.doc-view-list',compact('data','papcode','datefilter','userlist','lib','courier','window','sort','div'));
+        // return view('outgoing.doc-view-list',compact('data','papcode','datefilter','userlist','lib','courier'));
     }
 
     public function approve_list()

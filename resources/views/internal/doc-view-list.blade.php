@@ -299,6 +299,8 @@ $(document).ready(function(e){
                                                         }
                                                         echo $whattodisplay;
                                                     }
+
+                                                    if (isset($sort)){ echo $sort ." documents"; }
                                                 ?>
                                             </p>
                                             <ul class='thedatenavs'>
@@ -891,15 +893,16 @@ $(document).ready(function(e){
                         <p> Division </p>
                         <select id='divisionselect' class='btn btn-default' style='width: 100%;'>
                             <?php 
-                                if ($div->count()>0) {
-                                    foreach($div as $d) {
-                                        if (strlen($d->division) > 0) {
-                                            echo "<option value='{$d->division}'>";
-                                                echo $d->division;
-                                            echo "</option>";
+                                    if ($div->count()>0) {
+                                        foreach($div as $d) {
+                                            if (strlen($d->division) > 0) {
+                                                echo "<option value='{$d->division}'>";
+                                                    echo $d->division;
+                                                echo "</option>";
+                                            }
                                         }
                                     }
-                                }
+                                
                             ?>
                         </select>
 

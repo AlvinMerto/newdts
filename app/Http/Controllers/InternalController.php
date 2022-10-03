@@ -1139,7 +1139,9 @@ class InternalController extends Controller
                     ->orderBy('division','asc')
                     ->get();
 
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div'));
+        $window = "internal";
+        $sort   = "Pending";
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window','sort'));
     }
 
     public function ongoing_list()
@@ -1193,7 +1195,9 @@ class InternalController extends Controller
                     ->orderBy('division','asc')
                     ->get();
 
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div'));
+        $window = "internal";
+        $sort   = "On-going";
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window','sort'));
     }
 
     public function approve_list()
@@ -1248,7 +1252,9 @@ class InternalController extends Controller
                     ->orderBy('division','asc')
                     ->get();
 
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div'));
+        $window = "internal";
+        $sort   = "Approve";
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window','sort'));
     }
 
     public function disapprove_list()
@@ -1303,7 +1309,8 @@ class InternalController extends Controller
                     ->orderBy('division','asc')
                     ->get();
 
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div'));
+        $window = "internal";
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window'));
     }
 
     public function complete_list()
@@ -1358,7 +1365,9 @@ class InternalController extends Controller
                     ->orderBy('division','asc')
                     ->get();
 
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div'));
+        $window = "internal";
+        $sort   = "Completed";
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window','sort'));
     }
 
     public function ff_doc(Request $request, $id)

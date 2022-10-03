@@ -93,12 +93,12 @@ body {
               <a href="{{url('/external-document-list-view/disapprove')}}" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> Disapproved</a></li>
 
               <!--addon-->
-            <li>
+            <!--li>
               <span id="total-complete" class="label label-info pull-right">0</span>
-              <a href="#" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> Complete</a></li>
-            <li>
+              <a href="#" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> Complete</a></li-->
+            <!--li>
 
-              <a href="#" style="font-size: 12px;" class="external_export_data_div"><i class="fa fa-cloud-download"aria-hidden="true"></i> Data Summary</a></li>
+              <a href="#" style="font-size: 12px;" class="external_export_data_div"><i class="fa fa-cloud-download"aria-hidden="true"></i> Data Summary</a></li-->
             @if(Auth::user()->access_level == 5)
             <li>
               <a href="#" style="font-size: 12px;" class="external_export_data"><i class="fa fa-cloud-download"aria-hidden="true"></i> Download Data</a></li>
@@ -124,7 +124,7 @@ body {
                 <span id="outgoing-total-doc" class="label label-primary pull-right">0</span>
               <a href="{{url('/outgoing-document/filter-date')}}/{{$date}}" style="font-size: 12px;"><i class="fa fa-file-o" aria-hidden="true"></i> Outgoing Document Lists</a></li>
             <li>
-            <li>
+            <!--li>
               <span id="outgoing-total-pending" class="label label-warning pull-right">0</span>
               <a href="{{ url('/outgoing-document-list-view/pending') }}" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> Pending</a></li>
             <li>
@@ -136,11 +136,11 @@ body {
             <li>
               <span id="outgoing-total-disapprove" class="label label-danger pull-right">0</span>
               <a href="{{url('/outgoing-document-list-view/disapprove')}}" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> Disapproved</a></li>
-            <!--addon-->
+       
             <li>
               <span id="outgoing-total-complete" class="label label-info pull-right">0</span>
               <a href="#" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> Complete</a></li>
-            <li>
+            <li-->
 
               <a href="#" style="font-size: 12px;" class="outgoing_export_data_div"><i class="fa fa-cloud-download"aria-hidden="true"></i> Data Summary</a></li>
             @if(Auth::user()->access_level == 5)

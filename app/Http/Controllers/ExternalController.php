@@ -833,7 +833,11 @@ class ExternalController extends Controller
                         ->orderBy('externals.id','asc')
                         ->get();
 
-        return view('external.doc-view-list',compact('data','papcode','userlist','tplist','datefilter','lib','div'));
+        $window = "external";
+        $sort   = "Pending";
+        
+        // return view('external.doc-view-list',compact('data','papcode','userlist','tplist','datefilter','lib','div'));
+        return view('internal.doc-view-list',compact('data','papcode','userlist','tplist','datefilter','lib','div','window','sort'));
     }
 
     public function ongoing_list()
@@ -893,7 +897,11 @@ class ExternalController extends Controller
                     ->orderBy('division','asc')
                     ->get();
 
-        return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','tplist'));
+        $window = "external";
+        $sort   = "On-going";
+
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','tplist','window','sort'));
+        // return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','tplist'));
     }
 
     public function approve_list()
@@ -953,7 +961,11 @@ class ExternalController extends Controller
                         ->orderBy('externals.id','asc')
                         ->get();
 
-        return view('external.doc-view-list',compact('data','papcode','userlist','tplist','datefilter','lib','div'));
+        $window  = "external";
+        $sort    = "Approved";
+
+        return view('internal.doc-view-list',compact('data','papcode','userlist','tplist','datefilter','lib','div','window','sort'));
+        // return view('external.doc-view-list',compact('data','papcode','userlist','tplist','datefilter','lib','div'));
     }
 
     public function disapprove_list()
@@ -1013,7 +1025,11 @@ class ExternalController extends Controller
                         ->orderBy('externals.id','asc')
                         ->get();
 
-        return view('external.doc-view-list',compact('data','papcode','userlist','tplist','datefilter','lib','div'));
+        $window  = "external";
+        $sort    = "Disapproved";
+        
+        return view('internal.doc-view-list',compact('data','papcode','userlist','tplist','datefilter','lib','div','window','sort'));
+        // return view('external.doc-view-list',compact('data','papcode','userlist','tplist','datefilter','lib','div'));
     }
 
     public function complete_list()
