@@ -227,6 +227,14 @@ $(document).ready(function(e){
         font-size: 15px !important;
         color: #000;
     }
+
+    .theactionbtns {
+
+    }
+
+    .theactionbtns a {
+        margin-top: 0px !important;
+    }
 </style>
 
 <input type="hidden" name="type_input" id="type_input" value="<?php echo $window; ?>">
@@ -792,7 +800,7 @@ $(document).ready(function(e){
                                     </tr>
                                     <tr class='dontdisplay'>
                                         <td style="text-align: left;" colspan="8">
-                                            <div style='display: flex;'>
+                                            <div style='display: contents;' class='theactionbtns'>
                                                 @if($d->confi_name == Auth::user()->f_name && $d->classification == 1 || $d->classification == 1 && Auth::user()->access_level==5)
                                                     <?php if ($window == "internal") { ?>
                                                         <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
@@ -1112,7 +1120,12 @@ $(document).ready(function(e){
         <input type="hidden" name="edit_id" id="edit_id" value="">
 
         <tr>
-            <td colspan="2"><button class="btn-upload btn btn-warning"><span class="fa fa-paperclip" aria-hidden="true"></span> Attach Files</button> <button class="btn_save btn btn-success" style="padding-left: 20px; padding-right: 20px; float: right;"><span class="fa fa-floppy-o" aria-hidden="true"></span> Save</button></td>
+            <td colspan="2">
+                <button class="btn-upload btn btn-warning">
+                    <span class="fa fa-paperclip" aria-hidden="true"></span> Attach Files </button> 
+                <button class="btn_save btn btn-success" style="padding-left: 20px; padding-right: 20px; float: right;">
+                    <span class="fa fa-floppy-o" aria-hidden="true"></span> Save</button>
+            </td>
         </tr>
     </table>
   </div>

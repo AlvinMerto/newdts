@@ -263,22 +263,44 @@ margin-top: 10px;
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Date</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;" >{{date('M d, Y', strtotime($d->doc_receive))}}</td>
 
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Briefer #</td>
-                                             <td align="left" style="font-weight: bold;font-size: 14px !important;" >{{$d->briefer_number}}</td>
+                                            <?php if ($window == "internal" || $window == "outgoing") { ?>
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Briefer #</td>
+                                            <?php } ?>
+                                            <td align="left" style="font-weight: bold;font-size: 14px !important;" >{{$d->briefer_number}}</td>
                                         </tr>
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Barcode</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->barcode}}</td>
 
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Office/Division</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
+                                                <?php 
+                                                    if ($window == "external") { 
+                                                        echo "Agency from";
+                                                    } else if ($window == "internal") {
+                                                        echo "Office/Division";
+                                                    } else if ($window == "outgoing") {
+                                                        echo "Agency to";
+                                                    }
+                                                ?>
+                                            </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
                                         </tr>
 
                                         <tr class="border_bottom">
                                             <!--td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-weight: bold; font-size: 13px !important;">Document Type</td>
                                             <td align="left" >{{$d->type}}</td-->
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Sender</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
+                                                <?php 
+                                                    if ($window == "external") { 
+                                                        echo "Route to";
+                                                    } else if ($window == "internal") {
+                                                        echo "Route to";
+                                                    } else if ($window == "outgoing") {
+                                                        echo "Route to";
+                                                    }
+                                                ?>
+                                            </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;" >{{$d->signatory}}</td>
                                         
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Category</td>
@@ -324,22 +346,39 @@ margin-top: 10px;
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Date</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;" >{{date('M d, Y', strtotime($d->doc_receive))}}</td>
 
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Briefer #</td>
-                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->briefer_number}}</td>
+                                             <?php if ($window == "internal" || $window == "outgoing") { ?>
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Briefer #</td>
+                                            <?php } ?>
+
+                                            <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->briefer_number}}</td>
                                         </tr>
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Barcode</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->barcode}}</td>
 
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Office/Division</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
+                                                <?php 
+                                                    if ($window == "external") { 
+                                                        echo "Agency from";
+                                                    } else if ($window == "internal") {
+                                                        echo "Office/Division";
+                                                    } else if ($window == "outgoing") {
+                                                        echo "Agency to";
+                                                    }
+                                                ?>
+                                            </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
                                         </tr>
 
                                         <tr class="border_bottom">
                                             <!--td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-weight: bold; font-size: 13px !important;">Document Type</td>
                                             <td align="left" >{{$d->type}}</td-->
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Sender</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
+                                                <?php 
+                                                    echo "Route to";
+                                                ?>
+                                            </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->signatory}}</td>
                                         
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Category</td>
@@ -500,22 +539,39 @@ margin-top: 10px;
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Date</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{date('M d, Y', strtotime($d->doc_receive))}}</td>
 
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Briefer #</td>
-                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->briefer_number}}</td>
+                                            <?php if ($window == "internal" || $window == "outgoing") { ?>
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Briefer #</td>
+                                            <?php } ?>
+
+                                            <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->briefer_number}}</td>
                                         </tr>
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Barcode</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->barcode}}</td>
 
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Office/Division</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
+                                                <?php 
+                                                    if ($window == "external") { 
+                                                        echo "Agency from";
+                                                    } else if ($window == "internal") {
+                                                        echo "Office/Division";
+                                                    } else if ($window == "outgoing") {
+                                                        echo "Agency to";
+                                                    }
+                                                ?>
+                                            </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
                                         </tr>
 
                                         <tr class="border_bottom">
                                             <!--td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-weight: bold; font-size: 13px !important;">Document Type</td>
                                             <td align="left" >{{$d->type}}</td-->
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Sender</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
+                                                <?php 
+                                                    echo "Route to";
+                                                ?>
+                                            </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->signatory}}</td>
                                         </tr>
 
@@ -554,22 +610,39 @@ margin-top: 10px;
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Date</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{date('M d, Y', strtotime($d->doc_receive))}}</td>
 
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Briefer #</td>
-                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->briefer_number}}</td>
+                                            <?php if ($window == "internal" || $window == "outgoing") { ?>
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Briefer #</td>
+                                            <?php } ?>
+                                            
+                                            <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->briefer_number}}</td>
                                         </tr>
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Barcode</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->barcode}}</td>
 
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Office/Division</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
+                                                <?php 
+                                                    if ($window == "external") { 
+                                                        echo "Agency from";
+                                                    } else if ($window == "internal") {
+                                                        echo "Office/Division";
+                                                    } else if ($window == "outgoing") {
+                                                        echo "Agency to";
+                                                    }
+                                                ?>
+                                            </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
                                         </tr>
 
                                         <tr class="border_bottom">
                                             <!--td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-weight: bold; font-size: 13px !important;">Document Type</td>
                                             <td align="left" >{{$d->type}}</td-->
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Sender</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
+                                                <?php 
+                                                    echo "Route to";
+                                                ?>
+                                            </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->signatory}}</td>
                                         </tr>
 
