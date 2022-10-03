@@ -1918,7 +1918,20 @@ $(document).ready(function() {
     $(document).on("click", ".btn-upload", function() {
         var x_id        =   $('input#edit_id').val();
 
-        window.location.href="{{ url('/internal-document-new-entry/upload-image') }}/"+x_id;
+        var typeinput = null;
+            typeinput = $(document).find("#type_input").val();
+
+        var theurl = null;
+
+        if (typeinput == "external") {
+            window.location.href="{{ url('/external-document-new-entry/upload-image') }}/"+x_id;
+        } else if (typeinput == 'internal') {
+            window.location.href="{{ url('/internal-document-new-entry/upload-image') }}/"+x_id;
+        } else if (typeinput == 'outgoing') {
+            window.location.href="{{ url('/outgoing-document-new-entry/upload-image') }}/"+x_id;
+        }
+
+        
     });
 });
 
