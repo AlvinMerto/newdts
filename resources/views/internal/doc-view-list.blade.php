@@ -220,6 +220,7 @@ $(document).ready(function(e){
 
     .selectedtr {
         border-left: 4px solid rgb(72, 111, 153) !important;
+        border-right: 4px solid rgb(72, 111, 153) !important;
         box-shadow: 0px 0px 13px #cecece;
     }
 
