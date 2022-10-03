@@ -51,33 +51,33 @@ $(document).ready(function(e){
 
 				    		<tr>
 				    			<td><input class="form-control" style="width: auto;" type="date" name="docdate" id="docdate" value="<?php 
-				    			$startDate = time(); echo date('Y-m-d', strtotime('+1 day', $startDate)); ?>" required placeholder="Date Received" title="Date Received"></td>
+				    			$startDate = time(); echo date('Y-m-d', strtotime('+1 day', $startDate)); ?>" placeholder="Date Received" title="Date Received"></td>
 				    			<td rowspan="5" valign="top">
 				    				
 				    			</td>
 				    				
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="briefer" id="briefer" value="" required placeholder="Briefer Number"></td>
+				    			<td><input class="form-control" style="width: 200px;" type="text" name="briefer" id="briefer" value="" placeholder="Briefer Number"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="barcode" id="barcode" value="" required placeholder="Barcode Number"  onblur="checkDuplicate();"></td>
+				    			<td><input class="form-control" style="width: 200px;" type="text" name="barcode" id="barcode" value="" placeholder="Barcode Number"  onblur="checkDuplicate();"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="agency" id="agency" value="" required placeholder="Sender"></td>
+				    			<td><input class="form-control" style="width: 200px;" type="text" name="agency" id="agency" value="" placeholder="Sender"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="agencyto" id="agencyto" value="" required placeholder="Agency/Office"></td>
+				    			<td><input class="form-control" style="width: 200px;" type="text" name="agencyto" id="agencyto" value="" placeholder="Agency/Office"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="signature" id="signature" value="" required placeholder="Addressee"></td>
+				    			<td><input class="form-control" style="width: 200px;" type="text" name="signature" id="signature" value="" placeholder="Addressee"></td>
 				    		</tr>
 				    		<tr>
 				    			<td><input class="form-control" style="width: 200px;" type="text" name="signatureemail" id="signatureemail" value="" placeholder="Addressee Email Address"></td>
 				    		</tr>
 				    		<tr>
 				    			<td>
-				    				<input list="memo_datalist" name="doctitle" id="doctitle" class="form-control p-2" style="width: 300px;" required placeholder="Document Category/Type"></td>
+				    				<input list="memo_datalist" name="doctitle" id="doctitle" class="form-control p-2" style="width: 300px;" placeholder="Document Category/Type"></td>
 										<datalist id="memo_datalist">
 								            @if($lib->count()>0)
 								            @foreach($lib as $l)
@@ -89,11 +89,11 @@ $(document).ready(function(e){
 				    			</td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control mr-5" style="width: 300px;" type="text" name="docdesc" id="docdesc" value="" required placeholder="Subject/Description"></td>
+				    			<td><input class="form-control mr-5" style="width: 300px;" type="text" name="docdesc" id="docdesc" value="" placeholder="Subject/Description"></td>
 				    		</tr>
 				    		<tr>
 				    			<td>
-				    				<input list="release_datalist" name="releasemode" id="releasemode" class="form-control p-2" style="width: 300px;" required placeholder="Mode of Releasing"></td>
+				    				<input list="release_datalist" name="releasemode" id="releasemode" class="form-control p-2" style="width: 300px;" placeholder="Mode of Releasing"></td>
 										<datalist id="release_datalist">
 								            @if($courier->count()>0)
 								            @foreach($courier as $c)

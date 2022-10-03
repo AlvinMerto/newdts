@@ -51,18 +51,18 @@ $(document).ready(function(e){
 
 				    		<tr>
 				    			<td><input class="form-control" style="width: auto;" type="date" name="docdate" id="docdate" value="<?php 
-				    			$startDate = time(); echo date('Y-m-d', strtotime('+1 day', $startDate)); ?>" required placeholder="Date Received" title="Date Received"></td>
+				    			$startDate = time(); echo date('Y-m-d', strtotime('+1 day', $startDate)); ?>" placeholder="Date Received" title="Date Received"></td>
 				    			
 				    		</tr>
 				    		{{--<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="briefer" id="briefer" value="" required placeholder="Briefer Number"></td>
+				    			<td><input class="form-control" style="width: 200px;" type="text" name="briefer" id="briefer" value="" placeholder="Briefer Number"></td>
 				    		</tr>--}}
 				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="barcode" id="barcode" value="" required placeholder="Barcode Number" onblur="checkDuplicate();"></td>
+				    			<td><input class="form-control" style="width: 200px;" type="text" name="barcode" id="barcode" value="" placeholder="Barcode Number" onblur="checkDuplicate();"></td>
 				    		</tr>
 				    		<tr>
 				    			<td>
-				    				<input list="division_datalist" name="agency" id="agency" class="form-control p-2" style="width: 200px;" required placeholder="Agency to"></td>
+				    				<input list="division_datalist" name="agency" id="agency" class="form-control p-2" style="width: 200px;" placeholder="Agency to"></td>
 										<datalist id="division_datalist">
 								            @if($div->count()>0)
 								            @foreach($div as $u)
@@ -74,9 +74,9 @@ $(document).ready(function(e){
 				    			</td>
 				    		</tr>
 				    		<tr>
-				    			{{--<td><input class="form-control" style="width: 200px;" type="text" name="signature" id="signature" value="" required placeholder="Sender/Signatory"></td>--}}
+				    			{{--<td><input class="form-control" style="width: 200px;" type="text" name="signature" id="signature" value="" placeholder="Sender/Signatory"></td>--}}
 				    			<td>
-				    				<input list="user_datalist" name="signature" id="signature" class="form-control p-2" style="width: 200px;" required placeholder="Signatory/Route To"></td>
+				    				<input list="user_datalist" name="signature" id="signature" class="form-control p-2" style="width: 200px;" placeholder="Signatory/Route To"></td>
 										<datalist id="user_datalist">
 								            @if($userlist->count()>0)
 								            @foreach($userlist as $u)
@@ -89,14 +89,14 @@ $(document).ready(function(e){
 				    			</td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="sendername" id="sendername" value="" required placeholder="Sender's Name"></td>
+				    			<td><input class="form-control" style="width: 200px;" type="text" name="sendername" id="sendername" value="" placeholder="Sender's Name"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="Email" name="sigEmail" id="sigEmail" value="" required placeholder="Sender's Email"></td>
+				    			<td><input class="form-control" style="width: 200px;" type="Email" name="sigEmail" id="sigEmail" value="" placeholder="Sender's Email"></td>
 				    		</tr>
 				    		<tr>
 				    			<td>
-				    				<input list="memo_datalist" name="doctitle" id="doctitle" class="form-control p-2" style="width: 300px;" required placeholder="Document Category/Type"></td>
+				    				<input list="memo_datalist" name="doctitle" id="doctitle" class="form-control p-2" style="width: 300px;" placeholder="Document Category/Type"></td>
 										<datalist id="memo_datalist">
 								            @if($lib->count()>0)
 								            @foreach($lib as $l)
@@ -108,7 +108,7 @@ $(document).ready(function(e){
 				    			</td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control mr-5" style="width: 300px;" type="text" name="docdesc" id="docdesc" value="" required placeholder="Subject/Description"></td>
+				    			<td><input class="form-control mr-5" style="width: 300px;" type="text" name="docdesc" id="docdesc" value="" placeholder="Subject/Description"></td>
 				    		</tr>
 				    		
 				    		<tr>
@@ -120,10 +120,10 @@ $(document).ready(function(e){
 					    		</td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 150px;" type="Number" name="numcopy" id="numcopy" value="" required placeholder="Number of Copy"></td>
+				    			<td><input class="form-control" style="width: 150px;" type="Number" name="numcopy" id="numcopy" value="" placeholder="Number of Copy"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 150px;" type="Number" name="numpages" id="numpages" value="" required placeholder="Number of Pages"></td>
+				    			<td><input class="form-control" style="width: 150px;" type="Number" name="numpages" id="numpages" value="" placeholder="Number of Pages"></td>
 				    		</tr>
 				    		<tr>
 				    			<td>
