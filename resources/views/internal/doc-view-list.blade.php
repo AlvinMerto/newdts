@@ -1044,7 +1044,7 @@ $(document).ready(function(e){
 <div class="modal fade" id="doc-edit" tabindex="-1" role="dialog"aria-labelledby="edit-modal-label" aria-hidden="true">
   <div class="modal-dialog  modal-lg" style="min-width: auto; max-width: 50%;"  role="document">
     <div class="modal-content">
-      <div class="modal-header"><span style="font-size: 24px; color: #FF4000; text-align: center;"><strong>EDIT DOCUMENT TRACKING SYSTEM (INTERNAL DOCUMENTS)</strong></span>
+      <div class="modal-header"><span style="font-size: 24px; color: #FF4000; text-align: center;"><strong>EDIT DOCUMENT</strong></span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload();"><span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1079,7 +1079,7 @@ $(document).ready(function(e){
             </td>
         </tr>
         <tr>
-            <td><span style="margin-left: 30px;">Signatory</span></td>
+            <td><span style="margin-left: 30px;">Routed to</span></td>
             <td>
             
                 <input list="user_datalist" name="signature" id="signature" class="form-control ml-5" style="width: 200px;" required placeholder="Signatory"></td>
@@ -1110,7 +1110,10 @@ $(document).ready(function(e){
         </tr>
         <tr>
             <td><span style="margin-left: 30px;">Document Description</span></td>
-            <td><input class="form-control mr-5  ml-5" style="width: 300px;" type="text" name="docdesc" id="docdesc" value="" required placeholder="Subject/Description"></td>
+            <td>
+                <input class="form-control mr-5  ml-5" style="width: 300px;" type="text" name="docdesc" id="docdesc" placeholder="Subject/Description" value='' required>
+                <!--textarea class="form-control mr-5  ml-5" style="width: 300px;" name="docdesc" id="docdesc" placeholder="Subject/Description"></textarea-->
+            </td>
         </tr>
         <tr>
             <td colspan="2"><span style="margin-left: 30px;">

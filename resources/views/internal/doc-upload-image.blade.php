@@ -90,8 +90,7 @@ $(document).ready(function(e){
                                     <td align="center" style="padding: 10px; background-color: #3b5998; color: #fafafa; font-weight: bold;">Briefer #</td>
                                     <td align="center" style="padding: 10px; background-color: #3b5998; color: #fafafa; font-weight: bold;">Barcode</td>
                                     <td align="center" style="padding: 10px; background-color: #3b5998; color: #fafafa; font-weight: bold;">Document Category/Type</td>
-                                    <td colspan="2" align="center" style="padding: 10px; background-color: #3b5998; color: #fafafa; font-weight: bold;" 
-                                    >Subject/Description</td>
+                                    <td colspan="2" align="center" style="padding: 10px; background-color: #3b5998; color: #fafafa; font-weight: bold;">Subject/Description</td>
                                     <td align="center" style="padding: 10px; background-color: #3b5998; color: #fafafa; font-weight: bold;">Division</td>
                                 </tr>
 
