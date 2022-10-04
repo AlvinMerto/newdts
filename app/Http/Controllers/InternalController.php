@@ -1253,7 +1253,7 @@ class InternalController extends Controller
                     ->get();
 
         $window = "internal";
-        $sort   = "Approve";
+        $sort   = "Approved";
         return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window','sort'));
     }
 
@@ -1310,7 +1310,9 @@ class InternalController extends Controller
                     ->get();
 
         $window = "internal";
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window'));
+        $sort   = "Disapproved";
+
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window','sort'));
     }
 
     public function complete_list()

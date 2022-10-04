@@ -186,8 +186,6 @@ $(document).ready(function(e){
         transition: background 1s;
         -webkit-transition: background 1s;
         -o-transition: background 1s;
-
-
     }
 
     #theheaderdiv:hover {
@@ -219,9 +217,11 @@ $(document).ready(function(e){
     }
 
     .selectedtr {
-        border-left: 4px solid rgb(72, 111, 153) !important;
-        border-right: 4px solid rgb(72, 111, 153) !important;
-        box-shadow: 0px 0px 13px #cecece;
+        border-left: 7px solid rgb(72, 111, 153) !important;
+        border-right: 7px solid rgb(72, 111, 153) !important;
+        box-shadow: 0px 0px 20px #b0b0b0;
+        background: #fff;
+        position: relative;
     }
 
     .selectedtr td {
@@ -318,50 +318,53 @@ $(document).ready(function(e){
                                                     </li>
                                                 </a>
 
-                                                <?php if ($window == "internal") { ?>
-                                                    <a href="{{ url('internal-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
-                                                <?php } else if($window == "external") { ?>
-                                                    <a href="{{ url('external-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
-                                                <?php } else if($window == "outgoing") { ?>
-                                                    <a href="{{ url('outgoing-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
-                                                <?php } ?>
-                                                    <?php 
-                                                        $todate = null;
+                                                <?php if(!isset($sort)){ ?>
+                                                    <?php if ($window == "internal") { ?>
+                                                        <a href="{{ url('internal-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
+                                                    <?php } else if($window == "external") { ?>
+                                                        <a href="{{ url('external-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
+                                                    <?php } else if($window == "outgoing") { ?>
+                                                        <a href="{{ url('outgoing-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
+                                                    <?php } ?>
+                                                        <?php 
+                                                            $todate = null;
 
-                                                        if (isset($search)) {
-                                                            if (date("M. d, Y") == date("M. d, Y",strtotime($search))) {
-                                                                $todate = "selected";
+                                                            if (isset($search)) {
+                                                                if (date("M. d, Y") == date("M. d, Y",strtotime($search))) {
+                                                                    $todate = "selected";
+                                                                }
                                                             }
+                                                        ?>
+                                                        <li style="font-size: 14px;" class='{{$todate}}'> Today - <?php echo date("M. d, Y"); ?></li>
+                                                    </a>
+                                                    <?php
+                                                        for($i = 1 ; $i <= 4; $i++) {
+                                                            $thedates = date("M d, Y", strtotime("-{$i} days"));
+
+                                                            if ($window == "internal") {
+                                                                $datelink = url('internal-document/filter-date/')."/".$thedates;
+                                                            } else if ($window == "external") {
+                                                                $datelink = url('external-document/filter-date/')."/".$thedates;
+                                                            } else if ($window == "outgoing") {
+                                                                $datelink = url('outgoing-document/filter-date/')."/".$thedates;
+                                                            }
+
+                                                            $selecteddate = null;
+
+                                                            if (isset($search)) {
+                                                                if ($thedates == date("M d, Y", strtotime($search))) {
+                                                                    $selecteddate = "selected";
+                                                                }
+                                                            }
+
+                                                            echo "<a href='{$datelink}' /><li class='{$selecteddate}'>";
+                                                                echo date("D - M. d, Y", strtotime("-{$i} days"));
+                                                            echo "</li></a>";
                                                         }
                                                     ?>
-                                                    <li style="font-size: 14px;" class='{{$todate}}'> Today - <?php echo date("M. d, Y"); ?></li>
-                                                </a>
-                                                <?php
-                                                    for($i = 1 ; $i <= 4; $i++) {
-                                                        $thedates = date("M d, Y", strtotime("-{$i} days"));
+                                                    <input type='date' id='thedatefilterinput' style="font-family: arial;font-size: 13px;padding: 8px;border: 1px solid #ccc; margin-left: -3px;background: #eee;"/>
+                                                <?php } ?>
 
-                                                        if ($window == "internal") {
-                                                            $datelink = url('internal-document/filter-date/')."/".$thedates;
-                                                        } else if ($window == "external") {
-                                                            $datelink = url('external-document/filter-date/')."/".$thedates;
-                                                        } else if ($window == "outgoing") {
-                                                            $datelink = url('outgoing-document/filter-date/')."/".$thedates;
-                                                        }
-
-                                                        $selecteddate = null;
-
-                                                        if (isset($search)) {
-                                                            if ($thedates == date("M d, Y", strtotime($search))) {
-                                                                $selecteddate = "selected";
-                                                            }
-                                                        }
-
-                                                        echo "<a href='{$datelink}' /><li class='{$selecteddate}'>";
-                                                            echo date("D - M. d, Y", strtotime("-{$i} days"));
-                                                        echo "</li></a>";
-                                                    }
-                                                ?>
-                                                <input type='date' id='thedatefilterinput' style="font-family: arial;font-size: 13px;padding: 8px;border: 1px solid #ccc; margin-left: -3px;background: #eee;"/>
                                             </ul>
                                         </td>
                                         <td>
