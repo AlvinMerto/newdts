@@ -50,19 +50,19 @@ $(document).ready(function(e){
 				    	<table border="1px #fff solid;" style="align-self: center;">
 
 				    		<tr>
-				    			<td><input class="form-control" style="width: auto;" type="date" name="docdate" id="docdate" value="<?php 
+				    			<td><input class="form-control" style="" type="date" name="docdate" id="docdate" value="<?php 
 				    			$startDate = time(); echo date('Y-m-d', strtotime('+1 day', $startDate)); ?>" placeholder="Date Received" title="Date Received"></td>
 				    			
 				    		</tr>
 				    		{{--<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="briefer" id="briefer" value="" placeholder="Briefer Number"></td>
+				    			<td><input class="form-control" style="" type="text" name="briefer" id="briefer" value="" placeholder="Briefer Number"></td>
 				    		</tr>--}}
 				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="barcode" id="barcode" value="" placeholder="Barcode Number" onblur="checkDuplicate();"></td>
+				    			<td><input class="form-control" style="" type="text" name="barcode" id="barcode" value="" placeholder="Barcode Number" onblur="checkDuplicate();"></td>
 				    		</tr>
 				    		<tr>
 				    			<td>
-				    				<input list="division_datalist" name="agency" id="agency" class="form-control p-2" style="width: 200px;" placeholder="Agency to"></td>
+				    				<input list="" name="agency" id="agency" class="form-control p-2" style="" placeholder="Agency from"></td>
 										<datalist id="division_datalist">
 								            @if($div->count()>0)
 								            @foreach($div as $u)
@@ -74,29 +74,15 @@ $(document).ready(function(e){
 				    			</td>
 				    		</tr>
 				    		<tr>
-				    			{{--<td><input class="form-control" style="width: 200px;" type="text" name="signature" id="signature" value="" placeholder="Sender/Signatory"></td>--}}
-				    			<td>
-				    				<input list="user_datalist" name="signature" id="signature" class="form-control p-2" style="width: 200px;" placeholder="Signatory/Route To"></td>
-										<datalist id="user_datalist">
-								            @if($userlist->count()>0)
-								            @foreach($userlist as $u)
-												<option value="{{ $u->f_name }}">
-											@endforeach
-											@endif
-										</datalist>
-										<input type="hidden" id="userselect" name="userselect">
+				    			<td><input class="form-control" style="" type="text" name="sendername" id="sendername" value="" placeholder="Sender's Name"></td>
+				    		</tr>
+				    		<tr>
+				    			<td><input class="form-control" style="" type="Email" name="sigEmail" id="sigEmail" value="" placeholder="Sender's Email"></td>
+				    		</tr>
 
-				    			</td>
-				    		</tr>
-				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="text" name="sendername" id="sendername" value="" placeholder="Sender's Name"></td>
-				    		</tr>
-				    		<tr>
-				    			<td><input class="form-control" style="width: 200px;" type="Email" name="sigEmail" id="sigEmail" value="" placeholder="Sender's Email"></td>
-				    		</tr>
 				    		<tr>
 				    			<td>
-				    				<input list="memo_datalist" name="doctitle" id="doctitle" class="form-control p-2" style="width: 300px;" placeholder="Document Category/Type"></td>
+				    				<input list="memo_datalist" name="doctitle" id="doctitle" class="form-control p-2" style="" placeholder="Document Category/Type"></td>
 										<datalist id="memo_datalist">
 								            @if($lib->count()>0)
 								            @foreach($lib as $l)
@@ -108,7 +94,7 @@ $(document).ready(function(e){
 				    			</td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control mr-5" style="width: 300px;" type="text" name="docdesc" id="docdesc" value="" placeholder="Subject/Description"></td>
+				    			<td><input class="form-control mr-5" style="" type="text" name="docdesc" id="docdesc" value="" placeholder="Subject/Description"></td>
 				    		</tr>
 				    		
 				    		<tr>
@@ -120,10 +106,10 @@ $(document).ready(function(e){
 					    		</td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 150px;" type="Number" name="numcopy" id="numcopy" value="" placeholder="Number of Copy"></td>
+				    			<td><input class="form-control" style="" type="Number" name="numcopy" id="numcopy" value="" placeholder="Number of Copy"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="width: 150px;" type="Number" name="numpages" id="numpages" value="" placeholder="Number of Pages"></td>
+				    			<td><input class="form-control" style="" type="Number" name="numpages" id="numpages" value="" placeholder="Number of Pages"></td>
 				    		</tr>
 				    		<tr>
 				    			<td>
@@ -136,6 +122,22 @@ $(document).ready(function(e){
 					    		</td>
 				    		</tr>
 				    		<tr>
+				    			{{--<td><input class="form-control" style="" type="text" name="signature" id="signature" value="" placeholder="Sender/Signatory"></td>--}}
+				    			<td>
+				    				<input list="user_datalist" name="signature" id="signature" class="form-control p-2" style="" placeholder="Signatory/Route To"></td>
+										<datalist id="user_datalist">
+								            @if($userlist->count()>0)
+								            @foreach($userlist as $u)
+												<option value="{{ $u->f_name }}">
+											@endforeach
+											@endif
+										</datalist>
+										<input type="hidden" id="userselect" name="userselect">
+
+				    			</td>
+				    		</tr>
+
+				    		<tr>
 				    			<td>
 				    				<input type="checkbox" name="chkdocreturn" id="chkdocreturn" class="checkbox-success" style="vertical-align: text-bottom;"> Return this Document
 				    			</td>
@@ -146,7 +148,10 @@ $(document).ready(function(e){
 			                    </td>
 			                </tr>
 				    		<tr>
-				    			<td colspan="2"><button type="submit" class="btn-exentry btn btn-success" style="padding-left: 20px; padding-right: 20px; float: right;" onclick="document.getElementById('busywait').style.display = 'table-row'; window.scrollTo(0,document.querySelector('.scrollingContainer').scrollHeight);"><span class="fa fa-floppy-o" aria-hidden="true"></span> Save</button></td>
+				    			<td colspan="2" style="float: left;">
+				    				<button type="submit" class="btn-exentry btn btn-success" style="padding-left: 20px; padding-right: 20px; float: right;" onclick="document.getElementById('busywait').style.display = 'table-row'; window.scrollTo(0,document.querySelector('.scrollingContainer').scrollHeight);">
+				    					<span class="fa fa-floppy-o" aria-hidden="true"></span> Save</button>
+				    			</td>
 				    		</tr>
 				    		
 				    	</table>

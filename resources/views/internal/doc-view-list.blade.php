@@ -1180,7 +1180,17 @@ $(document).ready(function(e){
             var month = themonths[thedateval.split("-")[1]-1];
             var day   = thedateval.split("-")[2];
 
-            var datelink = "{{ url('internal-document/filter-date/') }}/"+month+" "+day+","+year;
+            var theurl = null;
+
+            if (typeinput == "internal") {
+                theurl = "{{ url('internal-document/filter-date/') }}/"+month+" "+day+","+year;
+            } else if (typeinput == "external") {
+                theurl = "{{ url('external-document/filter-date/') }}/"+month+" "+day+","+year;
+            } else if (typeinput == "outgoing") {
+                theurl = "{{ url('outgoing-document/filter-date/') }}/"+month+" "+day+","+year;
+            }
+
+            var datelink = theurl;
             window.location.href =datelink ;
         });
 
@@ -1495,8 +1505,21 @@ $(document).ready(function(e){
         var dept        =   $('input#ff_divisions').val();
         var x_id        =   $('input#_id').val();
 
+            var typeofinput = null;
+                typeofinput = $(document).find("#type_input").val();
+
+            var theurl   = null;
+
+            if (typeofinput == "internal") {
+                theurl   = "{{ url('/internal-document/doc-tracking-complete') }}/"+x_id;
+            } else if (typeofinput == "external") {
+                theurl = "{{ url('/external-document/doc-tracking-complete') }}/"+x_id;
+            } else if (typeofinput == "outgoing") {
+                theurl = "{{ url('/outgoing-document/doc-tracking-complete') }}/"+x_id;
+            }
+
             $.ajax({
-                url: "{{ url('/internal-document/doc-tracking-complete') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,_id: x_id,division: dept},
 
@@ -1531,10 +1554,21 @@ $(document).ready(function(e){
         var dept        =   $('input#ff_divisions').val();
         var x_id        =   $('input#_id').val();
 
-    
+            var typeofinput = null;
+                typeofinput = $(document).find("#type_input").val();
+
+            var theurl   = null;
+
+            if (typeofinput == "internal") {
+                theurl   = "{{ url('/internal-document/doc-tracking-approve') }}/"+x_id;
+            } else if (typeofinput == "external") {
+                theurl = "{{ url('/external-document/doc-tracking-approve') }}/"+x_id;
+            } else if (typeofinput == "outgoing") {
+                theurl = "{{ url('/outgoing-document/doc-tracking-approve') }}/"+x_id;
+            }
 
             $.ajax({
-                url: "{{ url('/internal-document/doc-tracking-approve') }}/"+x_id,
+                url: "{{ url('') }}/"+x_id,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,_id: x_id,division: dept},
 
@@ -1569,10 +1603,21 @@ $(document).ready(function(e){
         var dept        =   $('input#ff_divisions').val();
         var x_id        =   $('input#_id').val();
 
-    
+            var typeofinput = null;
+                typeofinput = $(document).find("#type_input").val();
+
+            var theurl   = null;
+
+            if (typeofinput == "internal") {
+                theurl   = "{{ url('/internal-document/doc-tracking-disapprove') }}/"+x_id;
+            } else if (typeofinput == "external") {
+                theurl = "{{ url('/external-document/doc-tracking-disapprove') }}/"+x_id;
+            } else if (typeofinput == "outgoing") {
+                theurl = "{{ url('/outgoing-document/doc-tracking-disapprove') }}/"+x_id;
+            }
 
             $.ajax({
-                url: "{{ url('/internal-document/doc-tracking-disapprove') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,_id: x_id,division: dept},
 
@@ -1730,8 +1775,21 @@ $(document).ready(function(e){
                 retdoc=0;
             }
 
+            var typeofinput = null;
+                typeofinput = $(document).find("#type_input").val();
+
+            var theurl   = null;
+
+            if (typeofinput == "internal") {
+                theurl   = "{{ url('/internal-document/update-document-details') }}/"+x_id;
+            } else if (typeofinput == "external") {
+                theurl = "{{ url('/external-document/update-document-details') }}/"+x_id;
+            } else if (typeofinput == "outgoing") {
+                theurl = "{{ url('/outgoing-document/update-document-details') }}/"+x_id;
+            }
+
              $.ajax({
-                url: "{{ url('/internal-document/update-document-details') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,_id: x_id, _docdate: docdate, _barcode: barcode, _agency: agency, _signature: signature, _doctitle: doctitle,_desc: desc,_briefer: briefer, returndoc:retdoc},
 
@@ -1820,9 +1878,21 @@ function checkClass() {
         //}
 
             //alert(doctype);
+    var typeofinput = null;
+        typeofinput = $(document).find("#type_input").val();
+
+    var theurl = null;
+    
+    if (typeofinput == "internal") {
+        theurl = "{{ url('/internal-document/docclass') }}/"+x_id;
+    } else if (typeofinput == "external") {
+        theurl = "{{ url('/external-document/docclass') }}/"+x_id;
+    } else if (typeofinput == "outgoing") {
+        theurl = "{{ url('/outgoing-document/docclass') }}/"+x_id;
+    }
 
             $.ajax({
-                url: "{{ url('/internal-document/docclass') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,_id: x_id,docclass: doctype},
 
@@ -1862,9 +1932,20 @@ function confideName(){
     //        alert("Please specify the Division first");
     //}else{
     
+    var typeofinput = null;
+        typeofinput = $(document).find("#type_input").val();
 
+    var theurl   = null;
+
+    if (typeofinput == "internal") {
+        theurl   = "{{ url('/internal-document/confidential') }}/"+x_id;
+    } else if (typeofinput == "external") {
+        theurl = "{{ url('/external-document/confidential') }}/"+x_id;
+    } else if (typeofinput == "outgoing") {
+        theurl = "{{ url('/outgoing-document/confidential') }}/"+x_id;
+    }
             $.ajax({
-                url: "{{ url('/internal-document/confidential') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,_id: x_id,docclass: doctype, confiname: cname},
 
@@ -1916,10 +1997,27 @@ function sortView(){
        var sortval = 1; 
     }
 
+    var typeofinput = null;
+        typeofinput = $(document).find("#type_input").val();
+
+    var theurl   = null;
+    var theinurl = null;
+
+    if (typeofinput == "internal") {
+        theurl   = "{{ url('/internal-document-list-view-sort-az') }}/"+x_id;
+        theinurl = "{{ url('/internal-document-list-view') }}";
+    } else if (typeofinput == "external") {
+        theurl = "{{ url('/external-document-list-view-sort-az') }}/"+x_id;
+        theinurl = "{{ url('/external-document-list-view') }}";
+    } else if (typeofinput == "outgoing") {
+        theurl = "{{ url('/outgoing-document-list-view-sort-az') }}/"+x_id;
+        theinurl = "{{ url('/outgoing-document-list-view') }}";
+    }
+
     if(sortval === 1){
-        window.location.href="{{ url('/internal-document-list-view-sort-az') }}";
+        window.location.href= theurl;
     }else{
-        window.location.href="{{ url('/internal-document-list-view') }}";
+        window.location.href= theinurl;
     }
 
 }

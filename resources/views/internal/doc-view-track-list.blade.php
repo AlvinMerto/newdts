@@ -285,8 +285,14 @@ margin-top: 10px;
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
+                                        
+                                        <?php if ($window == "external"){ ?>
+                                            
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sender}} </td>
+                                            
+                                        <?php } ?>
                                         </tr>
-
                                         <tr class="border_bottom">
                                             <!--td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-weight: bold; font-size: 13px !important;">Document Type</td>
                                             <td align="left" >{{$d->type}}</td-->
@@ -295,14 +301,14 @@ margin-top: 10px;
                                                     if ($window == "external") { 
                                                         echo "Route to";
                                                     } else if ($window == "internal") {
-                                                        echo "Route to";
+                                                        echo "Sender";
                                                     } else if ($window == "outgoing") {
                                                         echo "Route to";
                                                     }
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;" >{{$d->signatory}}</td>
-                                        
+                                            
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Category</td>
                                             <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->doctitle}}</td>
                                         </tr>
@@ -369,14 +375,26 @@ margin-top: 10px;
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
+                                        
+                                        <?php if ($window == "external"){ ?>
+                                            
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sender}} </td>
+                                            
+                                        <?php } ?>
                                         </tr>
-
                                         <tr class="border_bottom">
                                             <!--td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-weight: bold; font-size: 13px !important;">Document Type</td>
                                             <td align="left" >{{$d->type}}</td-->
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
-                                                <?php 
-                                                    echo "Route to";
+                                                 <?php 
+                                                    if ($window == "external") { 
+                                                        echo "Route to";
+                                                    } else if ($window == "internal") {
+                                                        echo "Sender";
+                                                    } else if ($window == "outgoing") {
+                                                        echo "Route to";
+                                                    }
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->signatory}}</td>
@@ -384,7 +402,7 @@ margin-top: 10px;
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Category</td>
                                             <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->doctitle}}</td>
                                         </tr>
-
+                                       
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
                                             <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: pre-wrap;">{{ $d->description }}</td>
@@ -562,19 +580,31 @@ margin-top: 10px;
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
+                                        
+                                        <?php if ($window == "external"){ ?>
+                                            
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sender}} </td>
+                                            
+                                        <?php } ?>
                                         </tr>
-
                                         <tr class="border_bottom">
                                             <!--td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-weight: bold; font-size: 13px !important;">Document Type</td>
                                             <td align="left" >{{$d->type}}</td-->
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
-                                                <?php 
-                                                    echo "Route to";
+                                                 <?php 
+                                                    if ($window == "external") { 
+                                                        echo "Route to";
+                                                    } else if ($window == "internal") {
+                                                        echo "Sender";
+                                                    } else if ($window == "outgoing") {
+                                                        echo "Route to";
+                                                    }
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->signatory}}</td>
                                         </tr>
-
+                                        
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Title</td>
                                             <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->doctitle}}</td>
@@ -633,14 +663,28 @@ margin-top: 10px;
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
-                                        </tr>
+                                       
 
+                                        <?php if ($window == "external"){ ?>
+                                           
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sender}} </td>
+                                            
+                                        <?php } ?>
+
+                                        </tr>
                                         <tr class="border_bottom">
                                             <!--td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-weight: bold; font-size: 13px !important;">Document Type</td>
                                             <td align="left" >{{$d->type}}</td-->
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
-                                                <?php 
-                                                    echo "Route to";
+                                                 <?php 
+                                                    if ($window == "external") { 
+                                                        echo "Route to";
+                                                    } else if ($window == "internal") {
+                                                        echo "Sender";
+                                                    } else if ($window == "outgoing") {
+                                                        echo "Route to";
+                                                    }
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->signatory}}</td>
@@ -1418,8 +1462,21 @@ margin-top: 10px;
 
             //alert(alvel);
 
+            var typeofinput = null;
+            typeofinput = $(document).find("#type_input").val();
+
+            var theurl = null;
+            
+            if (typeofinput == "internal") {
+                theurl = "{{ url('/internal-document/document-return-category') }}/"+id;
+            } else if (typeofinput == "external") {
+                theurl = "{{ url('/external-document/document-return-category') }}/"+id;
+            } else if (typeofinput == "outgoing") {
+                theurl = "{{ url('/outgoing-document/document-return-category') }}/"+id;
+            }
+
             $.ajax({
-                url: "{{ url('/internal-document/document-return-category') }}/"+id,
+                url: theurl,
                 type: "GET",
                 data: {_token: CSRF_TOKEN,_id: id},
 
@@ -1569,8 +1626,21 @@ margin-top: 10px;
 
             document.getElementById('busywait').style.display = "table-row";
 
+            var typeofinput = null;
+            typeofinput = $(document).find("#type_input").val();
+
+            var theurl = null;
+            
+            if (typeofinput == "internal") {
+                theurl = "{{ url('/internal-document/forward') }}/"+x_id;
+            } else if (typeofinput == "external") {
+                theurl = "{{ url('/external-document/forward') }}/"+x_id;
+            } else if (typeofinput == "outgoing") {
+                theurl = "{{ url('/outgoing-document/forward') }}/"+x_id;
+            }
+
             $.ajax({
-                url: "{{ url('/internal-document/forward') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,_id: x_id,remarks: rem, division: dept, for_appro_action: faction, for_info:finfo, for_guidance:fguidance, for_reference:freference, for_review:freview, for_signature:fsignature, confi:confiname,_classification:pr},
 
@@ -1677,10 +1747,21 @@ margin-top: 10px;
         var dept        =   $('input#ff_divisions').val();
         var x_id        =   $('input#_id').val();
 
-    
+        var typeofinput = null;
+        typeofinput = $(document).find("#type_input").val();
+
+        var theurl = null;
+        
+        if (typeofinput == "internal") {
+            theurl = "{{ url('/internal-document/doc-tracking-approve') }}/"+x_id;
+        } else if (typeofinput == "external") {
+            theurl = "{{ url('/external-document/doc-tracking-approve') }}/"+x_id;
+        } else if (typeofinput == "outgoing") {
+            theurl = "{{ url('/outgoing-document/doc-tracking-approve') }}/"+x_id;
+        }
 
             $.ajax({
-                url: "{{ url('/internal-document/doc-tracking-approve') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,_id: x_id,division: dept},
 
@@ -1715,10 +1796,21 @@ margin-top: 10px;
         var dept        =   $('input#ff_divisions').val();
         var x_id        =   $('input#_id').val();
 
-    
+        var typeofinput = null;
+        typeofinput = $(document).find("#type_input").val();
+
+        var theurl = null;
+        
+        if (typeofinput == "internal") {
+            theurl = "{{ url('/internal-document/doc-tracking-disapprove') }}/"+x_id;
+        } else if (typeofinput == "external") {
+            theurl = "{{ url('/external-document/doc-tracking-disapprove') }}/"+x_id;
+        } else if (typeofinput == "outgoing") {
+            theurl = "{{ url('/outgoing-document/doc-tracking-disapprove') }}/"+x_id;
+        }
 
             $.ajax({
-                url: "{{ url('/internal-document/doc-tracking-disapprove') }}/"+x_id,
+                url: theurl,
                 type: "POST",
                 data: {_token: CSRF_TOKEN,_id: x_id,division: dept},
 
@@ -1799,6 +1891,66 @@ margin-top: 10px;
     //     });
     // };
 
+    function checkClass() {
+        //var e = document.getElementById("docclassification");
+        var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
+        var e           =   $("#docclassification :selected").val();
+        var x_id        =   $('input#_id').val();
+        var doctype     =   $('select#docclassification').val();
+        var dept        =   $('input#ff_divisions').val();
+
+        //if(dept.length === 0){
+        //        alert("Please specify the Division first");
+        //}else{
+
+            //if(e > 3){
+            //    document.getElementById("ff_employees").disabled = true;
+            //    document.getElementById("ff_employees").value="";
+            //}else{
+            //    document.getElementById("ff_employees").disabled = false;
+            //}
+
+                //alert(doctype);
+                
+        var typeofinput = null;
+        typeofinput = $(document).find("#type_input").val();
+
+        var theurl = null;
+        if (typeofinput == "internal") {
+            theurl = "{{ url('/internal-document/docclass') }}/"+x_id;
+        } else if (typeofinput == "external") {
+            theurl = "{{ url('/external-document/docclass') }}/"+x_id;
+        } else if (typeofinput == "outgoing") {
+            theurl = "{{ url('/outgoing-document/docclass') }}/"+x_id;
+        }
+
+                $.ajax({
+                    url: theurl,
+                    type: "POST",
+                    data: {_token: CSRF_TOKEN,_id: x_id,docclass: doctype},
+
+                        success: function(response){
+                            console.log(response);
+
+                            //tempAlert("Autosaving....Please refresh the page...",2000);
+                            swal({
+                                  position: 'center',
+                                  icon: 'info',
+                                  title: 'Autosaving....Please refresh the page...',
+                                  showConfirmButton: false,
+                                  timer: 1500
+                                });
+
+                                //$('#doc-ff').modal('hide');
+                                //window.location.href="{{ url('/internal-document-list-view') }}";
+                        },
+                            error: function(ex){
+                            //alert(JSON.stringify(ex));
+                            window.location.href="{{ url('/internal-document-list-view') }}";
+                        },
+            }); 
+        //}
+    }
 
 </script>
 @endsection
