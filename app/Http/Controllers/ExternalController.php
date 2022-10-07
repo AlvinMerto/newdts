@@ -2159,7 +2159,9 @@ class ExternalController extends Controller
                         ->orderBy('externals.id','asc')
                         ->get();
 
-        return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div'));
+        $window = "external";
+        // return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window'));
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window'));
     }
 
     public function filter_date($date)

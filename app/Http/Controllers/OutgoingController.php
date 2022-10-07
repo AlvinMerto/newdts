@@ -2385,7 +2385,9 @@ class OutgoingController extends Controller
                     ->get();
 
         //dd($data);
-        return view('outgoing.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','courier'));
+        $window = "outgoing";
+        // return view('outgoing.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','courier'));
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','courier','window'));
     }
 
     public function filter_date($date)

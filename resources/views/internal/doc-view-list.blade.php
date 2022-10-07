@@ -1652,10 +1652,23 @@ $(document).ready(function(e){
         $(document).on("click", ".searchbtn", function() {
              //var x = document.getElementById("q").value;
 
-             var x =  $('input#q').val();
+            var x =  $('input#q').val();
+
+            var typeinput = null;
+                typeinput = $(document).find("#type_input").val();
+
+            var theurl = null;
+
+            if (typeinput == "external") {
+                theurl = "{{ url('/external-document/search-document') }}/"+x;
+            } else if (typeinput == 'internal') {
+                theurl = "{{ url('/internal-document/search-document') }}/"+x;
+            } else if (typeinput == 'outgoing') {
+                theurl = "{{ url('/outgoing-document/search-document') }}/"+x;
+            }
 
             if(x.length > 0){
-                window.location = "{{ url('/internal-document/search-document') }}/" + x
+                window.location = theurl;
             }else{
                 swal({
                               position: 'center',

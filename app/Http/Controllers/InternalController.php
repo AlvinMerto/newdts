@@ -2569,7 +2569,8 @@ class InternalController extends Controller
                     ->get();
 
         //dd($data);
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div'));
+        $window = "internal";
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window'));
     }
 
     public function filter_date($date)
