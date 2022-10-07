@@ -571,11 +571,12 @@ class OutgoingController extends Controller
                 ->paginate(10)
                 ->onEachSide(2);
         }else{
+            // ->where(['outgoing_departments.dept'=>Auth::user()->division])
+            // ->where(['outgoing_history.department'=>Auth::user()->division])
             $data = DB::table('outgoing_departments')
                 ->join('outgoings','outgoing_departments.ff_id','=','outgoings.id')
                 ->join('outgoing_history','outgoing_departments.ff_id','=','outgoing_history.ref_id')
-                ->where(['outgoing_departments.dept'=>Auth::user()->division])
-                ->where(['outgoing_history.department'=>Auth::user()->division])
+                ->where(['outgoing_history.empto'=>Auth::user()->id])
                 ->groupBy('outgoings.barcode')
                 ->orderBy('outgoing_history.days_count','desc')
                 ->orderBy('outgoings.created_at','asc')
@@ -1300,7 +1301,11 @@ class OutgoingController extends Controller
                 $action_remarks = $action_remarks;
             }
 
-            $data = DB::insert('insert into outgoing_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination) values (?, ?, ?, ?, ?, ?, ?, ?)', 
+            $empto_details = DB::table('users')
+                            ->where(['users.f_name' => $request->get('confi')])
+                            ->get(["id"]);
+
+            $data = DB::insert('insert into outgoing_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination,empto,empfrom) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
                 [
                 $request->get('_id'),
                 $action_remarks,
@@ -1309,7 +1314,9 @@ class OutgoingController extends Controller
                 $diff,
                 $request->get('division'),
                 'pending',
-                Auth::user()->f_name. ' forwarded to '.$request->get('confi')
+                Auth::user()->f_name. ' forwarded to '.$request->get('confi'),
+                $empto_details[0]->id,
+                Auth::user()->id
             ]);
 
             $dept = DB::insert('insert into outgoing_departments (ff_id, dept, stat) values (?, ?, ?)',

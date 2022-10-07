@@ -558,7 +558,6 @@ class InternalController extends Controller
                     ->orderBy('library.id','asc')
                     ->get();
 
-
         // update the day count
         foreach ($docs as $i)
             {
@@ -638,19 +637,25 @@ class InternalController extends Controller
                     ->onEachSide(2);
             }
         }else{
+            // ->where(['internal_history.empto'])
             if (!isset($_GET['date'])) {
                 $data = DB::table('internal_departments')
-                    ->join('internals','internal_departments.ff_id','=','internals.id')
-                    ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
-                    ->where(['internal_departments.dept'=>Auth::user()->division])
-                    ->where(['internal_history.department'=>Auth::user()->division])
-                    ->orderBy('internal_history.days_count','desc')
-                    ->orderBy('internal_history.actioned','asc')
-                    ->orderBy('internal_history.classification','desc')
-                    ->orderBy('internal_history.ref_id','desc')
-                    ->groupBy('internals.barcode')
-                    ->paginate(10)
-                    ->onEachSide(2);
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->where(['internal_history.empto'=>Auth::user()->id])
+                            // ->orWhere(['internal_history.empfrom'=>Auth::user()->id])
+                            ->orderBy('internal_history.days_count','desc')
+                            ->orderBy('internal_history.actioned','asc')
+                            ->orderBy('internal_history.classification','desc')
+                            ->orderBy('internal_history.ref_id','desc')
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+
+                            /*
+                            ->where(['internal_departments.dept'=>Auth::user()->division])
+                            ->where(['internal_history.department'=>Auth::user()->division])
+                            */
             } else {
                 // 2021-12-01 03:23:23
                 $dd   = $_GET['date'];
@@ -1452,7 +1457,11 @@ class InternalController extends Controller
                 $action_remarks = $action_remarks.($request->get('remarks'));
             }
 
-            $data = DB::insert('insert into internal_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination,classification,actioned) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            $empto_details = DB::table('users')
+                            ->where(['users.f_name' => $request->get('confi')])
+                            ->get(["id"]);
+
+            $data = DB::insert('insert into internal_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination,classification,actioned,empto,empfrom) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
                 [
                 $request->get('_id'),
                 $action_remarks,
@@ -1464,7 +1473,8 @@ class InternalController extends Controller
                 Auth::user()->f_name. ' forwarded to '.$request->get('confi'),
                 $request->get('_classification'),
                 0,
-
+                $empto_details[0]->id,
+                Auth::user()->id
             ]);
 
             $dept = DB::insert('insert into internal_departments (ff_id, dept, stat) values (?, ?, ?)',

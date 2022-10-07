@@ -72,7 +72,7 @@ $(document).ready(function(e){
     }
 
     .theinnertbl tr th{
-        font-size: 15px !important;
+        font-size: 13px !important;
         font-weight: bold;
         color: #486f99;
         padding: 10px;
@@ -217,8 +217,10 @@ $(document).ready(function(e){
     }
 
     .selectedtr {
+        /*
         border-left: 7px solid rgb(72, 111, 153) !important;
         border-right: 7px solid rgb(72, 111, 153) !important;
+        */
         box-shadow: 0px 0px 20px #b0b0b0;
         background: #fff;
         position: relative;
@@ -335,7 +337,7 @@ $(document).ready(function(e){
                                                                 }
                                                             }
                                                         ?>
-                                                        <li style="font-size: 14px;" class='{{$todate}}'> Today - <?php echo date("M. d, Y"); ?></li>
+                                                        <li style="font-size: 14px;" class='{{$todate}}'> Today <?php if ($todate != null) { echo "-".date("M. d, Y"); } ?></li>
                                                     </a>
                                                     <?php
                                                         for($i = 1 ; $i <= 4; $i++) {
@@ -358,7 +360,11 @@ $(document).ready(function(e){
                                                             }
 
                                                             echo "<a href='{$datelink}' /><li class='{$selecteddate}'>";
-                                                                echo date("D - M. d, Y", strtotime("-{$i} days"));
+                                                                if ($selecteddate != null) {
+                                                                    echo date("D - M. d, Y", strtotime("-{$i} days"));
+                                                                } else {
+                                                                    echo date("D", strtotime("-{$i} days"));
+                                                                }
                                                             echo "</li></a>";
                                                         }
                                                     ?>
@@ -935,7 +941,7 @@ $(document).ready(function(e){
                             <datalist id="userlist">
                                 @if($userlist->count()>0)
                                     @foreach($userlist as $l)
-                                        <option value="{{ $l->f_name }}">
+                                        <option value="{{ $l->f_name }}" data-empid="{{$l->id}}">
                                     @endforeach
                                 @endif
                             </datalist>

@@ -695,12 +695,14 @@ class ExternalController extends Controller
                 ->groupBy('externals.barcode')
                 ->paginate(10)
                 ->onEachSide(2);
-        }else{        
+        }else{ 
+            // ->where(['external_departments.dept'=>Auth::user()->division])
+            // ->where(['external_history.department'=>Auth::user()->division])
             $data = DB::table('external_departments')
                 ->join('externals','external_departments.ff_id','=','externals.id')
                 ->join('external_history','external_departments.ff_id','=','external_history.ref_id')
-                ->where(['external_departments.dept'=>Auth::user()->division])
-                ->where(['external_history.department'=>Auth::user()->division])
+                ->where(['external_history.empto'=>Auth::user()->id])
+                // ->orWhere(['internal_history.empfrom'=>Auth::user()->id])    
                 ->orderBy('external_history.days_count','desc')
                 ->orderBy('external_history.actioned','asc')
                 ->orderBy('external_history.classification','desc')
@@ -1187,7 +1189,11 @@ class ExternalController extends Controller
 
             }
 
-            $data = DB::insert('insert into external_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination,actioned) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            $empto_details = DB::table('users')
+                            ->where(['users.f_name' => $request->get('confi')])
+                            ->get(["id"]);
+
+            $data = DB::insert('insert into external_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination,actioned,empto,empfrom) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
                 [
                 $request->get('_id'),
                 $action_remarks,
@@ -1198,6 +1204,8 @@ class ExternalController extends Controller
                 'pending',
                 Auth::user()->f_name. ' forwarded to '.$request->get('confi'),
                 0,
+                $empto_details[0]->id,
+                Auth::user()->id
             ]);
 
             $dept = DB::insert('insert into external_departments (ff_id, dept, stat) values (?, ?, ?)',
