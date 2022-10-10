@@ -592,7 +592,7 @@ class InternalController extends Controller
             } else {
                 // 2021-12-01 03:23:23
             $date = date("Y-m-d h:i:s");
-            echo "hello".$date;
+            //echo "hello".$date;
             $data = DB::table('internal_departments')
                 ->join('internals','internal_departments.ff_id','=','internals.id')
                 ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
