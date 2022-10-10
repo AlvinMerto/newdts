@@ -2602,10 +2602,11 @@ class InternalController extends Controller
                 ->paginate(10)
                 ->onEachSide(2);
         }else{
+            // ->where(['internal_departments.dept'=>Auth::user()->division,'internals.doc_receive'=>$search])
             $data = DB::table('internal_departments')
                 ->join('internals','internal_departments.ff_id','=','internals.id')
                 ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id')
-                ->where(['internal_departments.dept'=>Auth::user()->division,'internals.doc_receive'=>$search])
+                ->where(['internal_departments.dept'=>Auth::user()->division,'internals.doc_date_ff'=>$search])
                 ->groupBy('internals.barcode')
                 ->orderBy('internals.day_count','desc')
                 ->orderBy('internals.created_at','desc')

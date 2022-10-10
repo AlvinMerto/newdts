@@ -2188,10 +2188,11 @@ class ExternalController extends Controller
                     ->orderBy('users.division', 'asc')
                     ->get();
 
+        // ->where(['external_departments.dept'=>Auth::user()->division,'externals.doc_receive'=>$search])
         $data = DB::table('external_departments')
                 ->join('externals','external_departments.ff_id','=','externals.id')
                 ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
-                ->where(['external_departments.dept'=>Auth::user()->division,'externals.doc_receive'=>$search])
+                ->where(['external_departments.dept'=>Auth::user()->division,'externals.doc_date_ff'=>$search])
                 ->groupBy('externals.barcode')
                 ->orderBy('externals.day_count','desc')
                 ->orderBy('externals.created_at','desc')
