@@ -643,7 +643,7 @@ class InternalController extends Controller
                             ->join('internals','internal_departments.ff_id','=','internals.id')
                             ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
                             ->where(['internal_history.empto'=>Auth::user()->id])
-                            // ->orWhere(['internal_history.empfrom'=>Auth::user()->id])
+                            ->orWhere(['internal_history.empfrom'=>Auth::user()->id])
                             ->orderBy('internal_history.days_count','desc')
                             ->orderBy('internal_history.actioned','asc')
                             ->orderBy('internal_history.classification','desc')
