@@ -60,7 +60,8 @@ $(document).ready(function(e){
     }
 
     .theinnertbl {
-        margin-top: -7px;
+        /*margin-top: -7px; */
+        background: #f4f4f4;
     }
 
     .theinnertbl tr {
@@ -162,6 +163,30 @@ $(document).ready(function(e){
         position: relative;
     }
 
+    .actionbtns {
+display: flex;
+column-gap: 5px;
+list-style: none;
+padding: 0px;
+margin-left: 11px;
+font-size: 14px;
+margin-bottom: 0px;
+margin-top: -7px;
+    }
+
+    .actionbtns li {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px;
+    }
+
+    .selected ul {
+        display: flex;
+margin: 5px 0px 0px 0px;
+padding: 0px;
+background: #fff;
+    }
+
     .selected:hover {
         background: #486f99 !important;
     }
@@ -239,6 +264,15 @@ $(document).ready(function(e){
     .theactionbtns a {
         margin-top: 0px !important;
     }
+
+    .lastaction {
+        margin: 10px 0px 0px 0px;
+        font-size: 13px;
+        color: #808080;
+        background: #fff;
+        padding: 6px;
+        font-weight: bold;
+    }
 </style>
 
 <input type="hidden" name="type_input" id="type_input" value="<?php echo $window; ?>">
@@ -278,7 +312,7 @@ $(document).ready(function(e){
                                                 </div-->
                                             </div>
                 </div>
-                	<div class="card-body" style="display: flex; justify-content: center; padding:0px;">
+                	<div class="card-body" style="display: flex; justify-content: center; padding:0px; background:transparent;">
 
     					<section style="width: 100%">
                             
@@ -292,16 +326,16 @@ $(document).ready(function(e){
 
                                         <?php $date = date("M d, Y"); $today = "/filter-date/".$date; // date("M d, Y"); ?>
                                         <td style='padding-left: 0px !important; padding-top: 0px !important; padding-bottom: 0px !important; overflow-x: auto;' colspan="10">
-                                            <p style="font-size: 18px; color: #3b5998; font-weight: normal; margin-bottom: 10px; margin-left: 11px;margin-top: 10px;">  
+                                            <p style="font-size: 14px; color: #8a8b8c; font-weight: normal; margin-bottom: 10px; margin-left: 11px;margin-top: 10px;">  
                                                 <?php 
                                                     if (isset($search)) {
                                                         $whattodisplay = null;
                                                         if (date("M. d, Y", strtotime($search)) == date("M. d, Y")) {
-                                                            $whattodisplay = "Displaying documents routed to you for Today";
+                                                            $whattodisplay = "Displaying documents routed to you Today";
                                                         } else {
-                                                            $whattodisplay = "Displaying documents routed to you last ".date("l - M. d, Y", strtotime($search));
+                                                            $whattodisplay = "Displaying the movement of document that were routed to you last ".date("l - M. d, Y", strtotime($search));
                                                         }
-                                                        echo $whattodisplay;
+                                                        echo "<i class='fa fa-caret-right' aria-hidden='true'></i> ".$whattodisplay;
                                                     }
 
                                                     if (isset($sort)){ echo $sort ." documents"; }
@@ -320,7 +354,7 @@ $(document).ready(function(e){
                                                     </li>
                                                 </a>
 
-                                                <?php if(!isset($sort)){ ?>
+                                                <?php if(!isset($sort)){ $theseldate = null; ?>
                                                     <?php if ($window == "internal") { ?>
                                                         <a href="{{ url('internal-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
                                                     <?php } else if($window == "external") { ?>
@@ -333,13 +367,21 @@ $(document).ready(function(e){
 
                                                             if (isset($search)) {
                                                                 if (date("M. d, Y") == date("M. d, Y",strtotime($search))) {
-                                                                    $todate = "selected";
+                                                                    if ($window == "internal") {
+                                                                        $theseldate = url('internal-document/filter-date/')."/".$date;
+                                                                    } else if ($window == "external") {
+                                                                        $theseldate = url('external-document/filter-date/')."/".$date;
+                                                                    } else if ($window == "outgoing") {
+                                                                        $theseldate = url('outgoing-document/filter-date/')."/".$date;
+                                                                    }
+                                                                    $todate     = "selected";
                                                                 }
                                                             }
                                                         ?>
                                                         <li style="font-size: 14px;" class='{{$todate}}'> Today <?php if ($todate != null) { echo "-".date("M. d, Y"); } ?></li>
                                                     </a>
                                                     <?php
+                                                        
                                                         for($i = 1 ; $i <= 4; $i++) {
                                                             $thedates = date("M d, Y", strtotime("-{$i} days"));
 
@@ -356,24 +398,54 @@ $(document).ready(function(e){
                                                             if (isset($search)) {
                                                                 if ($thedates == date("M d, Y", strtotime($search))) {
                                                                     $selecteddate = "selected";
+                                                                    $theseldate   = $datelink;
                                                                 }
                                                             }
 
-                                                            echo "<a href='{$datelink}' /><li class='{$selecteddate}'>";
+                                                            echo "<a href='{$datelink}' ><li class='{$selecteddate}' title='".date("D - M. d, Y", strtotime("-{$i} days"))."'>";
                                                                 if ($selecteddate != null) {
                                                                     echo date("D - M. d, Y", strtotime("-{$i} days"));
                                                                 } else {
                                                                     echo date("D", strtotime("-{$i} days"));
                                                                 }
                                                             echo "</li></a>";
+
                                                         }
                                                     ?>
                                                     <input type='date' id='thedatefilterinput' style="font-family: arial;font-size: 13px;padding: 8px;border: 1px solid #ccc; margin-left: -3px;background: #eee;"/>
                                                 <?php } ?>
 
                                             </ul>
+                                            
+                                            <?php 
+                                                $actbtn_na = null;
+                                                $actbtn_fw = null;
+
+                                                if (isset($_GET['action'])) {
+                                                    if ($_GET['action'] == 0) { // forwarded
+                                                        $actbtn_fw = "selected";
+                                                    } else if ($_GET['action'] == 1) { // needed action
+                                                        $actbtn_na = "selected";
+                                                    }
+                                                }
+
+                                                if (isset($dontdisplay)) {
+                                                    $theseldate = url("internal-document-list-view");
+                                                }
+                                            ?>
+                                            
+                                            <?php if (!isset($dontdisplay)) { ?>
+                                                <ul class='actionbtns'>
+                                                    <a href="<?php echo $theseldate."/?action=1"; ?>"> 
+                                                        <li class='btn btn-default <?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs action </li> 
+                                                    </a>
+                                                    <a href="<?php echo $theseldate."/?action=0"; ?>"> 
+                                                        <li class='btn btn-default <?php echo $actbtn_fw; ?>'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
+                                                    </a>
+                                                </ul>
+                                            <?php } ?>
                                         </td>
-                                        <td>
+                                        <!--td>
                                             <div class="d-flex" style="float: right;">
                                                 <div>
                                                     <div style="font-weight: bold;">SORT</div>
@@ -382,7 +454,7 @@ $(document).ready(function(e){
                                                     </a>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td-->
                                     </tr>
                                 </table>
 								   
@@ -392,23 +464,23 @@ $(document).ready(function(e){
                             @if($data->count()>0)
 
     						<table class='theinnertbl'>
-                                <thead>
-    							<tr class="border_bottom" style="box-shadow: 0px 2px 5px #ccc;position: relative;">
-                                    <th>Document Date</th>
-    								<th>Barcode</th>
-    								<th>Document Category/Type</th>
-    								<th>Description</th>
-    								<th>Office/Division</th>
-    								<th>Status</th>
-    								<th># Days</th>
-                                    <th>Classification</th>
-    								<!--th>Action</th-->
-    							</tr>
-                            </thead>
+                                <thead style='background: #fff;'>
+        							<tr class="border_bottom" style="box-shadow: 0px 2px 5px #ccc;position: relative;">
+                                        <th>Document Date</th>
+        								<th>Barcode</th>
+        								<th>Document Category/Type</th>
+        								<th>Description</th>
+        								<th>Office/Division</th>
+        								<th>Status</th>
+        								<th># Days</th>
+                                        <th>Classification</th>
+        								<!--th>Action</th-->
+        							</tr>
+                                </thead>
                             <tbody>
-                                <?php $priority = null; ?>
+                                <?php $priority = null; $count = 0; // var_dump($data); ?>
     							@foreach($data as $d)
-                                <tr class='withcontent'>
+                                <tr class='withcontent' data-theid='<?php echo $d->ref_id; ?>'>
                                     @if($d->actioned == 0)
                                         @if($d->classification == 1 && $d->confi_name == Auth::user()->f_name)
                                              @if($d->days_count>5)
@@ -861,7 +933,7 @@ $(document).ready(function(e){
                             @endif
 
     						@if($data->count() > 0)
-								<div class="justify-content-center" style="font-size: 10px; margin-top: 10px; margin-bottom: 50px;">{{ $data->links() }}</div>
+								<!--div class="justify-content-center" style="font-size: 10px; margin-top: 10px; margin-bottom: 50px;">{{ $data->links() }}</div-->
 							@endif
 
                            
@@ -1171,6 +1243,38 @@ $(document).ready(function(e){
 
             $(this).addClass("selectedtr");
             $(this).next().addClass("selectedtr").show();
+
+            var table       = null;
+
+            var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
+            var id          = $(this).data("theid");
+
+            var typeinput = null;
+            typeinput = $(document).find("#type_input").val();
+
+            if (typeinput == "internal") {
+                table = "internal_history";
+            } else if (typeinput == "external") {
+                table = "external_history";
+            } else if (typeinput == "outgoing") {
+                table = "outgoing_history";
+            }
+
+            $(this).siblings().find(".lastaction").remove();
+
+            var dis = $(this).siblings(".selectedtr td");
+
+            $.ajax({
+                url: "{{ url('admin/gethistory') }}",
+                type: "POST",
+                data: {_token: CSRF_TOKEN,id: id, table : table},
+                success : function(data){
+                    $("<p class='lastaction'>"+data['history']+"</p>").appendTo(".dontdisplay td");
+                }, error : function(){
+                    alert("error");
+                }
+            });
+            
         });
 
         // internal, external, outgoing

@@ -461,7 +461,7 @@ margin-top: 10px;
                                         </tr>
                                     </table>
 
-                                    <h4 style='margin-top:0px;'> History of Actions </h4>
+                                    <h4 style='margin-top:15px;'> History of Actions </h4>
                                     <?php // var_dump($data); 
                                         // $data_arr = (array) $data;
                                     ?>
@@ -714,7 +714,7 @@ margin-top: 10px;
                                                     <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
                                                         <i class="fa fa-file-excel-o"></i> Export to Excel</button> 
                                                     
-                                                    <a href="javascript:void(0);" class="go_complete btn btn-small btn-success mr-3" style='margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
+                                                    <a href="javascript:void(0);" data-dataid="{{$d->ref_id}}" class="go_complete btn btn-small btn-success mr-3" style='margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
 
                                                     <button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;">
                                                         <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document</button>
@@ -730,7 +730,7 @@ margin-top: 10px;
 
                                         
 
-                                        <h4 style='margin-top:0px;'> History of Actions </h4>
+                                        <h4 style='margin-top:15px;'> History of Actions </h4>
                                         @if($data->count()>0)
                                             <?php 
                                                 $display = [];
@@ -833,7 +833,7 @@ margin-top: 10px;
                                                     <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
                                                         <i class="fa fa-file-excel-o"></i> Export to Excel</button> 
                                                     
-                                                    <a href="javascript:void(0);" class="go_complete btn btn-small btn-success mr-3" style='margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
+                                                    <a href="javascript:void(0);" data-dataid="{{$d->ref_id}}" class="go_complete btn btn-small btn-success mr-3" style='margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
 
                                                     <button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;">
                                                         <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document</button>
@@ -1223,7 +1223,7 @@ margin-top: 10px;
                 $("#container").height($(document).height());
 
         var typeofinput = null;
-        typeofinput = $(document).find("#type_input").val();
+            typeofinput = $(document).find("#type_input").val();
 
         // set the default value
         // division            
@@ -1268,8 +1268,8 @@ margin-top: 10px;
 
         $(document).on("click", ".go_btn", function(e) {
         var CSRF_TOKEN  =   $('meta[name="csrf-token"]').attr('content');
-        var dept        =   $('input#ff_divisions').val(); // mark here
-        var x_id        =   $('input#_id').val();
+        var dept        =   $('input#ff_divisions').val(); 
+        var x_id        =   $('input#_id').val(); // mark here
         var rem         =   $('textarea#remarks').val();
 
         /*
@@ -1672,17 +1672,16 @@ margin-top: 10px;
                     window.location.href="{{ url('/home') }}";
                   },
                 });
-                e.preventDefault();
-            
+                e.preventDefault();   
         }
         
     });
 
-
     $(document).on("click", ".go_complete", function(e) {
         var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
-        var dept        =   $('input#ff_divisions').val();
-        var x_id        =   $('input#_id').val();
+        var dept        = $('input#ff_divisions').val();
+        // var x_id        = $('input#_id').val(); // here
+        var x_id        = $(this).data('dataid');
 
         var conf = confirm("You are about to tag this document as completed. Proceed?");
 
@@ -1691,7 +1690,7 @@ margin-top: 10px;
         }
 
         var typeofinput = null;
-        typeofinput = $(document).find("#type_input").val();
+            typeofinput = $(document).find("#type_input").val();
 
         var theurl = null;
         if (typeofinput == "internal") {
@@ -1702,6 +1701,7 @@ margin-top: 10px;
             theurl = "{{ url('/outgoing-document/doc-tracking-complete') }}/"+x_id;
         }
 
+        //alert(x_id); return;
             $.ajax({
                 url: theurl,
                 type: "POST",
@@ -1734,7 +1734,8 @@ margin-top: 10px;
                   },
                   error: function(ex){
                     //alert(JSON.stringify(ex));
-                    window.location.href="{{ url('/home') }}";
+                    alert("an error occured");
+                   // window.location.href="{{ url('/home') }}";
                   },
                 });
                 e.preventDefault();

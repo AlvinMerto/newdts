@@ -702,7 +702,7 @@ class ExternalController extends Controller
                 ->join('externals','external_departments.ff_id','=','externals.id')
                 ->join('external_history','external_departments.ff_id','=','external_history.ref_id')
                 ->where(['external_history.empto'=>Auth::user()->id])
-                // ->orWhere(['internal_history.empfrom'=>Auth::user()->id])    
+                ->orWhere(['external_history.empfrom'=>Auth::user()->id])    
                 ->orderBy('external_history.days_count','desc')
                 ->orderBy('external_history.actioned','asc')
                 ->orderBy('external_history.classification','desc')
@@ -1979,7 +1979,7 @@ class ExternalController extends Controller
                     ->where(['external_history.ref_id'=>$id,'external_history.department'=>Auth::user()->division])
                     ->update([
                         'stat'=>'complete',
-                        'destination' => Auth::user()->division.' complete the tracking',
+                        'destination' => Auth::user()->f_name.' completed the tracking',
                         'remarks'=>'completed on '.Carbon::now()->format('F j, Y').' @ '.Carbon::now()->format('H:i:s'),
                         'actioned' => 1,
                     ]);
@@ -2189,10 +2189,11 @@ class ExternalController extends Controller
                     ->get();
 
         // ->where(['external_departments.dept'=>Auth::user()->division,'externals.doc_receive'=>$search])
+        // ->where(['external_departments.dept'=>Auth::user()->division,'externals.doc_date_ff'=>$search])
         $data = DB::table('external_departments')
                 ->join('externals','external_departments.ff_id','=','externals.id')
                 ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
-                ->where(['external_departments.dept'=>Auth::user()->division,'externals.doc_date_ff'=>$search])
+                ->where(["external_history.empto" => Auth::user()->id, 'externals.doc_receive'=>$search])
                 ->groupBy('externals.barcode')
                 ->orderBy('externals.day_count','desc')
                 ->orderBy('externals.created_at','desc')
@@ -2213,7 +2214,7 @@ class ExternalController extends Controller
                         ->groupBy('externals.type')
                         ->orderBy('externals.id','asc')
                         ->get();
-        //dd($data);
+        // dd($data);
 
         $window = "external";
         //return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div'));

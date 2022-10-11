@@ -278,6 +278,10 @@ Route::post("/admin/updatepassword",[SettingController::class,"updatepassword"])
 Route::post("/admin/updatefullname",[HomeController::class,"updatefullname"]);
 Route::post("/admin/addname", [HomeController::class,"addname"]);
 
+// get history of actions thru ajax
+Route::post("/admin/gethistory",[HomeController::class,"gethistory"]);
+// end 
+
 Route::post('/admin/access-level/{id}',[HomeController::class, 'admin_users_control_edit']);
 
 Route::get('/admin/division/{division}',[HomeController::class, 'filter_by_division']);

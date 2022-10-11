@@ -293,6 +293,22 @@ class HomeController extends Controller
         }
     }
 
+    public function gethistory(Request $req) {
+        if (request()->ajax()) {
+            $table = $req->input("table");
+            $id    = $req->input("id");
+
+           $data   = DB::select("select * from {$table} where id = (select max(id) from {$table} where ref_id ='{$id}')");
+
+            // if (count($data)-1 > 0) {
+                return response()->json(['history' => "Last action was when ". $data[0]->destination." on ".$data[0]->date_forwared ]);
+            // } else {
+            //    return response()->json(['history' => "No history of action");
+            // }
+            //return response()->json(['history' => $sql]);
+        }
+    }
+
     public function setuserinactive(Request $req) {
         if (request()->ajax()) {
            $id = $req->input("id");

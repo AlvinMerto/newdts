@@ -681,8 +681,9 @@ class InternalController extends Controller
         */
         //dd($div);
 
+        $dontdisplay = "actionbtns";
         $window = "internal";
-        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window'));
+        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window','dontdisplay'));
     }
 
     public function list_document_ascending()
@@ -2330,7 +2331,7 @@ class InternalController extends Controller
                     ->where(['internal_history.ref_id'=>$id,'internal_history.department'=>Auth::user()->division])
                     ->update([
                         'stat'=>'complete',
-                        'destination' => Auth::user()->division.' complete the tracking',
+                        'destination' => Auth::user()->f_name.' completed the tracking',
                         'remarks'=>'completed on '.Carbon::now()->format('F j, Y').' @ '.Carbon::now()->format('H:i:s'),
                         'actioned' => 1,
                     ]);
@@ -2592,6 +2593,12 @@ class InternalController extends Controller
 
         if (Auth::user()->access_level==5 || Auth::user()->access_level==4)
         {
+            if (!isset($_GET['action'])) {
+            // ->where(['internals.doc_receive'=>$search])
+            // ->where('internal_history.date_ff',$search)
+            // ->where('internal_history.actioned',0)
+            // ->where('internal_history.empto',Auth::user()->id)->where('internal_history.date_ff',$search)
+            // ->where('internal_history.empto',Auth::user()->id)
             $data = DB::table('internal_departments')
                 ->join('internals','internal_departments.ff_id','=','internals.id')
                 ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id')
@@ -2601,17 +2608,52 @@ class InternalController extends Controller
                 ->orderBy('internals.created_at','desc')
                 ->paginate(10)
                 ->onEachSide(2);
-        }else{
+            } else {
+                 if ($_GET['action'] == "seen") {
+                    echo "seen if fired";
+                    $data = DB::table('internal_departments')
+                                ->join('internals','internal_departments.ff_id','=','internals.id')
+                                ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id')
+                                ->where('internal_history.empto',Auth::user()->id)
+                                ->where(['internals.doc_receive'=>$search])
+                                ->where('internal_history.actioned',0)
+                                ->groupBy('internals.barcode')
+                                ->orderBy('internals.day_count','desc')
+                                ->orderBy('internals.created_at','desc')
+                                ->paginate(10)
+                                ->onEachSide(2);
+                 }
+            }
+        } else {
             // ->where(['internal_departments.dept'=>Auth::user()->division,'internals.doc_receive'=>$search])
-            $data = DB::table('internal_departments')
-                ->join('internals','internal_departments.ff_id','=','internals.id')
-                ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id')
-                ->where(['internal_departments.dept'=>Auth::user()->division,'internals.doc_date_ff'=>$search])
-                ->groupBy('internals.barcode')
-                ->orderBy('internals.day_count','desc')
-                ->orderBy('internals.created_at','desc')
-                ->paginate(10)
-                ->onEachSide(2);
+            // ->where(['internal_departments.dept'=>Auth::user()->division,'internals.doc_date_ff'=>$search])
+            // ->where('internal_history.actioned',0)
+            if (isset($_GET['action'])) {
+                // action = 1 -> needed action
+                // action = 0 -> forwarded
+                 $data = DB::table('internal_departments')
+                        ->join('internals','internal_departments.ff_id','=','internals.id')
+                        ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id') 
+                        ->where('internal_history.empto',Auth::user()->id)
+                        ->where('internal_history.date_ff',$search)
+                        ->where('internal_history.actioned',$_GET['action'])
+                        ->groupBy('internals.barcode')
+                        ->orderBy('internals.day_count','desc')
+                        ->orderBy('internals.created_at','desc')
+                        ->paginate(10)
+                        ->onEachSide(2);
+            } else {
+                 $data = DB::table('internal_departments')
+                        ->join('internals','internal_departments.ff_id','=','internals.id')
+                        ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id') 
+                        ->where('internal_history.empto',Auth::user()->id)
+                        ->where('internal_history.date_ff',$search)
+                        ->groupBy('internals.barcode')
+                        ->orderBy('internals.day_count','desc')
+                        ->orderBy('internals.created_at','desc')
+                        ->paginate(10)
+                        ->onEachSide(2);
+            }
         }
 
         $papcode = DB::table('users')
@@ -2634,6 +2676,7 @@ class InternalController extends Controller
                     ->get();
 
         //dd($data);
+        // var_dump($data);
         $window = "internal";
         return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','search','window'));
     }
