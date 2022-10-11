@@ -421,9 +421,9 @@ background: #fff;
                                                 $actbtn_fw = null;
 
                                                 if (isset($_GET['action'])) {
-                                                    if ($_GET['action'] == 0) { // forwarded
+                                                    if ($_GET['action'] == 2) { // forwarded
                                                         $actbtn_fw = "selected";
-                                                    } else if ($_GET['action'] == 1) { // needed action
+                                                    } else if ($_GET['action'] == 0) { // needed action
                                                         $actbtn_na = "selected";
                                                     }
                                                 }
@@ -436,10 +436,10 @@ background: #fff;
                                             <?php if (!isset($dontdisplay)) { ?>
                                                 <?php if (!isset($sort)) { ?>
                                                     <ul class='actionbtns'>
-                                                        <a href="<?php echo $theseldate."/?action=1"; ?>"> 
+                                                        <a href="<?php echo $theseldate."/?action=0"; ?>"> 
                                                             <li class='btn btn-default <?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs action </li> 
                                                         </a>
-                                                        <a href="<?php echo $theseldate."/?action=0"; ?>"> 
+                                                        <a href="<?php echo $theseldate."/?action=2"; ?>"> 
                                                             <li class='btn btn-default <?php echo $actbtn_fw; ?>'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
                                                         </a>
                                                     </ul>

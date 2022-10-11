@@ -69,9 +69,9 @@ $(document).ready(function(e){
 
     .theinnertbl tr th{
         font-size: 12px;
-font-weight: bold;
-color: #86898a;
-border: 1px solid #e6e6e6;
+        font-weight: bold;
+        color: #86898a;
+        border: 1px solid #e6e6e6;
     }
 
 .img-grid {

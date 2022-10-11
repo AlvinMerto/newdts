@@ -1203,7 +1203,7 @@ class ExternalController extends Controller
                 $request->get('division'),
                 'pending',
                 Auth::user()->f_name. ' forwarded to '.$request->get('confi'),
-                0,
+                2,
                 $empto_details[0]->id,
                 Auth::user()->id
             ]);
