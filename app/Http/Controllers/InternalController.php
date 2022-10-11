@@ -2609,25 +2609,25 @@ class InternalController extends Controller
                 ->paginate(10)
                 ->onEachSide(2);
             } else {
-                 if ($_GET['action'] == "seen") {
-                    echo "seen if fired";
+                 
                     $data = DB::table('internal_departments')
                                 ->join('internals','internal_departments.ff_id','=','internals.id')
                                 ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id')
                                 ->where('internal_history.empto',Auth::user()->id)
                                 ->where(['internals.doc_receive'=>$search])
-                                ->where('internal_history.actioned',0)
+                                ->where('internal_history.actioned',$_GET['action'])
                                 ->groupBy('internals.barcode')
                                 ->orderBy('internals.day_count','desc')
                                 ->orderBy('internals.created_at','desc')
                                 ->paginate(10)
                                 ->onEachSide(2);
-                 }
+                 
             }
         } else {
             // ->where(['internal_departments.dept'=>Auth::user()->division,'internals.doc_receive'=>$search])
             // ->where(['internal_departments.dept'=>Auth::user()->division,'internals.doc_date_ff'=>$search])
             // ->where('internal_history.actioned',0)
+
             if (isset($_GET['action'])) {
                 // action = 1 -> needed action
                 // action = 0 -> forwarded
@@ -2643,6 +2643,7 @@ class InternalController extends Controller
                         ->paginate(10)
                         ->onEachSide(2);
             } else {
+
                  $data = DB::table('internal_departments')
                         ->join('internals','internal_departments.ff_id','=','internals.id')
                         ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id') 
