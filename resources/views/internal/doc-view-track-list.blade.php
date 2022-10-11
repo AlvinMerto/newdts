@@ -518,13 +518,12 @@ margin-top: 10px;
                                                                         $remarks = null;
 
                                                                         //if ( preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/',$rems[count($rems)-1]) == 1) {
-                                                                        if (count($rems) > 0) {
-                                                                            if ( $rems[count($rems)-1][0] != "*" ) {
-                                                                                $remarks = $rems[count($rems)-1];
-                                                                                unset($rems[count($rems)-1]);
-                                                                            } 
-                                                                        }
 
+                                                                        if( @$rems[count($rems)-1][0] != "*" ) {
+                                                                            $remarks = $rems[count($rems)-1];
+                                                                            unset($rems[count($rems)-1]);
+                                                                        } 
+                                                                        
                                                                         echo implode(" ",$rems);
                                                                     ?>
                                                                     <!--p> {!! nl2br($data[$i]->remarks) !!} </p-->
