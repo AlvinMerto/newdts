@@ -354,7 +354,7 @@ background: #fff;
                                                     </li>
                                                 </a>
 
-                                                <?php if(!isset($sort)){ $theseldate = null; ?>
+                                                <?php $theseldate = null; if(!isset($sort)){  ?>
                                                     <?php if ($window == "internal") { ?>
                                                         <a href="{{ url('internal-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
                                                     <?php } else if($window == "external") { ?>
@@ -435,14 +435,16 @@ background: #fff;
                                             ?>
                                             
                                             <?php if (!isset($dontdisplay)) { ?>
-                                                <ul class='actionbtns'>
-                                                    <a href="<?php echo $theseldate."/?action=1"; ?>"> 
-                                                        <li class='btn btn-default <?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs action </li> 
-                                                    </a>
-                                                    <a href="<?php echo $theseldate."/?action=0"; ?>"> 
-                                                        <li class='btn btn-default <?php echo $actbtn_fw; ?>'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
-                                                    </a>
-                                                </ul>
+                                                <?php if (!isset($sort)) { ?>
+                                                    <ul class='actionbtns'>
+                                                        <a href="<?php echo $theseldate."/?action=1"; ?>"> 
+                                                            <li class='btn btn-default <?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs action </li> 
+                                                        </a>
+                                                        <a href="<?php echo $theseldate."/?action=0"; ?>"> 
+                                                            <li class='btn btn-default <?php echo $actbtn_fw; ?>'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
+                                                        </a>
+                                                    </ul>
+                                                <?php } ?>
                                             <?php } ?>
                                         </td>
                                         <!--td>

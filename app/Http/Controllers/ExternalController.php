@@ -702,7 +702,7 @@ class ExternalController extends Controller
                 ->join('externals','external_departments.ff_id','=','externals.id')
                 ->join('external_history','external_departments.ff_id','=','external_history.ref_id')
                 ->where(['external_history.empto'=>Auth::user()->id])
-                ->orWhere(['external_history.empfrom'=>Auth::user()->id])    
+                ->orWhere(['external_history.empfrom'=>Auth::user()->id])
                 ->orderBy('external_history.days_count','desc')
                 ->orderBy('external_history.actioned','asc')
                 ->orderBy('external_history.classification','desc')
@@ -728,10 +728,10 @@ class ExternalController extends Controller
                         ->orderBy('externals.id','asc')
                         ->get();
 
-
+        $dontdisplay = true;
         $window = "external";
     	// return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','div','lib','window'));
-        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window','tplist','papcode'));
+        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window','tplist','papcode','dontdisplay'));
     }
 
     public function edit_docs_details($ref_id)
@@ -1949,9 +1949,10 @@ class ExternalController extends Controller
                         'actioned' => 1,
                     ]);
 
+        $dontdisplay = "actionbtns";
         $window = "external";
      // return view('external.doc-view-track-list', compact('papcode','data','docimages','userlist','lib','div'));
-        return view('internal.doc-view-track-list', compact('papcode','data','docimages','userlist','lib','div','window'));
+        return view('internal.doc-view-track-list', compact('papcode','data','docimages','userlist','lib','div','window','dontdisplay'));
     // return view('internal.doc-view-track-list', compact('papcode','data', 'uname','datefilter','docimages','lib','div','userlist'));
 
     }
@@ -2216,9 +2217,10 @@ class ExternalController extends Controller
                         ->get();
         // dd($data);
 
+        $dontdisplay = true;
         $window = "external";
         //return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div'));
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window','search'));
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window','search','dontdisplay'));
     }
 
     public function filter_type($type)
@@ -2262,9 +2264,10 @@ class ExternalController extends Controller
                         ->orderBy('externals.id','asc')
                         ->get();
         //dd($data);
+        //$dontdisplay = true;
         $window = "external";
         // return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div'));
-        return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window','search'));
+        return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window','search','dontdisplay'));
     }
 
     public function list_document_ascending()

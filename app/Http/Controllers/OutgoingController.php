@@ -2452,9 +2452,10 @@ class OutgoingController extends Controller
 
         //dd($data);
 
+        $dontdisplay = true;
         $window = "outgoing";
         // return view('outgoing.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','courier'));
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','courier','window','search'));
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','courier','window','search','dontdisplay'));
     }
 
     public function get_barcode_value($bnum)
