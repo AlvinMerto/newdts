@@ -170,8 +170,7 @@ list-style: none;
 padding: 0px;
 margin-left: 11px;
 font-size: 14px;
-margin-bottom: 0px;
-margin-top: -7px;
+margin-bottom: 10px;
     }
 
     .actionbtns li {
