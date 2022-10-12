@@ -2216,7 +2216,7 @@ class ExternalController extends Controller
                     ->orderBy('externals.created_at','desc')
                     ->paginate(10)
                     ->onEachSide(2);
-            } else if ($_GET['action'] == 2) { // forwarded to you
+            } else if ($_GET['action'] == 1111111) { // forwarded to you
                 $data = DB::table('external_departments')
                     ->join('externals','external_departments.ff_id','=','externals.id')
                     ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
@@ -2228,7 +2228,7 @@ class ExternalController extends Controller
                     ->orderBy('externals.created_at','desc')
                     ->paginate(10)
                     ->onEachSide(2);
-            } else if ($_GET['action'] == 0) { // needs action
+            } else if ($_GET['action'] == 2) { // needs action
                 $data = DB::table('external_departments')
                     ->join('externals','external_departments.ff_id','=','externals.id')
                     ->join('external_history','external_history.ref_id','=','external_departments.ff_id')

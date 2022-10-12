@@ -422,9 +422,9 @@ background: #fff;
                                                 $actbtn_fty = null;
 
                                                 if (isset($_GET['action'])) {
-                                                    if ($_GET['action'] == 2) { // forwarded to you
+                                                    if ($_GET['action'] == 1111111) { // forwarded to you
                                                         $actbtn_fty = "selected";
-                                                    } else if ($_GET['action'] == 0) { // needed action
+                                                    } else if ($_GET['action'] == 2) { // needed action
                                                         $actbtn_na = "selected";
                                                     } else if ($_GET['action'] == 3) { // you forwarded
                                                         $actbtn_fw = "selected";
@@ -439,7 +439,7 @@ background: #fff;
                                             <?php if (!isset($dontdisplay)) { ?>
                                                 <?php if (!isset($sort)) { ?>
                                                     <ul class='actionbtns'>
-                                                        <a href="<?php echo $theseldate."/?action=0"; ?>"> 
+                                                        <a href="<?php echo $theseldate."/?action=2"; ?>"> 
                                                             <li class='<?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs your action </li> 
                                                         </a>
                                                         <a href="<?php echo $theseldate."/?action=3"; ?>"> 
@@ -487,6 +487,13 @@ background: #fff;
                             <tbody>
                                 <?php $priority = null; $count = 0; // var_dump($data); ?>
     							@foreach($data as $d)
+                                    <?php
+                                        if (isset($_GET['action'])) {
+                                            if ($d->actioned != $_GET['action']) {
+                                                break;
+                                            }
+                                        }
+                                    ?>
                                 <tr class='withcontent' data-theid='<?php echo $d->ref_id; ?>'>
                                     @if($d->actioned == 0)
                                         @if($d->classification == 1 && $d->confi_name == Auth::user()->f_name)

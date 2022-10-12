@@ -2605,10 +2605,10 @@ class InternalController extends Controller
                             ->groupBy('internals.barcode')
                             ->orderBy('internals.day_count','desc')
                             ->orderBy('internals.created_at','desc')
-                            ->paginate(10)
-                            ->onEachSide(2);
+                            ->paginate(10);
             } else {
-                if ($_GET['action'] == 2) { // forwarded to you
+                if ($_GET['action'] == 111111111) { // forwarded to you
+                    // ->onEachSide(2)
                 // ->where('internal_history.empto',Auth::user()->id)
                         $data = DB::table('internal_departments')
                             ->join('internals','internal_departments.ff_id','=','internals.id')
@@ -2619,11 +2619,9 @@ class InternalController extends Controller
                             ->groupBy('internals.barcode')
                             ->orderBy('internals.day_count','desc')
                             ->orderBy('internals.created_at','desc')
-                            ->paginate(10)
-                            ->onEachSide(2); 
-                } else if($_GET['action'] == 0) { // needs action
+                            ->paginate(10); 
+                } else if($_GET['action'] == 2) { // needs action
                     // ->where('internals.doc_receive',$search)
-                    
                     $data = DB::table('internal_departments')
                             ->join('internals','internal_departments.ff_id','=','internals.id')
                             ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id')
@@ -2633,8 +2631,7 @@ class InternalController extends Controller
                             ->groupBy('internals.barcode')
                             ->orderBy('internals.day_count','desc')
                             ->orderBy('internals.created_at','desc')
-                            ->paginate(10)
-                            ->onEachSide(2); 
+                            ->paginate(10); 
                 } else if($_GET['action'] == 3) { // you forwarded
                     // ->where('internals.doc_receive',$search)
                     $data = DB::table('internal_departments')
@@ -2646,8 +2643,7 @@ class InternalController extends Controller
                             ->groupBy('internals.barcode')
                             ->orderBy('internals.day_count','desc')
                             ->orderBy('internals.created_at','desc')
-                            ->paginate(10)
-                            ->onEachSide(2); 
+                            ->paginate(10); 
                 }
             }
         } else {
@@ -2661,7 +2657,7 @@ class InternalController extends Controller
                 // action = 1 -> completed              :: in web url 1
                 // action = 3 -> you forwarded          :: in web url 3
 
-                    if ($_GET['action'] == 2) { // forwarded to you
+                    if ($_GET['action'] == 111111111) { // forwarded to you
                         $data = DB::table('internal_departments')
                             ->join('internals','internal_departments.ff_id','=','internals.id')
                             ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id') 
@@ -2671,9 +2667,8 @@ class InternalController extends Controller
                             ->groupBy('internals.barcode')
                             ->orderBy('internals.day_count','desc')
                             ->orderBy('internals.created_at','desc')
-                            ->paginate(10)
-                            ->onEachSide(2);
-                    } else if ($_GET['action'] == 0) { // needs your action
+                            ->paginate(10);
+                    } else if ($_GET['action'] == 2) { // needs your action
                         $data = DB::table('internal_departments')
                                 ->join('internals','internal_departments.ff_id','=','internals.id')
                                 ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id') 
@@ -2683,8 +2678,8 @@ class InternalController extends Controller
                                 ->groupBy('internals.barcode')
                                 ->orderBy('internals.day_count','desc')
                                 ->orderBy('internals.created_at','desc')
-                                ->paginate(10)
-                                ->onEachSide(2);
+                                ->paginate(10);
+                        // var_dump($data);
                     } else if ($_GET['action'] == 3) { // you forwarded
                         $data = DB::table('internal_departments')
                                 ->join('internals','internal_departments.ff_id','=','internals.id')
@@ -2695,8 +2690,7 @@ class InternalController extends Controller
                                 ->groupBy('internals.barcode')
                                 ->orderBy('internals.day_count','desc')
                                 ->orderBy('internals.created_at','desc')
-                                ->paginate(10)
-                                ->onEachSide(2);
+                                ->paginate(10);
                     }
                 
             } else {
@@ -2708,8 +2702,7 @@ class InternalController extends Controller
                         ->groupBy('internals.barcode')
                         ->orderBy('internals.day_count','desc')
                         ->orderBy('internals.created_at','desc')
-                        ->paginate(10)
-                        ->onEachSide(2);
+                        ->paginate(10);
             }
         }
 
