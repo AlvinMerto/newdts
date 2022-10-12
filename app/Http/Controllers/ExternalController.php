@@ -2234,7 +2234,7 @@ class ExternalController extends Controller
                     ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
                     ->where('external_history.date_ff',$search)
                     ->where('external_history.empto',Auth::user()->id)
-                    ->where('external_history.actioned',0)
+                    ->where('external_history.actioned',2)
                     ->groupBy('externals.barcode')
                     ->orderBy('externals.day_count','desc')
                     ->orderBy('externals.created_at','desc')

@@ -2628,7 +2628,7 @@ class InternalController extends Controller
                             ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id')
                             ->where('internal_history.date_ff',$search)
                             ->where("internal_history.empto",Auth::user()->id)
-                            ->where('internal_history.actioned',0)
+                            ->where('internal_history.actioned',2)
                             ->groupBy('internals.barcode')
                             ->orderBy('internals.day_count','desc')
                             ->orderBy('internals.created_at','desc')

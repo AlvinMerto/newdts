@@ -445,9 +445,9 @@ background: #fff;
                                                         <a href="<?php echo $theseldate."/?action=3"; ?>"> 
                                                             <li class='<?php echo $actbtn_fw; ?>'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
                                                         </a>
-                                                        <a href="<?php echo $theseldate."/?action=2"; ?>"> 
-                                                            <li class='<?php echo $actbtn_fty; ?>'> <i class='fa fa-share' aria-hidden='true'></i> forwarded to you</li> 
-                                                        </a>
+                                                        <!--a href="<?php //echo $theseldate."/?action=2"; ?>"> 
+                                                            <li class='<?php //echo $actbtn_fty; ?>'> <i class='fa fa-share' aria-hidden='true'></i> forwarded to you</li> 
+                                                        </a-->
                                                     </ul>
                                                 <?php } ?>
                                             <?php } ?>
