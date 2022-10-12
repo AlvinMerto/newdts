@@ -2191,15 +2191,57 @@ class ExternalController extends Controller
 
         // ->where(['external_departments.dept'=>Auth::user()->division,'externals.doc_receive'=>$search])
         // ->where(['external_departments.dept'=>Auth::user()->division,'externals.doc_date_ff'=>$search])
-        $data = DB::table('external_departments')
-                ->join('externals','external_departments.ff_id','=','externals.id')
-                ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
-                ->where(["external_history.empto" => Auth::user()->id, 'externals.doc_receive'=>$search])
-                ->groupBy('externals.barcode')
-                ->orderBy('externals.day_count','desc')
-                ->orderBy('externals.created_at','desc')
-                ->paginate(10)
-                ->onEachSide(2);
+
+        if (!isset($_GET['action'])) {
+            // ["external_history.empto" => Auth::user()->id, 
+            $data = DB::table('external_departments')
+                    ->join('externals','external_departments.ff_id','=','externals.id')
+                    ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
+                    ->where('external_history.date_ff',$search)
+                    ->groupBy('externals.barcode')
+                    ->orderBy('externals.day_count','desc')
+                    ->orderBy('externals.created_at','desc')
+                    ->paginate(10)
+                    ->onEachSide(2);
+        } else {
+            if ($_GET['action'] == 3) { // you forwarded
+                $data = DB::table('external_departments')
+                    ->join('externals','external_departments.ff_id','=','externals.id')
+                    ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
+                    ->where('external_history.date_ff',$search)
+                    ->where('external_history.empfrom',Auth::user()->id)
+                    ->where('external_history.actioned',2)
+                    ->groupBy('externals.barcode')
+                    ->orderBy('externals.day_count','desc')
+                    ->orderBy('externals.created_at','desc')
+                    ->paginate(10)
+                    ->onEachSide(2);
+            } else if ($_GET['action'] == 2) { // forwarded to you
+                $data = DB::table('external_departments')
+                    ->join('externals','external_departments.ff_id','=','externals.id')
+                    ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
+                    ->where('external_history.date_ff',$search)
+                    ->where('external_history.empto',Auth::user()->id)
+                    ->where('external_history.actioned',2)
+                    ->groupBy('externals.barcode')
+                    ->orderBy('externals.day_count','desc')
+                    ->orderBy('externals.created_at','desc')
+                    ->paginate(10)
+                    ->onEachSide(2);
+            } else if ($_GET['action'] == 0) { // needs action
+                $data = DB::table('external_departments')
+                    ->join('externals','external_departments.ff_id','=','externals.id')
+                    ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
+                    ->where('external_history.date_ff',$search)
+                    ->where('external_history.empto',Auth::user()->id)
+                    ->where('external_history.actioned',0)
+                    ->groupBy('externals.barcode')
+                    ->orderBy('externals.day_count','desc')
+                    ->orderBy('externals.created_at','desc')
+                    ->paginate(10)
+                    ->onEachSide(2);
+            }
+        }
 
         $papcode = DB::table('users')
                     ->groupBy('users.division')
@@ -2217,10 +2259,10 @@ class ExternalController extends Controller
                         ->get();
         // dd($data);
 
-        $dontdisplay = true;
+        // $dontdisplay = true;
         $window = "external";
         //return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div'));
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window','search','dontdisplay'));
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','lib','div','window','search'));
     }
 
     public function filter_type($type)

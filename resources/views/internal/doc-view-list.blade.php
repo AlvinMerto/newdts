@@ -417,14 +417,17 @@ background: #fff;
                                             </ul>
                                             
                                             <?php 
-                                                $actbtn_na = null;
-                                                $actbtn_fw = null;
+                                                $actbtn_na  = null;
+                                                $actbtn_fw  = null;
+                                                $actbtn_fty = null;
 
                                                 if (isset($_GET['action'])) {
-                                                    if ($_GET['action'] == 2) { // forwarded
-                                                        $actbtn_fw = "selected";
+                                                    if ($_GET['action'] == 2) { // forwarded to you
+                                                        $actbtn_fty = "selected";
                                                     } else if ($_GET['action'] == 0) { // needed action
                                                         $actbtn_na = "selected";
+                                                    } else if ($_GET['action'] == 3) { // you forwarded
+                                                        $actbtn_fw = "selected";
                                                     }
                                                 }
 
@@ -437,10 +440,13 @@ background: #fff;
                                                 <?php if (!isset($sort)) { ?>
                                                     <ul class='actionbtns'>
                                                         <a href="<?php echo $theseldate."/?action=0"; ?>"> 
-                                                            <li class='btn btn-default <?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs action </li> 
+                                                            <li class='<?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs your action </li> 
+                                                        </a>
+                                                        <a href="<?php echo $theseldate."/?action=3"; ?>"> 
+                                                            <li class='<?php echo $actbtn_fw; ?>'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
                                                         </a>
                                                         <a href="<?php echo $theseldate."/?action=2"; ?>"> 
-                                                            <li class='btn btn-default <?php echo $actbtn_fw; ?>'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
+                                                            <li class='<?php echo $actbtn_fty; ?>'> <i class='fa fa-share' aria-hidden='true'></i> forwarded to you</li> 
                                                         </a>
                                                     </ul>
                                                 <?php } ?>
@@ -934,7 +940,7 @@ background: #fff;
                             @endif
 
     						@if($data->count() > 0)
-								<!--div class="justify-content-center" style="font-size: 10px; margin-top: 10px; margin-bottom: 50px;">{{ $data->links() }}</div-->
+								<div class="justify-content-center" style="font-size: 10px; margin-top: 10px; margin-bottom: 50px;">{{ $data->links() }}</div>
 							@endif
 
                            
