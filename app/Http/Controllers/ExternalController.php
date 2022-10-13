@@ -354,7 +354,7 @@ class ExternalController extends Controller
             ->get();
 
         $search = "all";
-        
+
         if(Auth::user()->access_level=='5' and Auth::user()->division=='RECORDS'){
             $div = DB::table('users')
                     ->where(['users.division'=>'OC'])
@@ -1968,12 +1968,14 @@ class ExternalController extends Controller
                     ->get();
         }
         
+        /*
         $isopen = DB::table('external_history')
                     ->where(['external_history.department'=>Auth::user()->division,'external_history.ref_id'=>$id])
                     ->update([
                         'actioned' => 1,
                     ]);
-
+        */
+                    
         $dontdisplay = "actionbtns";
         $window = "external";
      // return view('external.doc-view-track-list', compact('papcode','data','docimages','userlist','lib','div'));

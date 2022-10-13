@@ -2280,12 +2280,14 @@ class InternalController extends Controller
                     ->orderBy('users.f_name')
                     ->get();
 
+        /*
         $isopen = DB::table('internal_history')
                     ->where(['internal_history.department'=>Auth::user()->division,'internal_history.ref_id'=>$id])
                     ->update([
                         'actioned' => 1,
                     ]);
-
+        */
+        
         //dd($data);
 
         $window = "internal";
