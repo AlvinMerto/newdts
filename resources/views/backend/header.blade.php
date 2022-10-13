@@ -1,4 +1,9 @@
-
+<style>
+  .needsaction {
+    padding: 0px 11px;
+    margin: 0px 10px;
+  }
+</style>
 <header class="main-header">
     <div class="logo">
       <span class="logo-lg"><b>Document Tracking</span>

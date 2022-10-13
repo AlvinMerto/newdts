@@ -332,7 +332,11 @@ background: #fff;
                                                         if (date("M. d, Y", strtotime($search)) == date("M. d, Y")) {
                                                             $whattodisplay = "Displaying documents routed to you Today";
                                                         } else {
-                                                            $whattodisplay = "Displaying the movement of document that were routed to you last ".date("l - M. d, Y", strtotime($search));
+                                                            if ($search == "needsaction") {
+                                                                $whattodisplay = "Displaying all the documents that require your attention";
+                                                            } else {
+                                                                $whattodisplay = "Displaying the movement of document that were routed to you last ".date("l - M. d, Y", strtotime($search));
+                                                            }
                                                         }
                                                         echo "<i class='fa fa-caret-right' aria-hidden='true'></i> ".$whattodisplay;
                                                     }
@@ -342,13 +346,31 @@ background: #fff;
                                             </p>
                                             <ul class='thedatenavs'>
                                                 <?php if ($window == "internal") { ?>
+                                                    <a href="{{url('internal-document-list-view')}}/?action=2" style='margin-right: -3px;'>
+                                                <?php } else if($window == "external") { ?>
+                                                    <a href="{{url('external-document-list-view')}}?action=2" style='margin-right: -3px;'>
+                                                <?php } ?>
+                                                    <?php if ($window != "outgoing") { 
+                                                        $sel = null;
+                                                        if (isset($search)) {
+                                                            if ($search == "needsaction") {
+                                                                $sel = "selected";
+                                                            }
+                                                        }
+                                                        ?> 
+                                                        <li class='<?php echo $sel; ?>'>
+                                                            <i class='fa fa-bell' aria-hidden='true'></i> Needs your Action
+                                                        </li>
+                                                    <?php } ?>
+                                                </a>
+                                                <?php if ($window == "internal") { ?>
                                                     <a href="{{url('internal-document-list-view')}}" style='margin-right: -3px;'>
                                                 <?php } else if($window == "external") { ?>
                                                     <a href="{{url('external-document-list-view')}}" style='margin-right: -3px;'>
                                                 <?php } else if($window == "outgoing") { ?>
                                                     <a href="{{url('outgoing-document-list-view')}}" style='margin-right: -3px;'>
                                                 <?php } ?>
-                                                    <li class = '<?php if(!isset($search)){ echo "selected";} ?>' style='padding: 7px 40px; '>
+                                                    <li class = '<?php if(isset($search)){ if ($search == 'all') { echo "selected"; }} ?>' style='padding: 7px 40px; '>
                                                         All
                                                     </li>
                                                 </a>

@@ -244,6 +244,7 @@ class InternalController extends Controller
         $docs = DB::table('internals')
             ->get();
 
+        $search = "all";
         $datefilter = DB::table('internals')
                         ->groupBy('internals.doc_receive')
                         ->orderBy('internals.id','asc')
@@ -651,12 +652,11 @@ class InternalController extends Controller
                             ->groupBy('internals.barcode')
                             ->paginate(10)
                             ->onEachSide(2);
-
                             /*
                             ->where(['internal_departments.dept'=>Auth::user()->division])
                             ->where(['internal_history.department'=>Auth::user()->division])
                             */
-            } else {
+            } else { // not in used
                 // 2021-12-01 03:23:23
                 $dd   = $_GET['date'];
                 $date = date("Y-m-d", strtotime($dd));
@@ -672,6 +672,25 @@ class InternalController extends Controller
                             ->paginate(10)
                             ->onEachSide(2);
             }
+
+            if (isset($_GET['action'])) {
+                if ($_GET['action'] == "2") { // needs action
+                    $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->where(['internal_history.empto'=>Auth::user()->id])
+                            ->where("internal_history.actioned",2)
+                            ->orderBy('internal_history.days_count','desc')
+                            ->orderBy('internal_history.actioned','asc')
+                            ->orderBy('internal_history.classification','desc')
+                            ->orderBy('internal_history.ref_id','desc')
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+
+                    $search = "needsaction";
+                }
+            }
         }
 
         /*$papcode = DB::table('users')
@@ -682,8 +701,9 @@ class InternalController extends Controller
         //dd($div);
 
         $dontdisplay = "actionbtns";
+
         $window = "internal";
-        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window','dontdisplay'));
+        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window','dontdisplay','search'));
     }
 
     public function list_document_ascending()

@@ -353,6 +353,8 @@ class ExternalController extends Controller
         $docs = DB::table('externals')
             ->get();
 
+        $search = "all";
+        
         if(Auth::user()->access_level=='5' and Auth::user()->division=='RECORDS'){
             $div = DB::table('users')
                     ->where(['users.division'=>'OC'])
@@ -710,6 +712,25 @@ class ExternalController extends Controller
                 ->groupBy('externals.barcode')
                 ->paginate(10)
                 ->onEachSide(2);
+        }
+
+            if (isset($_GET['action'])) {
+                if ($_GET['action'] == "2") { // needs action
+                    $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->where(['internal_history.empto'=>Auth::user()->id])
+                            ->where("internal_history.actioned",2)
+                            ->orderBy('internal_history.days_count','desc')
+                            ->orderBy('internal_history.actioned','asc')
+                            ->orderBy('internal_history.classification','desc')
+                            ->orderBy('internal_history.ref_id','desc')
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+
+                    $search = "needsaction";
+                }
             }
 
         //dd($data);
@@ -731,7 +752,7 @@ class ExternalController extends Controller
         $dontdisplay = true;
         $window = "external";
     	// return view('external.doc-view-list',compact('data','papcode','userlist','datefilter','tplist','div','lib','window'));
-        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window','tplist','papcode','dontdisplay'));
+        return view('internal.doc-view-list',compact('data','userlist','div','datefilter','lib','window','tplist','papcode','dontdisplay','search'));
     }
 
     public function edit_docs_details($ref_id)
