@@ -488,11 +488,26 @@ background: #fff;
                                 <?php $priority = null; $count = 0; // var_dump($data); ?>
     							@foreach($data as $d)
                                     <?php
+                                        
                                         if (isset($_GET['action'])) {
-                                            if ($d->actioned != $_GET['action']) {
-                                                break;
+                                            if ($d->actioned == 2) { // forwarded :: 
+                                                // determine if its from you or needs your action
+                                                if ($_GET['action'] == 2) {
+                                                    if ($d->empto == Auth::user()->id) { // needs your action
+                                                        // continue;
+                                                    } else {
+                                                        break;
+                                                    }
+                                                } else if ($_GET['action']==3) {
+                                                    if ($d->empfrom == Auth::user()->id) { // forwarded to you
+                                                        // continue;
+                                                    } else {
+                                                        break;
+                                                    }
+                                                }
                                             }
                                         }
+                                        
                                     ?>
                                 <tr class='withcontent' data-theid='<?php echo $d->ref_id; ?>'>
                                     @if($d->actioned == 0)

@@ -1462,6 +1462,11 @@ class InternalController extends Controller
                             ->where(['users.f_name' => $request->get('confi')])
                             ->get(["id"]);
 
+            // update first before inserting new history
+            $update = DB::table("internal_history")
+                            ->where("ref_id",$request->get("_id"))
+                            ->update(["actioned"=>0]);
+            // end update
             $data = DB::insert('insert into internal_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination,classification,actioned,empto,empfrom) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
                 [
                 $request->get('_id'),
@@ -2679,7 +2684,6 @@ class InternalController extends Controller
                                 ->orderBy('internals.day_count','desc')
                                 ->orderBy('internals.created_at','desc')
                                 ->paginate(10);
-                        // var_dump($data);
                     } else if ($_GET['action'] == 3) { // you forwarded
                         $data = DB::table('internal_departments')
                                 ->join('internals','internal_departments.ff_id','=','internals.id')
@@ -2692,7 +2696,6 @@ class InternalController extends Controller
                                 ->orderBy('internals.created_at','desc')
                                 ->paginate(10);
                     }
-                
             } else {
                  $data = DB::table('internal_departments')
                         ->join('internals','internal_departments.ff_id','=','internals.id')
