@@ -280,7 +280,8 @@ margin-top: 10px;
                                                     } else if ($window == "internal") {
                                                         echo "Office/Division";
                                                     } else if ($window == "outgoing") {
-                                                        echo "Agency to";
+                                                        // echo "Agency to";
+                                                        echo "From";
                                                     }
                                                 ?>
                                             </td>
@@ -370,10 +371,12 @@ margin-top: 10px;
                                                     } else if ($window == "internal") {
                                                         echo "Office/Division";
                                                     } else if ($window == "outgoing") {
-                                                        echo "Agency to";
+                                                        // echo "Agency to";
+                                                        echo "From";
                                                     }
                                                 ?>
                                             </td>
+
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
                                         
                                         <?php if ($window == "external"){ ?>
@@ -405,8 +408,22 @@ margin-top: 10px;
                                        
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
-                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: pre-wrap;">{{ $d->description }}</td>
+                                            <td align="left" style="font-weight: bold;font-size: 14px !important; white-space: pre-wrap;">{{ $d->description }}</td>
+
+                                            <?php if ($window == "outgoing") { ?>
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Addressee </td>
+                                                <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: pre-wrap;">{{ $d->sendto }}</td>                                                  
+                                            <?php } ?>
                                         </tr>
+
+                                        <?php if ($window == "outgoing") { ?>
+                                            <tr>
+                                                <td> </td>
+                                                <td> </td>
+                                                <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Addressee Email Address </td>
+                                                <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: pre-wrap;">{{ $d->sendto_email }}</td>                                                  
+                                            </tr>
+                                        <?php } ?>
 
                                     </table>
 
@@ -571,6 +588,7 @@ margin-top: 10px;
 
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">
                                                 <?php 
+                                                    
                                                     if ($window == "external") { 
                                                         echo "Agency from";
                                                     } else if ($window == "internal") {
@@ -578,6 +596,7 @@ margin-top: 10px;
                                                     } else if ($window == "outgoing") {
                                                         echo "Agency to";
                                                     }
+
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
@@ -659,13 +678,13 @@ margin-top: 10px;
                                                     } else if ($window == "internal") {
                                                         echo "Office/Division";
                                                     } else if ($window == "outgoing") {
-                                                        echo "Agency to";
+                                                        // echo "Agency to";
+                                                        echo "From";
                                                     }
                                                 ?>
                                             </td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{$d->agency}}</td>
                                        
-
                                         <?php if ($window == "external"){ ?>
                                            
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
