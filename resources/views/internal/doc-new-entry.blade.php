@@ -64,7 +64,7 @@ $(document).ready(function(e){
 
 				    		<tr>
 				    			<td><input class="form-control" style="width: auto;" type="date" name="docdate" id="docdate" value="<?php 
-				    			$startDate = time(); echo date('Y-m-d', strtotime('-1 days')); ?>" placeholder="Date Received" title="Date Received"></td>
+				    			$startDate = time(); echo date('Y-m-d'); ?>" placeholder="Date Received" title="Date Received"></td>
 				    			
 				    			{{--
 				    			<td rowspan="5" valign="top">
