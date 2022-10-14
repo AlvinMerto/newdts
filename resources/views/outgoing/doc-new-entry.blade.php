@@ -64,14 +64,22 @@ $(document).ready(function(e){
 				    			<td><input class="form-control" style="" type="text" name="barcode" id="barcode" value="" placeholder="Barcode Number"  onblur="checkDuplicate();"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="" type="text" name="agency" id="agency" value="" placeholder="Sender"></td>
+				    			<td colspan="2"> <strong> From <strong></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="" type="text" name="agencyto" id="agencyto" value="" placeholder="Agency/Office"></td>
+				    			<td><input class="form-control" style="" type="text" name="agency" id="agency" value="" placeholder="Office From"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="" type="text" name="signature" id="signature" value="" placeholder="Addressee"></td>
+				    			<td><input class="form-control" style="" type="text" name="signature" id="signature" value="" placeholder="From Whom"></td>
 				    		</tr>
+
+				    		<tr>
+				    			<td colspan="2"> <strong> To </strong> </td>
+				    		</tr>
+				    		<tr>
+				    			<td><input class="form-control" style="" type="text" name="agencyto" id="agencyto" value="" placeholder="Addressee"></td>
+				    		</tr>
+				    		
 				    		<tr>
 				    			<td><input class="form-control" style="" type="text" name="signatureemail" id="signatureemail" value="" placeholder="Addressee Email Address"></td>
 				    		</tr>

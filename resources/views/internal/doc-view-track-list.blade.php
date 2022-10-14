@@ -372,7 +372,7 @@ margin-top: 10px;
                                                         echo "Office/Division";
                                                     } else if ($window == "outgoing") {
                                                         // echo "Agency to";
-                                                        echo "From";
+                                                        echo "office from";
                                                     }
                                                 ?>
                                             </td>
@@ -396,7 +396,8 @@ margin-top: 10px;
                                                     } else if ($window == "internal") {
                                                         echo "Sender";
                                                     } else if ($window == "outgoing") {
-                                                        echo "Route to";
+                                                        // echo "Route to";
+                                                        echo "From whom";
                                                     }
                                                 ?>
                                             </td>
