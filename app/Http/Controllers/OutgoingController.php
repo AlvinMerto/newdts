@@ -570,6 +570,18 @@ class OutgoingController extends Controller
                 ->orderBy('outgoings.created_at','asc')
                 ->paginate(10)
                 ->onEachSide(2);
+
+            if (isset($_GET['q'])) {
+                $data = DB::table('outgoing_departments')
+                    ->join('outgoings','outgoing_departments.ff_id','=','outgoings.id')
+                    ->join('outgoing_history','outgoing_departments.ff_id','=','outgoing_history.ref_id')
+                    ->Where("outgoing.description","like","%{$_GET['q']}%")
+                    ->groupBy('outgoings.barcode')
+                    ->orderBy('outgoing_history.days_count','desc')
+                    ->orderBy('outgoings.created_at','asc')
+                    ->paginate(10)
+                    ->onEachSide(2);
+            }
         }else{
             // ->where(['outgoing_departments.dept'=>Auth::user()->division])
             // ->where(['outgoing_history.department'=>Auth::user()->division])
@@ -582,8 +594,22 @@ class OutgoingController extends Controller
                 ->orderBy('outgoings.created_at','asc')
                 ->paginate(10)
                 ->onEachSide(2);
+
+            if (isset($_GET['q'])) {
+                $data = DB::table('outgoing_departments')
+                    ->join('outgoings','outgoing_departments.ff_id','=','outgoings.id')
+                    ->join('outgoing_history','outgoing_departments.ff_id','=','outgoing_history.ref_id')
+                    ->where(['outgoing_history.empto'=>Auth::user()->id])
+                    ->Where("outgoing.description","like","%{$_GET['q']}%")
+                    ->groupBy('outgoings.barcode')
+                    ->orderBy('outgoing_history.days_count','desc')
+                    ->orderBy('outgoings.created_at','asc')
+                    ->paginate(10)
+                    ->onEachSide(2);
+            }
         }
 
+        
 
         //dd($data);
         $papcode = DB::table('users')

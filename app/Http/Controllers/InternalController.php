@@ -607,6 +607,19 @@ class InternalController extends Controller
                 ->onEachSide(2);
             }
 
+            if (isset($_GET['q'])) {
+                $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->Where("internals.description","like","%{$_GET['q']}%")
+                            ->orderBy('internal_history.days_count','desc')
+                            ->orderBy('internal_history.actioned','asc')
+                            ->orderBy('internal_history.classification','desc')
+                            ->orderBy('internal_history.ref_id','desc')
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+            }
         }else if(Auth::user()->access_level==4){
             if (!isset($_GET['date'])) {
                 $data = DB::table('internal_departments')
@@ -636,6 +649,20 @@ class InternalController extends Controller
                     ->groupBy('internals.barcode')
                     ->paginate(10)
                     ->onEachSide(2);
+            }
+
+            if (isset($_GET['q'])) {
+                $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->Where("internals.description","like","%{$_GET['q']}%")
+                            ->orderBy('internal_history.days_count','desc')
+                            ->orderBy('internal_history.actioned','asc')
+                            ->orderBy('internal_history.classification','desc')
+                            ->orderBy('internal_history.ref_id','desc')
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
             }
 
         }else{
@@ -674,7 +701,20 @@ class InternalController extends Controller
                             ->onEachSide(2);
             }
 
-            
+            if (isset($_GET['q'])) {
+                $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->where(['internal_history.empto'=>Auth::user()->id])
+                            ->Where("internals.description","like","%{$_GET['q']}%")
+                            ->orderBy('internal_history.days_count','desc')
+                            ->orderBy('internal_history.actioned','asc')
+                            ->orderBy('internal_history.classification','desc')
+                            ->orderBy('internal_history.ref_id','desc')
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+            }
         }
 
         /*$papcode = DB::table('users')
@@ -700,8 +740,10 @@ class InternalController extends Controller
 
                     $search = "needsaction";
                 }
-            }
-            
+        }
+
+        
+
         $dontdisplay = "actionbtns";
 
         $window = "internal";

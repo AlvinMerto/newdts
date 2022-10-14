@@ -697,6 +697,20 @@ class ExternalController extends Controller
                 ->groupBy('externals.barcode')
                 ->paginate(10)
                 ->onEachSide(2);
+
+                if (isset($_GET['q'])) {
+                    $data = DB::table('external_departments')
+                                ->join('externals','external_departments.ff_id','=','externals.id')
+                                ->join('external_history','external_departments.ff_id','=','external_history.ref_id')
+                                ->Where("externals.description","like","%{$_GET['q']}%")
+                                ->orderBy('external_history.days_count','desc')
+                                ->orderBy('external_history.actioned','asc')
+                                ->orderBy('external_history.classification','desc')
+                                ->orderBy('eternal_history.ref_id','desc')
+                                ->groupBy('externals.barcode')
+                                ->paginate(10)
+                                ->onEachSide(2);
+                }
         }else{ 
             // ->where(['external_departments.dept'=>Auth::user()->division])
             // ->where(['external_history.department'=>Auth::user()->division])
@@ -712,6 +726,21 @@ class ExternalController extends Controller
                 ->groupBy('externals.barcode')
                 ->paginate(10)
                 ->onEachSide(2);
+
+                if (isset($_GET['q'])) {
+                    $data = DB::table('external_departments')
+                                ->join('externals','external_departments.ff_id','=','externals.id')
+                                ->join('external_history','external_departments.ff_id','=','external_history.ref_id')
+                                ->where(['external_history.empto'=>Auth::user()->id])
+                                ->Where("externals.description","like","%{$_GET['q']}%")
+                                ->orderBy('external_history.days_count','desc')
+                                ->orderBy('external_history.actioned','asc')
+                                ->orderBy('external_history.classification','desc')
+                                ->orderBy('eternal_history.ref_id','desc')
+                                ->groupBy('externals.barcode')
+                                ->paginate(10)
+                                ->onEachSide(2);
+                }
         }
 
             if (isset($_GET['action'])) {
@@ -732,6 +761,8 @@ class ExternalController extends Controller
                     $search = "needsaction";
                 }
             }
+
+           
 
         //dd($data);
         $papcode = DB::table('users')
@@ -1975,7 +2006,7 @@ class ExternalController extends Controller
                         'actioned' => 1,
                     ]);
         */
-                    
+
         $dontdisplay = "actionbtns";
         $window = "external";
      // return view('external.doc-view-track-list', compact('papcode','data','docimages','userlist','lib','div'));

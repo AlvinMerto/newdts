@@ -62,6 +62,7 @@ $(document).ready(function(e){
     .theinnertbl {
         /*margin-top: -7px; */
         background: #f4f4f4;
+        table-layout: unset;
     }
 
     .theinnertbl tr {
@@ -291,6 +292,16 @@ background: #fff;
                                                         </span>
                                                     </div>
                                                 </div>
+                                                <div class="sidebar-form borderwhite" style="width: 200px; margin-left: 5px;">
+                                                    <div class="input-group whiteboxes">
+                                                        <input type="text" id="qsearchtxt" name="q" class="form-control" placeholder="Search a text in the description...">
+                                                        <span class="input-group-btn">
+                                                            <button type="submit" name="search" id="search-txt-btn" class="search-txt-btn btn btn-flat" style="height: 25pt; margin-top: -1px;" >
+                                                              <i class="fa fa-search"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
 
                                                 <!--div class="sidebar-form borderwhite" style="width: 200px; margin-left: 5px;">
                                                     <div class="input-group whiteboxes">
@@ -338,7 +349,10 @@ background: #fff;
                                                                 $whattodisplay = "Displaying the movement of document that were routed to you last ".date("l - M. d, Y", strtotime($search));
                                                             }
                                                         }
-                                                        echo "<i class='fa fa-caret-right' aria-hidden='true'></i> ".$whattodisplay;
+
+                                                        if ($search != "all") {
+                                                            echo "<i class='fa fa-caret-right' aria-hidden='true'></i> ".$whattodisplay;
+                                                        }
                                                     }
 
                                                     if (isset($sort)){ echo $sort ." documents"; }
@@ -460,6 +474,7 @@ background: #fff;
                                             
                                             <?php if (!isset($dontdisplay)) { ?>
                                                 <?php if (!isset($sort)) { ?>
+                                                    <?php if ($window != "outgoing") { ?>
                                                     <ul class='actionbtns'>
                                                         <a href="<?php echo $theseldate."/?action=2"; ?>"> 
                                                             <li class='<?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs your action </li> 
@@ -471,7 +486,9 @@ background: #fff;
                                                             <li class='<?php //echo $actbtn_fty; ?>'> <i class='fa fa-share' aria-hidden='true'></i> forwarded to you</li> 
                                                         </a-->
                                                     </ul>
+                                                    <?php } ?>
                                                 <?php } ?>
+
                                             <?php } ?>
                                         </td>
                                         <!--td>
@@ -1840,7 +1857,37 @@ background: #fff;
                               timer: 1500
                             });
             }
-        });       
+        });
+
+        $(document).on("click",".search-txt-btn",function(){
+            var x =  $('input#qsearchtxt').val();
+
+            var typeinput = null;
+                typeinput = $(document).find("#type_input").val();
+
+            var theurl = null;
+
+            if (typeinput == "external") {
+                theurl = "{{ url('external-document-list-view') }}/?q="+x;
+            } else if (typeinput == 'internal') {
+                theurl = "{{ url('/internal-document-list-view') }}/?q="+x;
+            } else if (typeinput == 'outgoing') {
+                theurl = "{{ url('outgoing-document-list-view') }}/?q="+x;
+            }
+
+            if(x.length > 0){
+                window.location = theurl;
+            }else{
+                swal({
+                              position: 'center',
+                              icon: 'warning',
+                              dangerMode: true,
+                              title: 'Search Criteria is empty!',
+                              showConfirmButton: false,
+                              timer: 1500
+                            });
+            }
+        });
     });
 
 
