@@ -51,7 +51,7 @@ $(document).ready(function(e){
 
 				    		<tr>
 				    			<td><input class="form-control" style="" type="date" name="docdate" id="docdate" value="<?php 
-				    			$startDate = time(); echo date('Y-m-d', strtotime('+1 day', $startDate)); ?>" placeholder="Date Received" title="Date Received"></td>
+				    			$startDate = time(); echo date('Y-m-d', strtotime('-1 days')); ?>" placeholder="Date Received" title="Date Received"></td>
 				    			
 				    		</tr>
 				    		{{--<tr>
@@ -77,7 +77,7 @@ $(document).ready(function(e){
 				    			<td><input class="form-control" style="" type="text" name="sendername" id="sendername" value="" placeholder="Sender's Name"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="" type="Email" name="sigEmail" id="sigEmail" value="" placeholder="Sender's Email"></td>
+				    			<td><input class="form-control" style="" type="text" name="sigEmail" id="sigEmail" value="" placeholder="Sender's Email"></td>
 				    		</tr>
 
 				    		<tr>
