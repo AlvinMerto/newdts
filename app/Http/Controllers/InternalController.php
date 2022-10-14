@@ -637,6 +637,7 @@ class InternalController extends Controller
                     ->paginate(10)
                     ->onEachSide(2);
             }
+
         }else{
             // ->where(['internal_history.empto'])
             if (!isset($_GET['date'])) {
@@ -673,7 +674,16 @@ class InternalController extends Controller
                             ->onEachSide(2);
             }
 
-            if (isset($_GET['action'])) {
+            
+        }
+
+        /*$papcode = DB::table('users')
+                    ->groupBy('users.division')
+                    ->orderBy('division','asc')
+                    ->get();
+        */
+        //dd($div);
+        if (isset($_GET['action'])) {
                 if ($_GET['action'] == "2") { // needs action
                     $data = DB::table('internal_departments')
                             ->join('internals','internal_departments.ff_id','=','internals.id')
@@ -691,15 +701,7 @@ class InternalController extends Controller
                     $search = "needsaction";
                 }
             }
-        }
-
-        /*$papcode = DB::table('users')
-                    ->groupBy('users.division')
-                    ->orderBy('division','asc')
-                    ->get();
-        */
-        //dd($div);
-
+            
         $dontdisplay = "actionbtns";
 
         $window = "internal";
@@ -2287,7 +2289,7 @@ class InternalController extends Controller
                         'actioned' => 1,
                     ]);
         */
-        
+
         //dd($data);
 
         $window = "internal";
