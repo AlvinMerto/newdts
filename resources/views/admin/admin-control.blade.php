@@ -147,6 +147,7 @@ $(document).ready(function(e){
                                     <th>Email</th>
                                     <th>Designation</th>
                                     <th>Division</th>
+                                    <th>Access Level</th>
                                     <th>Action</th>
                                 </thead>
 
@@ -178,6 +179,17 @@ $(document).ready(function(e){
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->position}}</td>
                                         <td>{{$user->division}} </td>
+                                        <td>
+                                            <?php 
+                                                switch($user->access_level) {
+                                                    case 1: echo "User"; break;
+                                                    case 2: echo "Chief"; break;
+                                                    case 3: echo "Director"; break;
+                                                    case 4: echo "USEC/SEC/ASEC"; break;
+                                                    case 5: echo "Records"; break;
+                                                }
+                                            ?>
+                                        </td>
                                         <td>
                                             <a href="javascript:void(0);" class="alevel btn btn-small btn-primary mr-3" id="{{$user->id}}" data-status='{{$class}}' data-email='{{$user->email}}' data-fullname='{{$user->f_name}}'>
                                                 <span class="fa fa-expeditedssl" aria-hidden="true"></span> see actions
@@ -523,27 +535,33 @@ $(document).ready(function(e){
             var a_level=0;
 
             if (document.getElementById('chkuser').checked) {
-                a_level=0;
-            }
-
-            if (document.getElementById('chkdchief').checked) {
+                //a_level=0;
                 a_level=1;
             }
 
-            if (document.getElementById('chkdirector').checked) {
+            if (document.getElementById('chkdchief').checked) {
+                //a_level=1;
                 a_level=2;
+            }
+
+            if (document.getElementById('chkdirector').checked) {
+                //a_level=2;
+                a_level=3;
             }
 
             if (document.getElementById('chkoc').checked) {
                 a_level=4;
+                //a_level=5;
             }
 
             if (document.getElementById('chkadmin').checked) {
                 a_level=4;
+                //a_level=5;
             }
 
             if (document.getElementById('chkrecord').checked) {
                 a_level=5;
+                //a_level=6;
             }
 
             $.ajax({

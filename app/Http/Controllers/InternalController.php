@@ -15,6 +15,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 
+use App\Classes\Classes;
 class InternalController extends Controller
 {
     //
@@ -84,7 +85,7 @@ class InternalController extends Controller
             $data->retdoc  = 0;
         }
         
-
+      //  var_dump($data); return;
         $data->save();
 
         $dept = DB::insert('insert into internal_departments (ff_id, dept, stat) values (?, ?, ?)',
@@ -237,6 +238,8 @@ class InternalController extends Controller
 
     public function list_document()
     {
+        //echo Auth::user()->access_level;
+
         $userlist = DB::table('users')
                     ->orderBy('users.f_name')
                     ->get();
@@ -250,310 +253,327 @@ class InternalController extends Controller
                         ->orderBy('internals.id','asc')
                         ->get();
 
-        if(Auth::user()->access_level=='5' and Auth::user()->division=='RECORDS'){
-            $div = DB::table('users')
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
+        $d = new Classes();
+        $div = $d->settheaccesslevel(Auth::user()->access_level, Auth::user()->division);
 
-        }else if(Auth::user()->division=='RECORDS' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'RECORDS'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
+        // if(Auth::user()->access_level=='5' and Auth::user()->division=='RECORDS'){
+        //     $div = DB::table('users')
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
 
-        }else if(Auth::user()->division=='OC' and Auth::user()->access_level=='4'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'OFAS'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->orWhere(['users.division'=>'IPPAO'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->orWhere(['users.division'=>'RECORDS'])
-                    ->orWhere('users.division',"like",'AMO%')
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
+        // }else if(Auth::user()->division=='RECORDS' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'RECORDS'])
+        //             ->orWhere(['users.division'=>'OFAS'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
 
-        }else if(Auth::user()->division=='OC' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'OC'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
+        // }else if(Auth::user()->division=='OC' and Auth::user()->access_level=='4'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'OFAS'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->orWhere(['users.division'=>'RECORDS'])
+        //             ->orWhere('users.division',"like",'AMO%')
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
 
-        }else if(Auth::user()->division=='PPPDO' and Auth::user()->access_level=='3'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PPPDO'])
-                    ->orWhere(['users.division'=>'PRD'])
-                    ->orWhere(['users.division'=>'PFD'])
-                    ->orWhere(['users.division'=>'PDD'])
-                    ->orWhere(['users.division'=>'KMD'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PPPDO' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='IPPAO' and Auth::user()->access_level=='3'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IPPAO'])
-                    ->orWhere(['users.division'=>'IPD'])
-                    ->orWhere(['users.division'=>'IRD'])
-                    ->orWhere(['users.division'=>'PuRD'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='IPPAO' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IPPAO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='OFAS' and Auth::user()->access_level=='3'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'OFAS'])
-                    ->orWhere(['users.division'=>'FD'])
-                    ->orWhere(['users.division'=>'AD'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='OFAS' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'OFAS'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // }else if(Auth::user()->division=='OC' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'OC'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
 
-        else if(Auth::user()->division=='PRD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PRD'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PRD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PRD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // }else if(Auth::user()->division=='PPPDO' and Auth::user()->access_level=='3'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PPPDO'])
+        //             ->orWhere(['users.division'=>'PRD'])
+        //             ->orWhere(['users.division'=>'PFD'])
+        //             ->orWhere(['users.division'=>'PDD'])
+        //             ->orWhere(['users.division'=>'KMD'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OFAS'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PPPDO' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='IPPAO' and Auth::user()->access_level=='3'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IPPAO'])
+        //             ->orWhere(['users.division'=>'IPD'])
+        //             ->orWhere(['users.division'=>'IRD'])
+        //             ->orWhere(['users.division'=>'PuRD'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OFAS'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='IPPAO' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IPPAO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='OFAS' and Auth::user()->access_level=='3'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'OFAS'])
+        //             ->orWhere(['users.division'=>'FD'])
+        //             ->orWhere(['users.division'=>'AD'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='OFAS' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'OFAS'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='PFD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PFD'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PFD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PFD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='PRD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PRD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PRD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PRD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='PDD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PDD'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PDD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PDD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='PFD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PFD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PFD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PFD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='KMD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'KMD'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='KMD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'KMD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='PDD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PDD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PDD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PDD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='IPD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IPD'])
-                    ->orWhere(['users.division'=>'IPPAO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='IPD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IPD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='KMD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'KMD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='KMD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'KMD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='IRD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IRD'])
-                    ->orWhere(['users.division'=>'IPPAO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='IRD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IRD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='IPD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IPD'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='IPD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IPD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='PuRD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PuRD'])
-                    ->orWhere(['users.division'=>'IPPAO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PuRD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PuRD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='IRD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IRD'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='IRD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IRD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='FD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'FD'])
-                    ->orWhere(['users.division'=>'OFAS'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='FD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'FD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='PuRD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PuRD'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PuRD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PuRD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='AD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AD'])
-                    ->orWhere(['users.division'=>'OFAS'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='FD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'FD'])
+        //             ->orWhere(['users.division'=>'OFAS'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='FD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'FD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='AMO-CM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-CM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-CM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-CM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='AD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AD'])
+        //             ->orWhere(['users.division'=>'OFAS'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='AMO-NM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-NM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-NM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-NM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='AMO-CM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-CM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-CM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-CM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='AMO-WM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-WM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-WM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-WM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='AMO-NM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-NM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-NM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-NM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='AMO-NEM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-NEM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-NEM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-NEM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='AMO-WM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-WM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-WM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-WM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else if(Auth::user()->division=='AMO-SCM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-SCM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-SCM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-SCM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='AMO-NEM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-NEM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-NEM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-NEM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
-        else{
-            $div = DB::table('users')
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        // else if(Auth::user()->division=='AMO-SCM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-SCM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-SCM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-SCM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else{
+        //     $div = DB::table('users')
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
 
         $lib = DB::table('library')
                     ->orderBy('library.id','asc')
@@ -580,31 +600,54 @@ class InternalController extends Controller
         if (Auth::user()->access_level==5)
         {   
             if (!isset($_GET['date'])) {
-            $data = DB::table('internal_departments')
-                ->join('internals','internal_departments.ff_id','=','internals.id')
-                ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
-                ->orderBy('internal_history.days_count','desc')
-                ->orderBy('internal_history.actioned','asc')
-                ->orderBy('internal_history.classification','desc')
-                ->orderBy('internal_history.ref_id','desc')
-                ->groupBy('internals.barcode')
-                ->paginate(10)
-                ->onEachSide(2);
+                if (isset($_GET['sort'])) {
+                    if ($_GET['sort']=="docdate") {
+                        $order = "desc";
+
+                        if (isset($_GET['order'])) {
+                            if ($_GET['order'] == 1) {
+                                $order = "desc";
+                            } else if ($_GET['order'] == 2) {
+                                $order = "asc";
+                            }
+                        }
+                        $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->orderBy('internals.id',$order)
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+                    }
+                } else {
+                    $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->orderBy('internal_history.days_count','desc')
+                            ->orderBy('internal_history.actioned','asc')
+                            ->orderBy('internal_history.classification','desc')
+                            ->orderBy('internal_history.ref_id','desc')
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+                }
             } else {
+
                 // 2021-12-01 03:23:23
-            $date = date("Y-m-d h:i:s");
-            //echo "hello".$date;
-            $data = DB::table('internal_departments')
-                ->join('internals','internal_departments.ff_id','=','internals.id')
-                ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
-                ->where(['updated_at'=>$date])
-                ->orderBy('internal_history.days_count','desc')
-                ->orderBy('internal_history.actioned','asc')
-                ->orderBy('internal_history.classification','desc')
-                ->orderBy('internal_history.ref_id','desc')
-                ->groupBy('internals.barcode')
-                ->paginate(10)
-                ->onEachSide(2);
+                $date = date("Y-m-d h:i:s");
+                //echo "hello".$date;
+                        $data = DB::table('internal_departments')
+                                    ->join('internals','internal_departments.ff_id','=','internals.id')
+                                    ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                                    ->where(['updated_at'=>$date])
+                                    ->orderBy('internal_history.days_count','desc')
+                                    ->orderBy('internal_history.actioned','asc')
+                                    ->orderBy('internal_history.classification','desc')
+                                    ->orderBy('internal_history.ref_id','desc')
+                                    ->groupBy('internals.barcode')
+                                    ->paginate(10)
+                                    ->onEachSide(2);
+                
             }
 
             if (isset($_GET['q'])) {
@@ -622,19 +665,44 @@ class InternalController extends Controller
             }
         }else if(Auth::user()->access_level==4){
             if (!isset($_GET['date'])) {
-                $data = DB::table('internal_departments')
-                    ->join('internals','internal_departments.ff_id','=','internals.id')
-                    ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
-                    ->where(['internal_departments.dept'=>Auth::user()->division])
-                    ->where(['internal_history.department'=>Auth::user()->division])
-                    ->orderBy('internal_history.days_count','desc')
-                    ->orderBy('internal_history.actioned','asc')
-                    ->orderBy('internal_history.classification','desc')
-                    ->orderBy('internal_history.ref_id','desc')
-                    ->groupBy('internals.barcode')
-                    ->paginate(10)
-                    ->onEachSide(2);
+                if (isset($_GET['sort'])) {
+                    if ($_GET['sort']=="docdate") {
+                        $order = "desc";
+
+                        if (isset($_GET['order'])) {
+                            if ($_GET['order'] == 1) {
+                                $order = "desc";
+                            } else if ($_GET['order'] == 2) {
+                                $order = "asc";
+                            }
+                        }
+
+                        $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->where(['internal_departments.dept'=>Auth::user()->division])
+                            ->where(['internal_history.department'=>Auth::user()->division])
+                            ->orderBy('internals.id',$order)
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+                    }
+                } else {
+                    $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->where(['internal_departments.dept'=>Auth::user()->division])
+                            ->where(['internal_history.department'=>Auth::user()->division])
+                            ->orderBy('internal_history.days_count','desc')
+                            ->orderBy('internal_history.actioned','asc')
+                            ->orderBy('internal_history.classification','desc')
+                            ->orderBy('internal_history.ref_id','desc')
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+                }
             } else {
+                // not in used
                 // 2021-12-01 03:23:23
                 $date = date("Y-m-d h:i:s");
                 echo "hello".$date;
@@ -665,25 +733,50 @@ class InternalController extends Controller
                             ->onEachSide(2);
             }
 
-        }else{
+        }else{ // commoner account LOLS
             // ->where(['internal_history.empto'])
             if (!isset($_GET['date'])) {
-                $data = DB::table('internal_departments')
-                            ->join('internals','internal_departments.ff_id','=','internals.id')
-                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
-                            ->where(['internal_history.empto'=>Auth::user()->id])
-                            ->orWhere(['internal_history.empfrom'=>Auth::user()->id])
-                            ->orderBy('internal_history.days_count','desc')
-                            ->orderBy('internal_history.actioned','asc')
-                            ->orderBy('internal_history.classification','desc')
-                            ->orderBy('internal_history.ref_id','desc')
-                            ->groupBy('internals.barcode')
-                            ->paginate(10)
-                            ->onEachSide(2);
                             /*
                             ->where(['internal_departments.dept'=>Auth::user()->division])
                             ->where(['internal_history.department'=>Auth::user()->division])
                             */
+      
+                    if (isset($_GET['sort'])) {
+                        if ($_GET['sort']=="docdate") {
+                            $order = "desc";
+
+                            if (isset($_GET['order'])) {
+                                if ($_GET['order'] == 1) {
+                                    $order = "desc";
+                                } else if ($_GET['order'] == 2) {
+                                    $order = "asc";
+                                }
+                            }
+
+                            $data = DB::table('internal_departments')
+                                ->join('internals','internal_departments.ff_id','=','internals.id')
+                                ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                                ->where(['internal_history.empto'=>Auth::user()->id])
+                                ->orWhere(['internal_history.empfrom'=>Auth::user()->id])
+                                ->orderBy('internals.id',$order)
+                                ->groupBy('internals.barcode')
+                                ->paginate(10)
+                                ->onEachSide(2);
+                        }
+                    } else {
+                         $data = DB::table('internal_departments')
+                                    ->join('internals','internal_departments.ff_id','=','internals.id')
+                                    ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                                    ->where(['internal_history.empto'=>Auth::user()->id])
+                                    ->orWhere(['internal_history.empfrom'=>Auth::user()->id])
+                                    ->orderBy('internal_history.days_count','desc')
+                                    ->orderBy('internal_history.actioned','asc')
+                                    ->orderBy('internal_history.classification','desc')
+                                    ->orderBy('internal_history.ref_id','desc')
+                                    ->groupBy('internals.barcode')
+                                    ->paginate(10)
+                                    ->onEachSide(2);
+                    }
             } else { // not in used
                 // 2021-12-01 03:23:23
                 $dd   = $_GET['date'];
@@ -737,12 +830,10 @@ class InternalController extends Controller
                             ->groupBy('internals.barcode')
                             ->paginate(10)
                             ->onEachSide(2);
-
+                            
                     $search = "needsaction";
                 }
         }
-
-        
 
         $dontdisplay = "actionbtns";
 
@@ -1139,7 +1230,8 @@ class InternalController extends Controller
                     ->orderBy('division','asc')
                     ->get();
 
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div'));
+        $window = "internal";
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window'));
     }
 
     public function get_user_list($u)
@@ -2007,318 +2099,328 @@ class InternalController extends Controller
                     ->orderBy('library.id','asc')
                     ->get();
 
-        if(Auth::user()->access_level=='5' and Auth::user()->division=='RECORDS'){
-            /*
-            $div = DB::table('users')
-                    ->where(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->orWhere(['users.division'=>'RECORDS'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-            */
-            $div = DB::table('users')
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='RECORDS' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'RECORDS'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
+        // if(Auth::user()->access_level=='5' and Auth::user()->division=='RECORDS'){
+        //     /*
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->orWhere(['users.division'=>'RECORDS'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        //     */
+        //     $div = DB::table('users')
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='RECORDS' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'RECORDS'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
 
-        }else if(Auth::user()->division=='OC' and Auth::user()->access_level=='4'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'OFAS'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->orWhere(['users.division'=>'IPPAO'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->orWhere(['users.division'=>'RECORDS'])
-                    ->orWhere('users.division',"like",'AMO%')
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
+        // }else if(Auth::user()->division=='OC' and Auth::user()->access_level=='4'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'OFAS'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->orWhere(['users.division'=>'RECORDS'])
+        //             ->orWhere('users.division',"like",'AMO%')
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
 
-        }else if(Auth::user()->division=='OC' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'OC'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
+        // }else if(Auth::user()->division=='OC' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'OC'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
 
-        }else if(Auth::user()->division=='PPPDO' and Auth::user()->access_level=='3'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PPPDO'])
-                    ->orWhere(['users.division'=>'PRD'])
-                    ->orWhere(['users.division'=>'PFD'])
-                    ->orWhere(['users.division'=>'PDD'])
-                    ->orWhere(['users.division'=>'KMD'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PPPDO' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='IPPAO' and Auth::user()->access_level=='3'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IPPAO'])
-                    ->orWhere(['users.division'=>'IPD'])
-                    ->orWhere(['users.division'=>'IRD'])
-                    ->orWhere(['users.division'=>'PuRD'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='IPPAO' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IPPAO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='OFAS' and Auth::user()->access_level=='3'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'OFAS'])
-                    ->orWhere(['users.division'=>'FD'])
-                    ->orWhere(['users.division'=>'AD'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='OFAS' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'OFAS'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
+        // }else if(Auth::user()->division=='PPPDO' and Auth::user()->access_level=='3'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PPPDO'])
+        //             ->orWhere(['users.division'=>'PRD'])
+        //             ->orWhere(['users.division'=>'PFD'])
+        //             ->orWhere(['users.division'=>'PDD'])
+        //             ->orWhere(['users.division'=>'KMD'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PPPDO' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='IPPAO' and Auth::user()->access_level=='3'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IPPAO'])
+        //             ->orWhere(['users.division'=>'IPD'])
+        //             ->orWhere(['users.division'=>'IRD'])
+        //             ->orWhere(['users.division'=>'PuRD'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='IPPAO' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IPPAO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='OFAS' and Auth::user()->access_level=='3'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'OFAS'])
+        //             ->orWhere(['users.division'=>'FD'])
+        //             ->orWhere(['users.division'=>'AD'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='OFAS' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'OFAS'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='PRD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PRD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PRD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PRD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='PFD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PFD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PFD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PFD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='PDD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PDD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PDD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PDD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='KMD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'KMD'])
+        //             ->orWhere(['users.division'=>'PPPDO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='KMD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'KMD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='IPD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IPD'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='IPD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IPD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='IRD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IRD'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='IRD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'IRD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='PuRD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PuRD'])
+        //             ->orWhere(['users.division'=>'IPPAO'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='PuRD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'PuRD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='FD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'FD'])
+        //             ->orWhere(['users.division'=>'OFAS'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='FD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'FD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='AD' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AD'])
+        //             ->orWhere(['users.division'=>'OFAS'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AD' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AD'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='AMO-CM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-CM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-CM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-CM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='AMO-NM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-NM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-NM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-NM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='AMO-WM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-WM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-WM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-WM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='AMO-NEM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-NEM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-NEM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-NEM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else if(Auth::user()->division=='AMO-SCM' and Auth::user()->access_level=='2'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-SCM'])
+        //             ->orWhere(['users.division'=>'OC'])
+        //             ->orWhere(['users.division'=>'OED'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }else if(Auth::user()->division=='AMO-SCM' and Auth::user()->access_level=='1'){
+        //     $div = DB::table('users')
+        //             ->where(['users.division'=>'AMO-SCM'])
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+        // else{
+        //     $div = DB::table('users')
+        //             ->groupBy('users.division')
+        //             ->orderBy('users.division', 'asc')
+        //             ->get();
+        // }
+
+
+        // echo Auth::user()->access_level;
+
+        if (Auth::user()->access_level == 1) {
+
         }
 
-        else if(Auth::user()->division=='PRD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PRD'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PRD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PRD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='PFD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PFD'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PFD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PFD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='PDD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PDD'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PDD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PDD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='KMD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'KMD'])
-                    ->orWhere(['users.division'=>'PPPDO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='KMD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'KMD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='IPD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IPD'])
-                    ->orWhere(['users.division'=>'IPPAO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='IPD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IPD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='IRD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IRD'])
-                    ->orWhere(['users.division'=>'IPPAO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='IRD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'IRD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='PuRD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PuRD'])
-                    ->orWhere(['users.division'=>'IPPAO'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='PuRD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'PuRD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='FD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'FD'])
-                    ->orWhere(['users.division'=>'OFAS'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='FD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'FD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='AD' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AD'])
-                    ->orWhere(['users.division'=>'OFAS'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AD' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AD'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='AMO-CM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-CM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-CM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-CM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='AMO-NM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-NM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-NM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-NM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='AMO-WM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-WM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-WM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-WM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='AMO-NEM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-NEM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-NEM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-NEM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else if(Auth::user()->division=='AMO-SCM' and Auth::user()->access_level=='2'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-SCM'])
-                    ->orWhere(['users.division'=>'OC'])
-                    ->orWhere(['users.division'=>'OED'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }else if(Auth::user()->division=='AMO-SCM' and Auth::user()->access_level=='1'){
-            $div = DB::table('users')
-                    ->where(['users.division'=>'AMO-SCM'])
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
-
-        else{
-            $div = DB::table('users')
-                    ->groupBy('users.division')
-                    ->orderBy('users.division', 'asc')
-                    ->get();
-        }
+        $d = new Classes();
+        $div = $d->settheaccesslevel(Auth::user()->access_level, Auth::user()->division);
 
         $userlist = DB::table('users')
                     ->orderBy('users.f_name')
@@ -2669,14 +2771,37 @@ class InternalController extends Controller
             // ->where('internal_history.actioned',0)
             // ->where('internal_history.empto',Auth::user()->id)->where('internal_history.date_ff',$search)
             // ->where('internal_history.empto',Auth::user()->id)
-                $data = DB::table('internal_departments')
+                if (isset($_GET['sort'])) {
+                    if ($_GET['sort']=="docdate") {
+                        $order = "desc";
+
+                        if (isset($_GET['order'])) {
+                            if ($_GET['order'] == 1) {
+                                $order = "desc";
+                            } else if ($_GET['order'] == 2) {
+                                $order = "asc";
+                            }
+                        }
+
+                        $data = DB::table('internal_departments')
                             ->join('internals','internal_departments.ff_id','=','internals.id')
-                            ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
                             ->where('internal_history.date_ff',$search)
+                            ->orderBy('internals.id',$order)
                             ->groupBy('internals.barcode')
-                            ->orderBy('internals.day_count','desc')
-                            ->orderBy('internals.created_at','desc')
-                            ->paginate(10);
+                            ->paginate(10)
+                            ->onEachSide(2);
+                    }
+                } else {
+                    $data = DB::table('internal_departments')
+                                ->join('internals','internal_departments.ff_id','=','internals.id')
+                                ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id')
+                                ->where('internal_history.date_ff',$search)
+                                ->groupBy('internals.barcode')
+                                ->orderBy('internals.day_count','desc')
+                                ->orderBy('internals.created_at','desc')
+                                ->paginate(10);
+                }
             } else {
                 if ($_GET['action'] == 111111111) { // forwarded to you
                     // ->onEachSide(2)
@@ -2763,7 +2888,30 @@ class InternalController extends Controller
                                 ->paginate(10);
                     }
             } else {
-                 $data = DB::table('internal_departments')
+                if (isset($_GET['sort'])) {
+                    if ($_GET['sort']=="docdate") {
+                        $order = "desc";
+
+                        if (isset($_GET['order'])) {
+                            if ($_GET['order'] == 1) {
+                                $order = "desc";
+                            } else if ($_GET['order'] == 2) {
+                                $order = "asc";
+                            }
+                        }
+
+                        $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->where('internal_history.empto',Auth::user()->id)
+                            ->where('internal_history.date_ff',$search)
+                            ->orderBy('internals.id',$order)
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+                    }
+                } else {
+                    $data = DB::table('internal_departments')
                         ->join('internals','internal_departments.ff_id','=','internals.id')
                         ->join('internal_history','internal_history.ref_id','=','internal_departments.ff_id') 
                         ->where('internal_history.empto',Auth::user()->id)
@@ -2772,6 +2920,7 @@ class InternalController extends Controller
                         ->orderBy('internals.day_count','desc')
                         ->orderBy('internals.created_at','desc')
                         ->paginate(10);
+                }
             }
         }
 
@@ -2789,10 +2938,29 @@ class InternalController extends Controller
                     ->orderBy('library.id','asc')
                     ->get();
 
+        /*
+        $div = DB::table('users')
+                    ->where(['users.division'=>'OFAS'])
+                    ->orWhere(['users.division'=>'PPPDO'])
+                    ->orWhere(['users.division'=>'IPPAO'])
+                    ->orWhere(['users.division'=>'OC'])
+                    ->orWhere(['users.division'=>'OED'])
+                    ->orWhere(['users.division'=>'RECORDS'])
+                    ->orWhere('users.division',"like",'AMO%')
+                    ->groupBy('users.division')
+                    ->orderBy('users.division', 'asc')
+                    ->get();
+        */
+
+        $d = new Classes();
+        $div = $d->settheaccesslevel(Auth::user()->access_level, Auth::user()->division);
+
+        /*
         $div = DB::table('users')
                     ->groupBy('users.division')
                     ->orderBy('users.division', 'asc')
                     ->get();
+        */
 
         //dd($data);
         // var_dump($data);

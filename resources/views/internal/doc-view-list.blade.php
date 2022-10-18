@@ -78,6 +78,49 @@ $(document).ready(function(e){
         font-weight: bold;
         color: #486f99;
         padding: 10px;
+        position: relative;
+    }
+
+    .theinnertbl tr th span {
+        padding: 5px;
+    }
+
+    .theinnertbl tr th span:hover {
+        background: #f1f1f1;
+        cursor: pointer;
+    }
+
+    .theinnertbl tr th span:hover > .dropdivdown__ {
+        display: block;
+        position: absolute;
+        right: 0;
+    }
+
+    .dropdivdown {
+        display: none;
+        box-shadow: 0px 2px 5px #ccc;
+        position: absolute;
+        right: 0;
+        z-index: 100000000000;
+    }
+
+    .dropdivdown ul{
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .dropdivdown ul li{
+        list-style: none;
+        padding: 10px 17px;
+        border: 1px solid #ccc;
+        margin-top: -1px;
+        background: #fff;
+        font-weight: normal;
+        font-size: 14px;
+    }
+
+    .dropdivdown ul li:hover {
+        background: #f1f1f1;
     }
 
     .borderwhite {
@@ -159,7 +202,7 @@ $(document).ready(function(e){
         background: #486f99;
         color: #fff !important;
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: 7px;
         text-align: center;
         position: relative;
     }
@@ -273,6 +316,8 @@ background: #fff;
         padding: 6px;
         font-weight: bold;
     }
+
+
 </style>
 
 <input type="hidden" name="type_input" id="type_input" value="<?php echo $window; ?>">
@@ -385,7 +430,7 @@ background: #fff;
                                                     <a href="{{url('outgoing-document-list-view')}}" style='margin-right: -3px;'>
                                                 <?php } ?>
                                                     <li class = '<?php if(isset($search)){ if ($search == 'all') { echo "selected"; }} ?>' style='padding: 7px 40px; '>
-                                                        All
+                                                        All <?php // if (Auth::user()->access_level == 4) { echo " documents routed to your office"; } ?>
                                                     </li>
                                                 </a>
 
@@ -512,14 +557,34 @@ background: #fff;
     						<table class='theinnertbl'>
                                 <thead style='background: #fff;'>
         							<tr class="border_bottom" style="box-shadow: 0px 2px 5px #ccc;position: relative;">
-                                        <th>Document Date</th>
+                                        <th>Document Date 
+                                            <?php if (!isset($_GET['action'])) { ?>
+                                                <span> <i class="fa fa-angle-double-down" id= 'sortid' aria-hidden="true" style=""></i> 
+                                                    <div class='dropdivdown'>
+                                                        <ul>
+                                                            <a href='?sort=docdate&order=1'> <li> <i class="fa fa-sort-amount-asc" aria-hidden="true" style='margin-right: 9px;'></i> Newest First </li> </a>
+                                                            <a href='?sort=docdate&order=2'> <li> <i class="fa fa-sort-amount-desc" aria-hidden="true" style='margin-right: 9px;'></i> Oldest First </li> </a>
+                                                            <?php if ($window == "internal") { ?>
+                                                                <a href="{{url('internal-document-list-view')}}">
+                                                            <?php } else if($window == "external") { ?>
+                                                                <a href="{{url('external-document-list-view')}}">
+                                                            <?php } else if($window == "outgoing") { ?>
+                                                                <a href="{{url('outgoing-document-list-view')}}">
+                                                            <?php } ?>
+                                                                <li> <i class="fa fa-eraser" aria-hidden="true" style='margin-right: 9px;'></i> Reset Filter </li>
+                                                                </a>
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                            <?php } ?>
+                                        </th>  
         								<th>Barcode</th>
-        								<th>Document Category/Type</th>
+        								<th>Document Category/Type <!--span> <i class="fa fa-angle-double-down" aria-hidden="true" style=""></i> </span--></th>
         								<th>Description</th>
-        								<th>Office/Division</th>
+        								<th>Office/Division </th>
         								<th>Status</th>
         								<th># Days</th>
-                                        <th>Classification</th>
+                                        <th>Classification <span> <i class="fa fa-angle-double-down" aria-hidden="true" style=""></i> </span></th>
         								<!--th>Action</th-->
         							</tr>
                                 </thead>
@@ -1043,18 +1108,20 @@ background: #fff;
                     <td class="p-3" style="border-bottom: none;">
                         <p> Division </p>
                         <select id='divisionselect' class='btn btn-default' style='width: 100%;'>
-                            <?php 
-                                    if ($div->count()>0) {
-                                        foreach($div as $d) {
-                                            if (strlen($d->division) > 0) {
-                                                echo "<option value='{$d->division}'>";
-                                                    echo $d->division;
-                                                echo "</option>";
+                            <optgroup label="Division">
+                                <?php 
+                                        if ($div->count()>0) {
+                                            foreach($div as $d) {
+                                                if (strlen($d->division) > 0) {
+                                                    echo "<option value='{$d->division}'>";
+                                                        echo $d->division;
+                                                    echo "</option>";
+                                                }
                                             }
                                         }
-                                    }
-                                
-                            ?>
+                                    
+                                ?>
+                            </optgroup>
                         </select>
 
                         <input list="divisions" placeholder="Division" name="ff_divisions" id="ff_divisions" class="form-control" onchange="getUserList(this);" style='display:none;'>
@@ -1305,6 +1372,23 @@ background: #fff;
             }
         });
 
+        var dropdownshow = true;
+        $(document).find(".theinnertbl tr th span").on("click", function(){
+            if (dropdownshow == true) {
+                dropdownshow = false;
+                $(this).find(".dropdivdown").show();
+
+                $(this).find("#sortid").removeClass('fa-angle-double-down');
+                $(this).find("#sortid").addClass('fa-angle-double-up');
+            } else {
+                $(this).find(".dropdivdown").hide();
+                dropdownshow = true;    
+
+                $(this).find("#sortid").addClass('fa-angle-double-down');
+                $(this).find("#sortid").removeClass('fa-angle-double-up');
+            }
+        });
+
         $(document).find(".theinnertbl tbody tr.withcontent").on("click",function(){
             $(this).siblings().removeAttr("style");
             $(this).siblings().removeClass("selectedtr");
@@ -1338,8 +1422,8 @@ background: #fff;
                 data: {_token: CSRF_TOKEN,id: id, table : table},
                 success : function(data){
                     $("<p class='lastaction'>"+data['history']+"</p>").appendTo(".dontdisplay td");
-                }, error : function(){
-                    alert("error");
+                }, error : function() {
+                    window.location.href = "{{ url('/login') }}";
                 }
             });
             
@@ -1417,6 +1501,9 @@ background: #fff;
             var alvel = $('input#q_user_level').val(); 
 
             //alert(alvel);
+
+            var theval = $(document).find("#divisionselect").val();
+            getUserList(false, theval);
 
             var theurl = null;
 
@@ -1827,6 +1914,40 @@ background: #fff;
 
     $(document).ready(function() {
 
+        $(document).on("keyup","#q", function(e){
+            if (e.key == "Enter" || e.key == "enter" || e.key == "ENTER") {
+                //var x = document.getElementById("q").value;
+
+                var x =  $('input#q').val();
+
+                var typeinput = null;
+                    typeinput = $(document).find("#type_input").val();
+
+                var theurl = null;
+
+                if (typeinput == "external") {
+                    theurl = "{{ url('/external-document/search-document') }}/"+x;
+                } else if (typeinput == 'internal') {
+                    theurl = "{{ url('/internal-document/search-document') }}/"+x;
+                } else if (typeinput == 'outgoing') {
+                    theurl = "{{ url('/outgoing-document/search-document') }}/"+x;
+                }
+
+                if(x.length > 0){
+                    window.location = theurl;
+                }else{
+                    swal({
+                                  position: 'center',
+                                  icon: 'warning',
+                                  dangerMode: true,
+                                  title: 'Search Criteria is empty!',
+                                  showConfirmButton: false,
+                                  timer: 1500
+                                });
+                }
+            }
+        });
+
         $(document).on("click", ".searchbtn", function() {
              //var x = document.getElementById("q").value;
 
@@ -1856,6 +1977,38 @@ background: #fff;
                               showConfirmButton: false,
                               timer: 1500
                             });
+            }
+        });
+
+        $(document).on("keyup","#qsearchtxt", function(e){
+            if (e.key == "Enter" || e.key == "enter" || e.key == "ENTER") {
+                var x =  $('input#qsearchtxt').val();
+
+                var typeinput = null;
+                    typeinput = $(document).find("#type_input").val();
+
+                var theurl = null;
+
+                if (typeinput == "external") {
+                    theurl = "{{ url('external-document-list-view') }}/?q="+x;
+                } else if (typeinput == 'internal') {
+                    theurl = "{{ url('/internal-document-list-view') }}/?q="+x;
+                } else if (typeinput == 'outgoing') {
+                    theurl = "{{ url('outgoing-document-list-view') }}/?q="+x;
+                }
+
+                if(x.length > 0){
+                    window.location = theurl;
+                }else{
+                    swal({
+                                  position: 'center',
+                                  icon: 'warning',
+                                  dangerMode: true,
+                                  title: 'Search Criteria is empty!',
+                                  showConfirmButton: false,
+                                  timer: 1500
+                                });
+                }
             }
         });
 
