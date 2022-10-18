@@ -6,7 +6,6 @@
 
 	class Classes {
 		public function settheaccesslevel($accesslvl, $div) {
-			
 			if($accesslvl=='5' and $div=='RECORDS'){
 	            $div = DB::table('users')
 	                    ->groupBy('users.division')
