@@ -15,7 +15,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 
-use App\Classes\Classes;
+use App\classes\Classes;
 class InternalController extends Controller
 {
     //

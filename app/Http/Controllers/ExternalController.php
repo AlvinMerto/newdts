@@ -12,7 +12,7 @@ use Auth;
 use DB;
 use Mail;
 
-use App\Classes\Classes;
+use App\classes\Classes;
 class ExternalController extends Controller
 {
     //
