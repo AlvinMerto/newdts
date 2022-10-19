@@ -419,7 +419,7 @@ background: #fff;
                                                         }
                                                         ?> 
                                                         <li class='<?php echo $sel; ?>'>
-                                                            <i class='fa fa-bell' aria-hidden='true'></i> Needs your Action
+                                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Needs your Action
                                                         </li>
                                                     <?php } ?>
                                                 </a>
@@ -459,7 +459,7 @@ background: #fff;
                                                                 }
                                                             }
                                                         ?>
-                                                        <li style="font-size: 14px;" class='{{$todate}}'> Today <?php if ($todate != null) { echo "-".date("M. d, Y"); } ?></li>
+                                                        <li style="font-size: 14px;" class='{{$todate}}'> <i class="fa fa-calendar-o" aria-hidden="true"></i> Today <?php if ($todate != null) { echo "-".date("M. d, Y"); } ?></li>
                                                     </a>
                                                     <?php
                                                         
@@ -483,7 +483,7 @@ background: #fff;
                                                                 }
                                                             }
 
-                                                            echo "<a href='{$datelink}' ><li class='{$selecteddate}' title='".date("D - M. d, Y", strtotime("-{$i} days"))."'>";
+                                                            echo "<a href='{$datelink}' ><li class='{$selecteddate}' title='".date("D - M. d, Y", strtotime("-{$i} days"))."'><i class='fa fa-calendar-o' aria-hidden='true'></i> ";
                                                                 if ($selecteddate != null) {
                                                                     echo date("D - M. d, Y", strtotime("-{$i} days"));
                                                                 } else {
@@ -1063,7 +1063,7 @@ background: #fff;
     						</table>
 
                             @else
-                                <div style="font-size: 16px; color: #7b7b7b; width: 100%; text-align: center;border: 4px dotted #ccc;" class="justify-content-center p-5">No Record Found</div>
+                                <div style="font-size: 16px; color: #7b7b7b; text-align: center;border: 1px dashed #ccc; margin: 10px;" class="justify-content-center p-5">No Record Found</div>
                             @endif
 
     						@if($data->count() > 0)

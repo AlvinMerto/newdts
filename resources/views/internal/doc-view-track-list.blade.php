@@ -249,7 +249,7 @@ margin-top: 10px;
 
                         <section style="width: 100%">
                         <!--Content-->
-                            <table style="align-self: center; table-layout: inherit;">
+                            <table style="align-self: center; ">
                                 
                                 @if($data->count()>0)
                                 @foreach($data as $d)
@@ -260,7 +260,7 @@ margin-top: 10px;
                                     @if($d->confi_name == Auth::user()->f_name && $d->classification == 1)
     
                                         <tr class="border_bottom">
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Date</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right; width: min-content;">Document Date</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;" >{{date('M d, Y', strtotime($d->doc_receive))}}</td>
 
                                             <?php if ($window == "internal" || $window == "outgoing") { ?>
@@ -316,7 +316,7 @@ margin-top: 10px;
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
-                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: pre-wrap;">{{ $d->description }}</td>
+                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->description }}</td>
                                         </tr>
 
                                     </table>
@@ -333,9 +333,9 @@ margin-top: 10px;
                                         <tr class="border_bottom">
                                             <td align="center" >{{$d->destination}}</td>
                                             <td align="left" >{{ $d->date_forwared }}</td>
-                                            <td align="left" style="white-space: pre-wrap;">{{ $d->stat }}</td>
+                                            <td align="left" style="white-space: normal;">{{ $d->stat }}</td>
                                             <td align="center" >{{$d->days_count}}</td>
-                                            <td align="left" style="white-space: pre-wrap;">{!! nl2br($d->remarks) !!}</td>
+                                            <td align="left" style="white-space: normal;">{!! nl2br($d->remarks) !!}</td>
                                         </tr>
                                         @endforeach
                                         @endif
@@ -350,7 +350,7 @@ margin-top: 10px;
                                         </tr>
                                     @elseif(Auth::user()->access_level == 5)
                                         <tr class="border_bottom">
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Date</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right; width: min-content;">Document Date</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;" >{{date('M d, Y', strtotime($d->doc_receive))}}</td>
 
                                              <?php if ($window == "internal" || $window == "outgoing") { ?>
@@ -409,11 +409,11 @@ margin-top: 10px;
                                        
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
-                                            <td align="left" style="font-weight: bold;font-size: 14px !important; white-space: pre-wrap;">{{ $d->description }}</td>
+                                            <td align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->description }}</td>
 
                                             <?php if ($window == "outgoing") { ?>
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Addressee </td>
-                                                <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: pre-wrap;">{{ $d->sendto }}</td>                                                  
+                                                <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->sendto }}</td>                                                  
                                             <?php } ?>
                                         </tr>
 
@@ -422,7 +422,7 @@ margin-top: 10px;
                                                 <td> </td>
                                                 <td> </td>
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Addressee Email Address </td>
-                                                <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: pre-wrap;">{{ $d->sendto_email }}</td>                                                  
+                                                <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->sendto_email }}</td>                                                  
                                             </tr>
                                         <?php } ?>
 
@@ -573,7 +573,7 @@ margin-top: 10px;
                                     @elseif(Auth::user()->access_level != 5 && $d->confi_name == Auth::user()->f_name && $d->classification != 1)
     
                                         <tr class="border_bottom">
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Date</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;width: min-content;">Document Date</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{date('M d, Y', strtotime($d->doc_receive))}}</td>
 
                                             <?php if ($window == "internal" || $window == "outgoing") { ?>
@@ -633,7 +633,7 @@ margin-top: 10px;
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
-                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important;">{{ $d->description }}</td>
+                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->description }}</td>
                                         </tr>
 
                                     </table>
@@ -658,7 +658,7 @@ margin-top: 10px;
 
                                     @elseif(Auth::user()->access_level != 5 && $d->confi_name != Auth::user()->f_name && $d->classification != 1)
                                         <tr class="border_bottom">
-                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Document Date</td>
+                                            <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;width: min-content;">Document Date</td>
                                             <td align="left" style="font-weight: bold;font-size: 14px !important;">{{date('M d, Y', strtotime($d->doc_receive))}}</td>
 
                                             <?php if ($window == "internal" || $window == "outgoing") { ?>
@@ -718,7 +718,7 @@ margin-top: 10px;
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
-                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important;">{{ $d->description }}</td>
+                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important;white-space: normal;">{{ $d->description }}</td>
                                         </tr>
 
                                        </table>
