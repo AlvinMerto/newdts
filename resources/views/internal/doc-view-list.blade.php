@@ -340,7 +340,7 @@ background: #fff;
                                                 </div>
                                                 <div class="sidebar-form borderwhite" style="width: 200px; margin-left: 5px;">
                                                     <div class="input-group whiteboxes">
-                                                        <input type="text" id="qsearchtxt" name="q" class="form-control" placeholder="Search a text in the description...">
+                                                        <input type="text" id="qsearchtxt" name="q" class="form-control" placeholder="Search a text in the description..." <?php if (isset($_GET['q'])){ echo "value='".$_GET['q']."'"; } ?>>
                                                         <span class="input-group-btn">
                                                             <button type="submit" name="search" id="search-txt-btn" class="search-txt-btn btn btn-flat" style="height: 25pt; margin-top: -1px;" >
                                                               <i class="fa fa-search"></i>

@@ -656,7 +656,7 @@ class OutgoingController extends Controller
                     ->join('outgoings','outgoing_departments.ff_id','=','outgoings.id')
                     ->join('outgoing_history','outgoing_departments.ff_id','=','outgoing_history.ref_id')
                     ->where(['outgoing_history.empto'=>Auth::user()->id])
-                    ->Where("outgoing.description","like","%{$_GET['q']}%")
+                    ->Where("outgoings.description","like","%{$_GET['q']}%")
                     ->groupBy('outgoings.barcode')
                     ->orderBy('outgoing_history.days_count','desc')
                     ->orderBy('outgoings.created_at','asc')
