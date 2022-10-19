@@ -285,8 +285,9 @@ background: #fff;
     }
 
     .selectedtr {
+        
+        border-left: 3px solid rgb(72, 111, 153) !important;
         /*
-        border-left: 7px solid rgb(72, 111, 153) !important;
         border-right: 7px solid rgb(72, 111, 153) !important;
         */
         box-shadow: 0px 0px 20px #b0b0b0;
