@@ -210,18 +210,20 @@ $(document).ready(function(e){
     .miniselected {
         color: #486f99 !important;
         border-bottom: 3px solid !important;
+        font-weight: bold;
     }
 
     .actionbtns {
-display: flex;
-column-gap: 5px;
-list-style: none;
-padding: 0px;
-margin-left: 0px;
-font-size: 14px;
-margin-bottom: 0px;
-background: #dfdfdf;
-margin-top: -7px;
+        display: flex;
+        column-gap: 5px;
+        list-style: none;
+        padding: 0px;
+        margin-left: 0px;
+        font-size: 14px;
+        margin-bottom: 0px;
+        background: #dfdfdf;
+        margin-top: -7px;
+        font-weight: normal;
     }
 
     .actionbtns li {
@@ -238,9 +240,9 @@ margin-top: -7px;
 
     .selected ul {
         display: flex;
-margin: 5px 0px 0px 0px;
-padding: 0px;
-background: #fff;
+        margin: 5px 0px 0px 0px;
+        padding: 0px;
+        background: #fff;
     }
 
     .selected:hover {
@@ -585,8 +587,16 @@ background: #fff;
                                                 <span> <i class="fa fa-angle-double-down" id= 'sortid' aria-hidden="true" style=""></i> 
                                                     <div class='dropdivdown'>
                                                         <ul>
-                                                            <a href='?sort=docdate&order=1'> <li> <i class="fa fa-sort-amount-asc" aria-hidden="true" style='margin-right: 9px;'></i> Newest First </li> </a>
-                                                            <a href='?sort=docdate&order=2'> <li> <i class="fa fa-sort-amount-desc" aria-hidden="true" style='margin-right: 9px;'></i> Oldest First </li> </a>
+                                                            <?php 
+                                                                $connector = null;
+                                                                if (isset($_GET['page'])) {
+                                                                    $connector = "&";
+                                                                } else {
+                                                                    $connector = "?";
+                                                                }
+                                                            ?>
+                                                            <a href='<?php echo $connector; ?>sort=docdate&order=1'> <li> <i class="fa fa-sort-amount-asc" aria-hidden="true" style='margin-right: 9px;'></i> Newest First </li> </a>
+                                                            <a href='<?php echo $connector; ?>sort=docdate&order=2'> <li> <i class="fa fa-sort-amount-desc" aria-hidden="true" style='margin-right: 9px;'></i> Oldest First </li> </a>
                                                             <?php if ($window == "internal") { ?>
                                                                 <a href="{{url('internal-document-list-view')}}">
                                                             <?php } else if($window == "external") { ?>
