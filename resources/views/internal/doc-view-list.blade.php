@@ -208,16 +208,15 @@ $(document).ready(function(e){
     }
 
     .miniselected {
-        background: #486f99;
-        color: #fff;
-        border: 0px;
+        color: #486f99 !important;
+        border-bottom: 3px solid !important;
     }
 
     .actionbtns {
 display: flex;
 column-gap: 5px;
 list-style: none;
-padding: 10px 10px 10px 10px;
+padding: 0px;
 margin-left: 0px;
 font-size: 14px;
 margin-bottom: 0px;
@@ -226,9 +225,11 @@ margin-top: -7px;
     }
 
     .actionbtns li {
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 5px;
+        /*
+        border-bottom: 3px solid #486f99;
+        color: #486f99; */
+        color: #737373;
+        padding: 10px;
     }
 
     .selected ul {
@@ -507,9 +508,9 @@ background: #fff;
                                             </ul>
                                             
                                             <?php 
-                                                $actbtn_na  = "btn btn-default";
-                                                $actbtn_fw  = "btn btn-default";
-                                                $actbtn_fty = "btn btn-default";
+                                                $actbtn_na  = null;
+                                                $actbtn_fw  = null;
+                                                $actbtn_fty = null;
 
                                                 if (isset($_GET['action'])) {
                                                     if ($_GET['action'] == 1111111) { // forwarded to you
@@ -551,10 +552,10 @@ background: #fff;
                                                     <?php if ($window != "outgoing") { ?>
                                                     <ul class='actionbtns'>
                                                         <a href="<?php echo $theseldate."/?action=2"; ?>"> 
-                                                            <li class='<?php echo $actbtn_na; ?> btn btn-default'> <i class='fa fa-bell' aria-hidden='true'></i> Needs your action </li> 
+                                                            <li class='<?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs your action </li> 
                                                         </a>
                                                         <a href="<?php echo $theseldate."/?action=3"; ?>"> 
-                                                            <li class='<?php echo $actbtn_fw; ?> btn btn-default'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
+                                                            <li class='<?php echo $actbtn_fw; ?>'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
                                                         </a>
                                                         <!--a href="<?php //echo $theseldate."/?action=2"; ?>"> 
                                                             <li class='<?php //echo $actbtn_fty; ?>'> <i class='fa fa-share' aria-hidden='true'></i> forwarded to you</li> 
