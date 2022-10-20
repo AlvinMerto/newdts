@@ -590,13 +590,13 @@ $(document).ready(function(e){
                                                             <?php 
                                                                 $connector = null;
                                                                 if (isset($_GET['page'])) {
-                                                                    $connector = "&";
+                                                                    $connector = "&page=".$_GET['page'];
                                                                 } else {
-                                                                    $connector = "?";
+                                                                    $connector = null;
                                                                 }
                                                             ?>
-                                                            <a href='<?php echo $connector; ?>sort=docdate&order=1'> <li> <i class="fa fa-sort-amount-asc" aria-hidden="true" style='margin-right: 9px;'></i> Newest First </li> </a>
-                                                            <a href='<?php echo $connector; ?>sort=docdate&order=2'> <li> <i class="fa fa-sort-amount-desc" aria-hidden="true" style='margin-right: 9px;'></i> Oldest First </li> </a>
+                                                            <a href='?sort=docdate&order=1<?php echo $connector; ?>'> <li> <i class="fa fa-sort-amount-asc" aria-hidden="true" style='margin-right: 9px;'></i> Newest First </li> </a>
+                                                            <a href='?sort=docdate&order=2'> <li> <i class="fa fa-sort-amount-desc" aria-hidden="true" style='margin-right: 9px;'></i> Oldest First </li> </a>
                                                             <?php if ($window == "internal") { ?>
                                                                 <a href="{{url('internal-document-list-view')}}">
                                                             <?php } else if($window == "external") { ?>
@@ -1098,9 +1098,18 @@ $(document).ready(function(e){
                                 <div style="font-size: 16px; color: #7b7b7b; text-align: center;border: 1px dashed #ccc; margin: 10px;" class="justify-content-center p-5">No Record Found</div>
                             @endif
 
-    						@if($data->count() > 0)
-								<div class="justify-content-center" style="font-size: 10px; margin-top: 10px; margin-bottom: 50px;">{{ $data->links() }}</div>
-							@endif
+    						<!--@if($data->count() > 0)-->
+								<div class="justify-content-center" style="font-size: 10px; margin-top: 10px; margin-bottom: 50px;">
+                                    <!--{{ $data->links() }}-->
+                                    <?php 
+                                        if (isset($_GET['sort']) && isset($_GET['order'])) {
+                                            echo $data->appends(["sort"=>$_GET['sort'], "order"=>$_GET['order']])->render();
+                                        } else {
+                                            echo $data->render();
+                                        }
+                                    ?>
+                                </div>
+							<!--@endif-->
 
                            
 
