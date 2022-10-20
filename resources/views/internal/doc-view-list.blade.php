@@ -211,10 +211,12 @@ $(document).ready(function(e){
 display: flex;
 column-gap: 5px;
 list-style: none;
-padding: 0px;
-margin-left: 11px;
+padding: 10px 10px 10px 10px;
+margin-left: 0px;
 font-size: 14px;
-margin-bottom: 10px;
+margin-bottom: 0px;
+background: #dfdfdf;
+margin-top: -5px;
     }
 
     .actionbtns li {
@@ -518,24 +520,7 @@ background: #fff;
                                                 }
                                             ?>
                                             
-                                            <?php if (!isset($dontdisplay)) { ?>
-                                                <?php if (!isset($sort)) { ?>
-                                                    <?php if ($window != "outgoing") { ?>
-                                                    <ul class='actionbtns'>
-                                                        <a href="<?php echo $theseldate."/?action=2"; ?>"> 
-                                                            <li class='<?php echo $actbtn_na; ?>'> <i class='fa fa-bell' aria-hidden='true'></i> Needs your action </li> 
-                                                        </a>
-                                                        <a href="<?php echo $theseldate."/?action=3"; ?>"> 
-                                                            <li class='<?php echo $actbtn_fw; ?>'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
-                                                        </a>
-                                                        <!--a href="<?php //echo $theseldate."/?action=2"; ?>"> 
-                                                            <li class='<?php //echo $actbtn_fty; ?>'> <i class='fa fa-share' aria-hidden='true'></i> forwarded to you</li> 
-                                                        </a-->
-                                                    </ul>
-                                                    <?php } ?>
-                                                <?php } ?>
-
-                                            <?php } ?>
+                                            
                                         </td>
                                         <!--td>
                                             <div class="d-flex" style="float: right;">
@@ -553,10 +538,34 @@ background: #fff;
 								    
 								      <!-- /.search form -->
     					<!--Content-->
+                                            <?php if (!isset($dontdisplay)) { ?>
+                                                <?php if (!isset($sort)) { ?>
+                                                    <?php if ($window != "outgoing") { ?>
+                                                    <ul class='actionbtns'>
+                                                        <a href="<?php echo $theseldate."/?action=2"; ?>"> 
+                                                            <li class='<?php echo $actbtn_na; ?> btn btn-default'> <i class='fa fa-bell' aria-hidden='true'></i> Needs your action </li> 
+                                                        </a>
+                                                        <a href="<?php echo $theseldate."/?action=3"; ?>"> 
+                                                            <li class='<?php echo $actbtn_fw; ?> btn btn-default'> <i class='fa fa-share' aria-hidden='true'></i> You forwarded </li> 
+                                                        </a>
+                                                        <!--a href="<?php //echo $theseldate."/?action=2"; ?>"> 
+                                                            <li class='<?php //echo $actbtn_fty; ?>'> <i class='fa fa-share' aria-hidden='true'></i> forwarded to you</li> 
+                                                        </a-->
+                                                    </ul>
+                                                    <?php } ?>
+                                                <?php } ?>
+
+                                            <?php } ?>
+
                             @if($data->count()>0)
 
     						<table class='theinnertbl'>
                                 <thead style='background: #fff;'>
+                                    <!--tr style='background: #e6e6e6;'>
+                                        <th colspan="10">
+                                            
+                                        </th>
+                                    </tr-->
         							<tr class="border_bottom" style="box-shadow: 0px 2px 5px #ccc;position: relative;">
                                         <th>Document Date 
                                             <?php if (!isset($_GET['action'])) { ?>
@@ -1361,6 +1370,9 @@ background: #fff;
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script>
     $(document).ready(function() {
+
+        // alert(getOffset(".selected").left);
+        // uniqueclassselected
 
         var opened = false;
         $(document).find("#theheaderdiv").on("click",function(){
@@ -2452,6 +2464,13 @@ function getUserList(ul, div = false){
         });
     };
 
+function getOffset(el) {
+  const rect = el.getBoundingClientRect();
+  return {
+    left: rect.left + window.scrollX,
+    top: rect.top + window.scrollY
+  };
+}
 
 </script>
 @endsection
