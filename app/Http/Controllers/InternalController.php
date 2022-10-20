@@ -834,7 +834,7 @@ class InternalController extends Controller
                     $search = "needsaction";
                 }
         }
-
+        
         $dontdisplay = "actionbtns";
 
         $window = "internal";

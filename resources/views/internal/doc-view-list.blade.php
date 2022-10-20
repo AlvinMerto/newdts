@@ -595,7 +595,7 @@ $(document).ready(function(e){
                                                                     $connector = null;
                                                                 }
                                                             ?>
-                                                            <a href='?sort=docdate&order=1<?php echo $connector; ?>'> <li> <i class="fa fa-sort-amount-asc" aria-hidden="true" style='margin-right: 9px;'></i> Newest First </li> </a>
+                                                            <a href='?sort=docdate&order=1'> <li> <i class="fa fa-sort-amount-asc" aria-hidden="true" style='margin-right: 9px;'></i> Newest First </li> </a>
                                                             <a href='?sort=docdate&order=2'> <li> <i class="fa fa-sort-amount-desc" aria-hidden="true" style='margin-right: 9px;'></i> Oldest First </li> </a>
                                                             <?php if ($window == "internal") { ?>
                                                                 <a href="{{url('internal-document-list-view')}}">
