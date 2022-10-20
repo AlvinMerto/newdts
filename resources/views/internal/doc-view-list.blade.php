@@ -207,6 +207,12 @@ $(document).ready(function(e){
         position: relative;
     }
 
+    .miniselected {
+        background: #486f99;
+        color: #fff;
+        border: 0px;
+    }
+
     .actionbtns {
 display: flex;
 column-gap: 5px;
@@ -501,17 +507,19 @@ background: #fff;
                                             </ul>
                                             
                                             <?php 
-                                                $actbtn_na  = null;
-                                                $actbtn_fw  = null;
-                                                $actbtn_fty = null;
+                                                $actbtn_na  = "btn btn-default";
+                                                $actbtn_fw  = "btn btn-default";
+                                                $actbtn_fty = "btn btn-default";
 
                                                 if (isset($_GET['action'])) {
                                                     if ($_GET['action'] == 1111111) { // forwarded to you
                                                         $actbtn_fty = "selected";
                                                     } else if ($_GET['action'] == 2) { // needed action
-                                                        $actbtn_na = "selected";
+                                                         $actbtn_na = "miniselected";
+                                                        // $actbtn_na = "btn btn-primary";
                                                     } else if ($_GET['action'] == 3) { // you forwarded
-                                                        $actbtn_fw = "selected";
+                                                         $actbtn_fw = "miniselected";
+                                                        // $actbtn_fw = "btn btn-primary";
                                                     }
                                                 }
 
