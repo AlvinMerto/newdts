@@ -182,7 +182,7 @@ $(document).ready(function(e){
     .thedatenavs {
         padding: 0px;
         margin: 0px;
-        margin-left: 10px;
+        /*margin-left: 10px; */
     }
 
     .thedatenavs li{
@@ -216,7 +216,7 @@ margin-left: 0px;
 font-size: 14px;
 margin-bottom: 0px;
 background: #dfdfdf;
-margin-top: -5px;
+margin-top: -7px;
     }
 
     .actionbtns li {
