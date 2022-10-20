@@ -232,6 +232,10 @@ margin-top: -7px;
         padding: 10px;
     }
 
+    .actionbtns li:hover {
+        color: #333;
+    }
+
     .selected ul {
         display: flex;
 margin: 5px 0px 0px 0px;
