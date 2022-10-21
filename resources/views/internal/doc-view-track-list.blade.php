@@ -316,7 +316,7 @@ margin-top: 10px;
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
-                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->description }}</td>
+                                            <td colspan="5" align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->description }}</td>
                                         </tr>
 
                                     </table>
@@ -409,7 +409,7 @@ margin-top: 10px;
                                        
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
-                                            <td align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->description }}</td>
+                                            <td colspan="5" align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->description }}</td>
 
                                             <?php if ($window == "outgoing") { ?>
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Addressee </td>
@@ -633,7 +633,7 @@ margin-top: 10px;
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
-                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->description }}</td>
+                                            <td colspan="5" align="left" style="font-weight: bold;font-size: 14px !important; white-space: normal;">{{ $d->description }}</td>
                                         </tr>
 
                                     </table>
@@ -718,7 +718,7 @@ margin-top: 10px;
 
                                         <tr class="border_bottom">
                                             <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;">Description</td>
-                                            <td colspan="3" align="left" style="font-weight: bold;font-size: 14px !important;white-space: normal;">{{ $d->description }}</td>
+                                            <td colspan="5" align="left" style="font-weight: bold;font-size: 14px !important;white-space: normal;">{{ $d->description }}</td>
                                         </tr>
 
                                        </table>
