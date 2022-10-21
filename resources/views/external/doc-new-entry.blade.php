@@ -77,7 +77,9 @@ $(document).ready(function(e){
 				    			<td><input class="form-control" style="" type="text" name="sendername" id="sendername" value="" placeholder="Sender's Name"></td>
 				    		</tr>
 				    		<tr>
-				    			<td><input class="form-control" style="" type="text" name="sigEmail" id="sigEmail" value="" placeholder="Sender's Email"></td>
+				    			<td><input class="form-control" style="" type="text" name="sigEmail" id="sigEmail" value="" placeholder="Sender's Email"> 
+				    				<!--span style='color: #6f6f6f;'> **if the client did not provide an email address, just put their name and append @mail.com</span-->
+				    			</td>
 				    		</tr>
 
 				    		<tr>

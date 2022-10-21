@@ -18,10 +18,10 @@
 		<td colspan="2" align="center" style="font-weight: bold; font-size: 16px;">MINDANAO DEVELOPMENT AUTHORITY</td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center">Old Airport Bldg., Old Airport Road,</td>
+		<td colspan="2" align="center">14th Floor, Pryce Tower, Pryce Business Park</td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center">Km. 9, Sasa, Davao City 8000 Philippines</td>
+		<td colspan="2" align="center">JP Laurel Avenue, Davao City, Philippines 8000</td>
 	</tr>
 	<tr>
 		<td colspan="2" height="20px;" align="center" style="font-weight: bold;"></td>
@@ -100,9 +100,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" align="justify">
-			<p>&emsp;The degtermination of the completeness of the documentary requirements submitted, if any, is subject to the evaluation of the technical person in charge.
-				<br><br>
-
+			<p>&emsp;The determination of the completeness of the documentary requirements submitted, if any, is subject to the evaluation of the technical person in charge.
 			&emsp;This receipt is system generated and does not require signature.
 			</p>
 		</td>
@@ -118,7 +116,6 @@
 </table>
 <br>
 <br>
-<p style="color: #A4A4A4; font-weight: bold; font-family: Georgia, serif;">Old Airport Bldg., Old Airport Road, <br>
-Km. 9, Sasa, Davao City 8000 Philippines<br></p>
+<p style="color: #A4A4A4; font-weight: bold; font-family: Georgia, serif;">14th Floor, Pryce Tower Pryce Business Park JP Laurel Avenue Davao City, Philippines 8000<br></p>
 <p>www.minda.gov.ph<br><br></p>
-<p style="color: #A4A4A4;">Telefax No.: (082) 221-7060/(082) 221-6929</p>
+<!--p style="color: #A4A4A4;">Telefax No.: (082) 221-7060/(082) 221-6929</p-->

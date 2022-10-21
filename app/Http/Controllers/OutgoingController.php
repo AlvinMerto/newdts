@@ -97,7 +97,7 @@ class OutgoingController extends Controller
         $history = DB::insert('insert into outgoing_history (ref_id, remarks, date_ff, date_forwared, days_count, department, stat,classification,confi_name,destination) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
                 $data->id,
-               'Document Tracking Started',
+               'Start of Document Tracking',
                Carbon::now(),
                 Carbon::now('Asia/Hong_Kong')->format('F j, Y').' @ '.Carbon::now('Asia/Hong_Kong')->format('g:i:s a'),    //$request->get('docdate'),
                 '0',
@@ -105,7 +105,7 @@ class OutgoingController extends Controller
                 'pending',
                 $classification,
                 $confidential,
-                Auth::user()->division,
+                Auth::user()->f_name." started the Document Tracking"
             ]);
 
         if(!is_null($request->get('signatureemail')))

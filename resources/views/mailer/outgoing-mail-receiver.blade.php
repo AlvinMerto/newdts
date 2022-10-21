@@ -18,10 +18,10 @@
 		<td colspan="2" align="center" style="font-weight: bold; font-size: 16px;">MINDANAO DEVELOPMENT AUTHORITY</td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center">Old Airport Bldg., Old Airport Road,</td>
+		<td colspan="2" align="center">14th Floor, Pryce Tower, Pryce Business Park</td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center">Km. 9, Sasa, Davao City 8000 Philippines</td>
+		<td colspan="2" align="center">JP Laurel Avenue, Davao City, Philippines 8000</td>
 	</tr>
 	<tr>
 		<td colspan="2" height="20px;" align="center" style="font-weight: bold;"></td>

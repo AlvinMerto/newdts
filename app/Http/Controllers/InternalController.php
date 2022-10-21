@@ -101,15 +101,16 @@ class InternalController extends Controller
         $history = DB::insert('insert into internal_history (ref_id, remarks, date_ff, date_forwared, days_count, department, stat,classification,confi_name,destination) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
                $data->id,
-               'Document Tracking Started',
+                'Start of Document Tracking',
                 Carbon::now(),
                 Carbon::now('Asia/Hong_Kong')->format('F j, Y').' @ '.Carbon::now('Asia/Hong_Kong')->format('g:i:s a'),   
                 '0',
+                // Auth::user()->f_name." from the Records Unit",
                 Auth::user()->division,
                 'pending',
                 $classification,
                 $confidential,
-                Auth::user()->division,
+                Auth::user()->f_name." started the Document Tracking"
             ]);
 
             $projectcounts = ProjectCount::firstOrCreate(
@@ -834,7 +835,7 @@ class InternalController extends Controller
                     $search = "needsaction";
                 }
         }
-        
+
         $dontdisplay = "actionbtns";
 
         $window = "internal";

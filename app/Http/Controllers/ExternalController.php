@@ -100,7 +100,7 @@ class ExternalController extends Controller
         $history = DB::insert('insert into external_history (ref_id, remarks, date_ff, date_forwared, days_count, department, stat,classification,confi_name,destination) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
                 $data->id,
-               'Document Tracking Started',
+               'Start of Document Tracking',
                Carbon::now(),
                 Carbon::now('Asia/Hong_Kong')->format('F j, Y').' @ '.Carbon::now('Asia/Hong_Kong')->format('g:i:s a'),    //$request->get('docdate'),
                 '0',
@@ -108,7 +108,7 @@ class ExternalController extends Controller
                 'pending',
                 $classification,
                 $confidential,
-                Auth::user()->division,
+                Auth::user()->f_name." started the Document Tracking"
             ]);
 
             $projectcounts = ProjectCount::firstOrCreate(
@@ -144,7 +144,9 @@ class ExternalController extends Controller
 
         $last_id = $data->id;
 
-        $this->send_receipt($last_id,$request->get('barcode'),$request->get('sendername'),$request->get('sigEmail'),$request->get('numcopy'),$request->get('numpages'),$request->get('docdesc'),$request->get('signature'),$request->get('agency'));
+        if (filter_var($request->get('sigEmail'),FILTER_VALIDATE_EMAIL)) {
+            $this->send_receipt($last_id,$request->get('barcode'),$request->get('sendername'),$request->get('sigEmail'),$request->get('numcopy'),$request->get('numpages'),$request->get('docdesc'),$request->get('signature'),$request->get('agency'));
+        }
 
         return redirect('/external-document-new-entry/upload-image/'.$data->id);
     }
