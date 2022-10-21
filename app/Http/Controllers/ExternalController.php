@@ -708,7 +708,8 @@ class ExternalController extends Controller
                         // ->orderBy('external_history.days_count','desc')
                         // ->orderBy('external_history.actioned','asc')
                         // ->orderBy('external_history.classification','desc')
-                        ->orderBy('externals.id',$order)
+                        // ->orderBy('externals.id',$order)
+                        ->orderBy('externals.doc_receive',$order)
                         ->groupBy('externals.barcode')
                         ->paginate(10)
                         ->onEachSide(2);
@@ -761,7 +762,8 @@ class ExternalController extends Controller
                         ->join('external_history','external_departments.ff_id','=','external_history.ref_id')
                         ->where(['external_history.empto'=>Auth::user()->id])
                         ->orWhere(['external_history.empfrom'=>Auth::user()->id])
-                        ->orderBy('externals.id',$order)
+                        // ->orderBy('externals.id',$order)
+                        ->orderBy('externals.doc_receive',$order)
                         ->groupBy('externals.barcode')
                         ->paginate(10)
                         ->onEachSide(2);
@@ -2332,7 +2334,8 @@ class ExternalController extends Controller
                                 ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
                                 ->where('external_history.date_ff',$search)
                                 //->where('external_history.empto',Auth::user()->id)
-                                ->orderBy('externals.id',$order)
+                                // ->orderBy('externals.id',$order)
+                                ->orderBy('externals.doc_receive',$order)
                                 ->groupBy('externals.barcode')
                                 ->paginate(10)
                                 ->onEachSide(2);
@@ -2367,7 +2370,8 @@ class ExternalController extends Controller
                                 ->join('external_history','external_history.ref_id','=','external_departments.ff_id')
                                 ->where('external_history.date_ff',$search)
                                 ->where('external_history.empto',Auth::user()->id)
-                                ->orderBy('externals.id',$order)
+                                // ->orderBy('externals.id',$order)
+                                ->orderBy('externals.doc_receive',$order)
                                 ->groupBy('externals.barcode')
                                 ->paginate(10)
                                 ->onEachSide(2);

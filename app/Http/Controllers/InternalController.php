@@ -588,7 +588,7 @@ class InternalController extends Controller
 
                     $curdate = Carbon::now();
 
-                    $diff = Carbon::parse($curdate)->diffInDays($prevdate);
+                    $diff    = Carbon::parse($curdate)->diffInDays($prevdate);
 
                     $update_doc = DB::table('internals')
                             ->where(['internals.id'=>$doc_id,'internals.status'=>'pending'])
@@ -615,7 +615,8 @@ class InternalController extends Controller
                         $data = DB::table('internal_departments')
                             ->join('internals','internal_departments.ff_id','=','internals.id')
                             ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
-                            ->orderBy('internals.id',$order)
+                            // ->orderBy('internals.id',$order)
+                            ->orderBy('internals.doc_receive',$order)
                             ->groupBy('internals.barcode')
                             ->paginate(10)
                             ->onEachSide(2);
@@ -683,7 +684,8 @@ class InternalController extends Controller
                             ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
                             ->where(['internal_departments.dept'=>Auth::user()->division])
                             ->where(['internal_history.department'=>Auth::user()->division])
-                            ->orderBy('internals.id',$order)
+                            //->orderBy('internals.id',$order)
+                            ->orderBy('internals.doc_receive',$order)
                             ->groupBy('internals.barcode')
                             ->paginate(10)
                             ->onEachSide(2);
@@ -759,7 +761,8 @@ class InternalController extends Controller
                                 ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
                                 ->where(['internal_history.empto'=>Auth::user()->id])
                                 ->orWhere(['internal_history.empfrom'=>Auth::user()->id])
-                                ->orderBy('internals.id',$order)
+                                // ->orderBy('internals.id',$order)
+                                ->orderBy('internals.doc_receive',$order)
                                 ->groupBy('internals.barcode')
                                 ->paginate(10)
                                 ->onEachSide(2);
@@ -2788,7 +2791,8 @@ class InternalController extends Controller
                             ->join('internals','internal_departments.ff_id','=','internals.id')
                             ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
                             ->where('internal_history.date_ff',$search)
-                            ->orderBy('internals.id',$order)
+                            // ->orderBy('internals.id',$order)
+                            ->orderBy('internals.doc_receive',$order)
                             ->groupBy('internals.barcode')
                             ->paginate(10)
                             ->onEachSide(2);
@@ -2906,7 +2910,8 @@ class InternalController extends Controller
                             ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
                             ->where('internal_history.empto',Auth::user()->id)
                             ->where('internal_history.date_ff',$search)
-                            ->orderBy('internals.id',$order)
+                            // ->orderBy('internals.id',$order)
+                            ->orderBy('internals.doc_receive',$order)
                             ->groupBy('internals.barcode')
                             ->paginate(10)
                             ->onEachSide(2);
