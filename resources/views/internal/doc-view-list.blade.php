@@ -1231,6 +1231,9 @@ $(document).ready(function(e){
                         <p>
                             <input type="checkbox" name="for_signature" id="for_signature" style="vertical-align: text-bottom;"><b> <label for='for_signature'> for approval/signature </label> </b>
                         </p>
+                        <p>
+                            <input type="checkbox" name="for_instruction" id="for_instruction" style="vertical-align: text-bottom;"><b> <label for='for_instruction'> for instruction </label> </b>
+                        </p>
                     </td>
                     <td style="vertical-align: top;">
                         <div id='recipientsbox'>
@@ -1701,6 +1704,12 @@ $(document).ready(function(e){
              var fsignature = 0;
         }
 
+        if (document.getElementById('for_instruction').checked) {
+            var finstruction = 1;
+        } else {
+             var finstruction = 0;
+        }
+
         var pr          = $('#docclassification option:selected').val();
         var confiname   =   $('input#ff_employees').val();
 
@@ -1727,7 +1736,7 @@ $(document).ready(function(e){
 
         //    return;
         // send email
-            forwardtoemps(0,CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,confiname,pr);
+            forwardtoemps(0,CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr);
         //     document.getElementById('busywait').style.display = "none"; 
         //    window.location.reload();
             e.preventDefault();
@@ -1736,7 +1745,7 @@ $(document).ready(function(e){
         
     });
     
-    function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,confiname,pr) {
+    function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr) {
 
         var typeinput = null;
             typeinput = $(document).find("#type_input").val();
@@ -1764,7 +1773,8 @@ $(document).ready(function(e){
                        for_guidance:fguidance, 
                        for_reference:freference, 
                        for_review:freview, 
-                       for_signature:fsignature, 
+                       for_signature:fsignature,
+                       for_instruction:finstruction,
                        confi:recipients_lists[startswith],
                        _classification:pr},
 
@@ -1786,7 +1796,7 @@ $(document).ready(function(e){
 
                     if (startswith < recipients_lists.length-1) {
                         var thenewstart = startswith+1;
-                        forwardtoemps(thenewstart, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,confiname,pr);
+                        forwardtoemps(thenewstart, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr);
                     }
 
                     if (startswith == recipients_lists.length-1) {

@@ -450,9 +450,9 @@ margin-top: 10px;
                                                         <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document</button>
    
                                                     <?php if ($window == "external") { ?>
-                                                        <a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a>
+                                                        <!--a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a-->
                                                     <?php } else { ?>
-                                                        <a href="{{ url('/internal-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a>
+                                                        <!--a href="{{ url('/internal-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a-->
                                                     <?php } //else { ?>
                                                         <!--a href="{{ url('/outgoing-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a-->
                                                     <?php //} ?>
@@ -741,15 +741,13 @@ margin-top: 10px;
                                                         <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document</button>
    
                                                     <?php if ($window == "external") { ?>
-                                                        <a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a>
+                                                        <!--a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a-->
                                                     <?php } else { ?>
-                                                        <a href="{{ url('/internal-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a>
+                                                        <!--a href="{{ url('/internal-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a-->
                                                     <?php } //else { ?>
                                                         <!--a href="{{ url('/outgoing-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a-->
                                                     <?php //} ?>
                                                     </div>
-
-                                        
 
                                         <h4 style='margin-top:15px;'> History of Actions </h4>
                                         @if($data->count()>0)
@@ -860,9 +858,9 @@ margin-top: 10px;
                                                         <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document</button>
    
                                                     <?php if ($window == "external") { ?>
-                                                        <a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a>
+                                                        <!--a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a-->
                                                     <?php } else { ?>
-                                                        <a href="{{ url('/internal-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a>
+                                                        <!--a href="{{ url('/internal-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a-->
                                                     <?php } //else { ?>
                                                         <!--a href="{{ url('/outgoing-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New Internal Entry</a-->
                                                     <?php //} ?>
@@ -1045,6 +1043,9 @@ margin-top: 10px;
                         </p>
                         <p>
                             <input type="checkbox" name="for_signature" id="for_signature" style="vertical-align: text-bottom;"><b> <label for='for_signature'> for approval/signature </label> </b>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="for_instruction" id="for_instruction" style="vertical-align: text-bottom;"><b> <label for='for_instruction'> for instruction </label> </b>
                         </p>
                     </td>
                     <td style="vertical-align: top;">
@@ -1339,6 +1340,12 @@ margin-top: 10px;
              var fsignature = 0;
         }
 
+        if (document.getElementById('for_instruction').checked) {
+            var f_instruction = 1;
+        } else {
+             var f_instruction = 0;
+        }
+
         var pr          = $('#docclassification option:selected').val();
         var confiname   =   $('input#ff_employees').val();
 
@@ -1365,7 +1372,7 @@ margin-top: 10px;
 
         //    return;
         // send email
-            forwardtoemps(0,CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,confiname,pr);
+            forwardtoemps(0,CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,f_instruction,confiname,pr);
         //     document.getElementById('busywait').style.display = "none"; 
         //    window.location.reload();
             e.preventDefault();
@@ -1374,7 +1381,7 @@ margin-top: 10px;
         
     });
     
-    function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,confiname,pr) {
+    function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,f_instruction,confiname,pr) {
 
         var theurl = null;
         if (typeofinput == "internal") {
@@ -1398,6 +1405,7 @@ margin-top: 10px;
                        for_reference:freference, 
                        for_review:freview, 
                        for_signature:fsignature, 
+                       for_instruction:f_instruction,
                        confi:recipients_lists[startswith],
                        _classification:pr},
 
@@ -1418,7 +1426,7 @@ margin-top: 10px;
 
                     if (startswith < recipients_lists.length-1) {
                         var thenewstart = startswith+1;
-                        forwardtoemps(thenewstart, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,confiname,pr);
+                        forwardtoemps(thenewstart, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,f_instruction,confiname,pr);
                     }
 
                     if (startswith == recipients_lists.length-1) {

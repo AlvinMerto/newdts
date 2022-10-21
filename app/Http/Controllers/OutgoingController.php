@@ -1371,7 +1371,10 @@ class OutgoingController extends Controller
 
             if($request->get('for_signature')==1){
                 $action_remarks = $action_remarks.' *for approval/signature* <br>';
+            }
 
+            if($request->get('for_instruction')==1){
+                $action_remarks = $action_remarks.' *for instruction* <br>';
             }
 
             if($request->get('remarks') !=""){

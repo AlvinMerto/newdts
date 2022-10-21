@@ -1613,9 +1613,13 @@ class InternalController extends Controller
 
             }
 
+            if($request->get('for_instruction')==1){
+                $action_remarks = $action_remarks.' *for instruction* <br>';
+            }
+
             if($request->get('remarks') !=""){
                 $actions_only   = $action_remarks;
-                $action_remarks = $action_remarks.($request->get('remarks'));
+                $action_remarks = $action_remarks.",".($request->get('remarks'));
             }
 
             $empto_details = DB::table('users')
