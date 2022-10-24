@@ -290,7 +290,7 @@ margin-top: 10px;
                                         <?php if ($window == "external"){ ?>
                                             
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
-                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sender}} </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sendername}} </td>
                                             
                                         <?php } ?>
                                         </tr>
@@ -382,7 +382,7 @@ margin-top: 10px;
                                         <?php if ($window == "external"){ ?>
                                             
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
-                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sender}} </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sendername}} </td>
                                             
                                         <?php } ?>
                                         </tr>
@@ -605,7 +605,7 @@ margin-top: 10px;
                                         <?php if ($window == "external"){ ?>
                                             
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
-                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sender}} </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sendername}} </td>
                                             
                                         <?php } ?>
                                         </tr>
@@ -1070,6 +1070,7 @@ margin-top: 10px;
                 </tr>
                 <tr>
                     <td colspan="2">
+                        <div id='listofpeople'></div>
                         <textarea id="remarks" name="remarks" rows="3" style="width: 100%; max-width: 100%;border: 1px solid #ccc;border-radius: 4px;resize: none;padding: 10px;" placeholder=""></textarea>
                     </td>
                 </tr>
@@ -1276,6 +1277,9 @@ margin-top: 10px;
                             $(this).remove();
                         }
                     }).appendTo("#recipientsbox");
+
+                //$("<p>"+theemp+"</p>").appendTo("#listofpeople");
+
         });
 
         $(document).on("change","#divisionselect",function(){
@@ -1466,6 +1470,19 @@ margin-top: 10px;
 
 
     $(document).ready(function() {
+        $("#remarks").on("keyup",function(e){
+            if (e.key == "@" || e.key == "@" || e.key == "@") {
+                // $("<p>"+theemp+"</p>").appendTo("#listofpeople");
+                var els = $(document).find("#recipientsbox").children("p");
+
+                for(var i=0;i<=els.length-1;i++) {
+                    // innerText
+                    // recipients_lists.push(els[i].innerText);
+                    // $("<p>"+els[i].innerText+"</p>").appendTo("#listofpeople");
+                }
+            }
+        })
+
         $(document).on("mouseover",".photos-gallery-li .photo", function(e) {
             $(document).find(".theblack").remove();
 
