@@ -185,6 +185,10 @@ $(document).ready(function(e){
         /*margin-left: 10px; */
     }
 
+    .thedatenavs a:first-child li {
+        border-left: 0px;
+    }
+
     .thedatenavs li{
         display: inline-block;
         margin-right: -1px;
@@ -420,37 +424,60 @@ $(document).ready(function(e){
                                                 ?>
                                             </p>
                                             <ul class='thedatenavs'>
-                                                <?php if ($window == "internal") { ?>
-                                                    <a href="{{url('internal-document-list-view')}}/?action=2" style='margin-right: -3px;'>
-                                                <?php } else if($window == "external") { ?>
-                                                    <a href="{{url('external-document-list-view')}}?action=2" style='margin-right: -3px;'>
-                                                <?php } ?>
-                                                    <?php if ($window != "outgoing") { 
+                                                <?php 
+                                                    if ($window != "outgoing") { 
                                                         $sel = null;
                                                         if (isset($search)) {
-                                                            if ($search == "needsaction") {
+                                                            if ($search == "docneedsaction") {
                                                                 $sel = "selected";
                                                             }
                                                         }
-                                                        ?> 
-                                                        <li class='<?php echo $sel; ?>'>
-                                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Needs your Action
-                                                        </li>
-                                                    <?php } ?>
-                                                </a>
-                                                <?php if ($window == "internal") { ?>
-                                                    <a href="{{url('internal-document-list-view')}}" style='margin-right: -3px;'>
-                                                <?php } else if($window == "external") { ?>
-                                                    <a href="{{url('external-document-list-view')}}" style='margin-right: -3px;'>
-                                                <?php } else if($window == "outgoing") { ?>
-                                                    <a href="{{url('outgoing-document-list-view')}}" style='margin-right: -3px;'>
+                                                    }
+                                                ?> 
+                                                <?php if ($window == "internal"){ ?>
+                                                    <!--a href="{{url('internal-document-list-view')}}/?action=3" style='margin-right: -3px;'-->
+                                                <?php } else if ($window == "external") {?>
+                                                    <!--a href="{{url('external-document-list-view')}}?action=3" style='margin-right: -3px;'-->
                                                 <?php } ?>
-                                                    <li class = '<?php if(isset($search)){ if ($search == 'all') { echo "selected"; }} ?>' style='padding: 7px 40px; '>
-                                                        All <?php // if (Auth::user()->access_level == 4) { echo " documents routed to your office"; } ?>
-                                                    </li>
-                                                </a>
+                                                        <!--li class="<?php //echo $sel; ?>"> <i class="fa fa-bell" aria-hidden="true"></i> Documents that needed action </li-->
+                                                    <!--/a-->
 
-                                                <?php $theseldate = null; if(!isset($sort)){  ?>
+                                                <?php if (!isset($removenav)) { ?>
+                                                        <?php if ($window == "internal") { ?>
+                                                            <a href="{{url('internal-document-list-view')}}/?action=2" style='margin-right: -3px;'>
+                                                        <?php } else if($window == "external") { ?>
+                                                            <a href="{{url('external-document-list-view')}}?action=2" style='margin-right: -3px;'>
+                                                        <?php } ?>
+                                                            <?php if ($window != "outgoing") { 
+                                                                $sel = null;
+                                                                if (isset($search)) {
+                                                                    if ($search == "needsaction") {
+                                                                        $sel = "selected";
+                                                                    }
+                                                                }
+                                                                ?> 
+                                                                <li class='<?php echo $sel; ?>'>
+                                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Needs your Action
+                                                                </li>
+                                                            <?php } ?>
+                                                        </a>
+                                                    
+
+                                                        <?php if ($window == "internal") { ?>
+                                                            <a href="{{url('internal-document-list-view')}}" style='margin-right: -3px;'>
+                                                        <?php } else if($window == "external") { ?>
+                                                            <a href="{{url('external-document-list-view')}}" style='margin-right: -3px;'>
+                                                        <?php } else if($window == "outgoing") { ?>
+                                                            <a href="{{url('outgoing-document-list-view')}}" style='margin-right: -3px;'>
+                                                        <?php } ?>
+                                                            <li class = '<?php if(isset($search)){ if ($search == 'all') { echo "selected"; }} ?>' style='padding: 7px 40px; '>
+                                                                All <?php // if (Auth::user()->access_level == 4) { echo " documents routed to your office"; } ?>
+                                                            </li>
+                                                        </a>
+                                                <?php } ?>
+                                                
+
+                                                <?php $theseldate = null; if(!isset($sort)){ ?>
                                                     <?php if ($window == "internal") { ?>
                                                         <a href="{{ url('internal-document/filter-date/') }}/{{$date}}" style='margin-right: -3px;'/> 
                                                     <?php } else if($window == "external") { ?>
@@ -460,7 +487,6 @@ $(document).ready(function(e){
                                                     <?php } ?>
                                                         <?php 
                                                             $todate = null;
-
                                                             if (isset($search)) {
                                                                 if (date("M. d, Y") == date("M. d, Y",strtotime($search))) {
                                                                     if ($window == "internal") {
@@ -506,6 +532,18 @@ $(document).ready(function(e){
                                                                 }
                                                             echo "</li></a>";
 
+                                                        }
+
+                                                        if ($theseldate == null) {
+                                                            $thedatesearch = date("M d, Y", strtotime($search));
+                                                            if ($window == "internal") {
+                                                                $datelink = url('internal-document/filter-date/')."/".$thedatesearch;
+                                                            } else if ($window == "external") {
+                                                                $datelink = url('external-document/filter-date/')."/".$thedatesearch;
+                                                            } else if ($window == "outgoing") {
+                                                                $datelink = url('outgoing-document/filter-date/')."/".$thedatesearch;
+                                                            }
+                                                            $theseldate = $datelink;
                                                         }
                                                     ?>
                                                     <input type='date' id='thedatefilterinput' style="font-family: arial;font-size: 13px;padding: 8px;border: 1px solid #ccc; margin-left: -3px;background: #eee;"/>
@@ -1493,15 +1531,15 @@ $(document).ready(function(e){
             var theurl = null;
 
             if (typeinput == "internal") {
-                theurl = "{{ url('internal-document/filter-date/') }}/"+month+" "+day+","+year;
+                theurl = "{{ url('internal-document/filter-date/') }}/"+month+" "+day+", "+year;
             } else if (typeinput == "external") {
-                theurl = "{{ url('external-document/filter-date/') }}/"+month+" "+day+","+year;
+                theurl = "{{ url('external-document/filter-date/') }}/"+month+" "+day+", "+year;
             } else if (typeinput == "outgoing") {
-                theurl = "{{ url('outgoing-document/filter-date/') }}/"+month+" "+day+","+year;
+                theurl = "{{ url('outgoing-document/filter-date/') }}/"+month+" "+day+", "+year;
             }
 
             var datelink = theurl;
-            window.location.href =datelink ;
+            window.location.href = datelink ;
         });
 
         // set the default value

@@ -35,10 +35,12 @@ body {
               <!--a href="{{url('/internal-document-list-view')}}" style="font-size: 12px;"><i class="fa fa-file-o" aria-hidden="true"></i> Internal Document Lists</a></li-->
               <?php $date = date("M d, Y"); ?>
               <a href="{{url('/internal-document/filter-date')}}/{{$date}}" style="font-size: 12px;"><i class="fa fa-file-o" aria-hidden="true"></i> Internal Document Lists</a></li>
+            <?php if (Auth::user()->access_level>=3) { ?>
             <!--li>
               <span id="internal-total-pending" class="label label-warning pull-right">0</span>
-              <a href="{{ url('/internal-document-list-view/pending') }}" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> Pending</a></li>
-            <li>
+              <a href="{{ url('/internal-document-list-view/pending') }}" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> Pending</a></li-->
+            <?php } ?>
+            <!--li>
               <span id="internal-total-ongoing" class="label label-info pull-right">0</span>
               <a href="{{ url('/internal-document-list-view/on-going') }}" style="font-size: 12px;"><i class="fa fa-file-o"aria-hidden="true"></i> On-going</a></li>
             <li>

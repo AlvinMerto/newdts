@@ -834,8 +834,23 @@ class InternalController extends Controller
                             ->groupBy('internals.barcode')
                             ->paginate(10)
                             ->onEachSide(2);
-                            
                     $search = "needsaction";
+                } else if ($_GET['action'] == '3') { // documents that needs action
+                    $thedate = Carbon::today()->subDays(10);
+                    $data = DB::table('internal_departments')
+                            ->join('internals','internal_departments.ff_id','=','internals.id')
+                            ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                            ->where(['internal_history.empto'=>Auth::user()->id])
+                            ->orWhere("internal_history.empfrom",Auth::user()->id)
+                            ->where('internal_history.stat',"<>","complete")
+                            ->orderBy('internal_history.days_count','desc')
+                            ->orderBy('internal_history.actioned','asc')
+                            ->orderBy('internal_history.classification','desc')
+                            ->orderBy('internal_history.ref_id','desc')
+                            ->groupBy('internals.barcode')
+                            ->paginate(10)
+                            ->onEachSide(2);
+                    $search = "docneedsaction";
                 }
         }
 
@@ -1284,13 +1299,26 @@ class InternalController extends Controller
                 ->paginate(10)
                 ->onEachSide(2);
 
-        }else{
-
+        }else if (Auth::user()->access_level==3) {
             $data = DB::table('internal_departments')
                 ->join('internals','internal_departments.ff_id','=','internals.id')
                 ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
                 ->where(['internal_departments.dept'=>Auth::user()->division])
                 ->where(['internal_history.department'=>Auth::user()->division, 'internal_history.stat'=>'pending'])
+                ->groupBy('internals.barcode')
+                ->orderBy('internals.day_count','desc')
+                ->orderBy('internals.created_at','desc')
+                ->paginate(10)
+                ->onEachSide(2);
+        } else {
+            die("You are not allowed here");
+            $data = DB::table('internal_departments')
+                ->join('internals','internal_departments.ff_id','=','internals.id')
+                ->join('internal_history','internal_departments.ff_id','=','internal_history.ref_id')
+                // ->where("internal_history.empto")
+                // ->where(['internal_departments.dept'=>Auth::user()->division])
+                // ->where(['internal_history.department'=>Auth::user()->division, 'internal_history.stat'=>'pending'])
+                ->where("internal_history.stat","pending")
                 ->groupBy('internals.barcode')
                 ->orderBy('internals.day_count','desc')
                 ->orderBy('internals.created_at','desc')
@@ -1307,7 +1335,8 @@ class InternalController extends Controller
 
         $window = "internal";
         $sort   = "Pending";
-        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window','sort'));
+        $removenav = true;
+        return view('internal.doc-view-list',compact('data','papcode','userlist','datefilter','lib','div','window','sort','removenav'));
     }
 
     public function ongoing_list()
