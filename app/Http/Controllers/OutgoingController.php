@@ -71,8 +71,8 @@ class OutgoingController extends Controller
         $data->sendto_email     =   $request->get('signatureemail');
         $data->releasemode      =   $request->get('releasemode');
         //
-        $data->sender           =   Auth::user()->division;  //$request->get('docfrom');
-        $data->type             =   'Outgoing Documents';   //$request->get('doctype');
+        $data->sender           =   Auth::user()->division;    //$request->get('docfrom');
+        $data->type             =   'Outgoing Documents';      //$request->get('doctype');
         $data->doc_receive      =   $request->get('docdate');
         $data->doc_date_ff      =   Carbon::now();
         $data->image            =   $encryp.'.'.$extension;
@@ -108,9 +108,9 @@ class OutgoingController extends Controller
                 Auth::user()->f_name." started the Document Tracking"
             ]);
 
-        if(!is_null($request->get('signatureemail')))
+        //if(!is_null($request->get('signatureemail')))
+        if (filter_var($request->get('signatureemail'),FILTER_VALIDATE_EMAIL))
         {
-
             $this->send_to_receiver($request->get('signatureemail'), $classification,$request->get('docdesc'),$request->get('barcode'),$request->get('releasemode'));
         }
         //return redirect('/outgoing-document-new-entry')->with('alert','New Document save');
