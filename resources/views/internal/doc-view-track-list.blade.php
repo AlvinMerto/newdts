@@ -290,7 +290,7 @@ margin-top: 10px;
                                         <?php if ($window == "external"){ ?>
                                             
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
-                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sendername}} </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important; white-space: unset;">  {{$d->sendername}} </td>
                                             
                                         <?php } ?>
                                         </tr>
@@ -382,7 +382,7 @@ margin-top: 10px;
                                         <?php if ($window == "external"){ ?>
                                             
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
-                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sendername}} </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important; white-space: unset;">  {{$d->sendername}} </td>
                                             
                                         <?php } ?>
                                         </tr>
@@ -605,7 +605,7 @@ margin-top: 10px;
                                         <?php if ($window == "external"){ ?>
                                             
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
-                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sendername}} </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important; white-space: unset;">  {{$d->sendername}} </td>
                                             
                                         <?php } ?>
                                         </tr>
@@ -689,7 +689,7 @@ margin-top: 10px;
                                         <?php if ($window == "external"){ ?>
                                            
                                                 <td align="center" class="card-header" style="padding: 10px; color: #0B4C5F; font-size: 13px !important; text-align: right;"> Sender's name </td>
-                                                <td align="left" style="font-weight: bold;font-size: 14px !important;">  {{$d->sender}} </td>
+                                                <td align="left" style="font-weight: bold;font-size: 14px !important;white-space: unset; ">  {{$d->sendername}} </td>
                                             
                                         <?php } ?>
 
