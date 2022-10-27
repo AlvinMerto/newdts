@@ -1330,6 +1330,10 @@ class ExternalController extends Controller
                 Auth::user()->id
             ]);
 
+            $itemid = DB::table('external_history')
+                        ->where(["ref_id"=>$request->get('_id')])
+                        ->get(['id'])->first()->id;
+
             $dept = DB::insert('insert into external_departments (ff_id, dept, stat) values (?, ?, ?)',
             [
                 $request->get('_id'),
@@ -1370,7 +1374,8 @@ class ExternalController extends Controller
                     "class"     => $pr,
                     "theid"     => $id,
                     "actions"   => $actions_only,
-                    "othins"    => $request->get('remarks')
+                    "othins"    => $request->get('remarks'),
+                    "itemid"    => $itemid
                 ];
 
                 $this->send_to_user($request->get('confi'),$request->get('_classification'),$id, $theinfo);

@@ -77,7 +77,7 @@
 							<td style='padding:15px;'>
 								<p style="background: #79dfea;float: left;padding: 10px;">
 									<!-- http://office.minda.gov.ph:9004/internal-document-track-list-view/view-document-tracking/3 -->
-									<a href="http://office.minda.gov.ph:9004/internal-document-track-list-view/view-document-tracking/<?php echo $theid; ?>" style="text-decoration: none;color: #fff;font-size: 16px;"> View document </a>
+									<a href="http://office.minda.gov.ph:9004/internal-document-track-list-view/view-document-tracking/<?php echo $theid."/?i=".$itemid; ?>" style="text-decoration: none;color: #fff;font-size: 16px;"> View document </a>
 								</p>
 							</td>
 						</tr>
