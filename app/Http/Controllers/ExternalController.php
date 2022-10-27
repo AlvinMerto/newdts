@@ -1306,9 +1306,14 @@ class ExternalController extends Controller
                             ->where(['users.f_name' => $request->get('confi')])
                             ->get(["id"]);
 
+            /*
             $update = DB::table("external_history")
                         ->where("ref_id",$request->get("_id"))
                         ->update(["actioned"=>0]);
+            */
+            $update = DB::table("external_history")
+                                 ->where("id",$request->get("itemid_"))
+                                 ->update(["actioned"=>0]);
 
             $data = DB::insert('insert into external_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination,actioned,empto,empfrom) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
                 [

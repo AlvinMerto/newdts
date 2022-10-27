@@ -506,7 +506,7 @@ margin-top: 10px;
                                                                 }   
                                                             }
                                                             echo "<li class='{$class}'>";
-                                                                echo "<a href='{$url}/?date=".date("mdY",strtotime($ddd))."'>".date("M. d, Y", strtotime($ddd))."</a>";
+                                                                echo "<a href='{$url}/?i=".$_GET['i']."&date=".date("mdY",strtotime($ddd))."'>".date("M. d, Y", strtotime($ddd))."</a>";
                                                             echo "</li>";
                                                         }
                                                     ?>
@@ -520,7 +520,12 @@ margin-top: 10px;
                                                     for($i = 0;$i<=count($data)-1; ++$i) {
                                                         if ( date("mdY", strtotime($data[$i]->date_ff)) == $thedate ) { 
                                                             ?>
-                                                            <div class='perrow'>
+                                                            <div class='perrow'
+                                                                    <?php echo $data[$i]->id;
+                                                                        if ($data[$i]->id == $_GET['i']) {
+                                                                            echo " style='background: #a3d7f7;'";
+                                                                        }
+                                                                    ?>>
                                                                 <div class='one'>
                                                                     <p class='destinationtext'> Action: </p>
                                                                     <p> {{$data[$i]->destination}} </p>
@@ -737,7 +742,7 @@ margin-top: 10px;
                                                     
                                                     <a href="javascript:void(0);" data-dataid="{{$d->ref_id}}" class="go_complete btn btn-small btn-success mr-3" style='margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
 
-                                                    <button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;">
+                                                    <button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;">
                                                         <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document</button>
    
                                                     <?php if ($window == "external") { ?>
@@ -773,7 +778,7 @@ margin-top: 10px;
                                                                 }   
                                                             }
                                                             echo "<li class='{$class}'>";
-                                                                echo "<a href='{$url}/?date=".date("mdY",strtotime($ddd))."'>".date("M. d, Y", strtotime($ddd))."</a>";
+                                                                echo "<a href='{$url}/?i=".$_GET['i']."&date=".date("mdY",strtotime($ddd))."'>".date("M. d, Y", strtotime($ddd))."</a>";
                                                             echo "</li>";
                                                         }
                                                     ?>
@@ -789,7 +794,12 @@ margin-top: 10px;
                                                         if ( date("mdY", strtotime($data[$i]->date_ff)) == $thedate ) { 
                                         ?>
 
-                                                            <div class='perrow'>
+                                                            <div class='perrow' 
+                                                                    <?php 
+                                                                        if ($data[$i]->empto == Auth::user()->id) {
+                                                                            echo " style='background: #a3d7f7;'";
+                                                                        }
+                                                                    ?>>
                                                                 <div class='one'>
                                                                     <p class='destinationtext'> Action: </p>
                                                                     <p> {{$data[$i]->destination}} </p>
@@ -1104,7 +1114,7 @@ margin-top: 10px;
 
                             </span>
                             <span style='float:right;'> 
-                                <a href="javascript:void(0);" class="go_btn btn btn-small btn-primary"><span class="fa fa-share-square-o" aria-hidden="true"></span> Forward</a>    
+                                <a href="javascript:void(0);" class="go_btn btn btn-small btn-primary" data-itemid='<?php echo $_GET['i']; ?>'><span class="fa fa-share-square-o" aria-hidden="true"></span> Forward</a>    
                             </span>
                         </td>
                     </tr>
@@ -1291,6 +1301,7 @@ margin-top: 10px;
         });
 
         var recipients_lists = [];
+        var grouptrackingid  = null;
 
         $(document).on("click", ".go_btn", function(e) {
         var CSRF_TOKEN  =   $('meta[name="csrf-token"]').attr('content');
@@ -1298,6 +1309,7 @@ margin-top: 10px;
         var x_id        =   $('input#_id').val(); // mark here
         var rem         =   $('textarea#remarks').val();
 
+        var itemid      =   $(this).data("itemid");
         /*
         var faction     =   $('input#for_appro_action').val();
         var finfo       =   $('input#for_info').val();
@@ -1376,7 +1388,7 @@ margin-top: 10px;
 
         //    return;
         // send email
-            forwardtoemps(0,CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,f_instruction,confiname,pr);
+            forwardtoemps(0,CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,f_instruction,confiname,pr,itemid);
         //     document.getElementById('busywait').style.display = "none"; 
         //    window.location.reload();
             e.preventDefault();
@@ -1385,7 +1397,7 @@ margin-top: 10px;
         
     });
     
-    function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,f_instruction,confiname,pr) {
+    function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,f_instruction,confiname,pr,itemid) {
 
         var theurl = null;
         if (typeofinput == "internal") {
@@ -1411,7 +1423,8 @@ margin-top: 10px;
                        for_signature:fsignature, 
                        for_instruction:f_instruction,
                        confi:recipients_lists[startswith],
-                       _classification:pr},
+                       _classification:pr,
+                       itemid_ : itemid },
 
                 success: function(response){
 
@@ -1430,7 +1443,7 @@ margin-top: 10px;
 
                     if (startswith < recipients_lists.length-1) {
                         var thenewstart = startswith+1;
-                        forwardtoemps(thenewstart, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,f_instruction,confiname,pr);
+                        forwardtoemps(thenewstart, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,f_instruction,confiname,pr,itemid);
                     }
 
                     if (startswith == recipients_lists.length-1) {

@@ -1655,11 +1655,26 @@ class InternalController extends Controller
                             ->where(['users.f_name' => $request->get('confi')])
                             ->get(["id"]);
 
-            // update first before inserting new history
-            $update = DB::table("internal_history")
-                            ->where("ref_id",$request->get("_id"))
-                            ->update(["actioned"=>0]);
+            // update first before inserting new history      
+
+            // IF HAS THE SAME KEY INDEX DO NOT UPDATE REF_ID TO ZERO(0)
+               // if (count($getgroupid) == 0) {
+               // if ( null !== $request->get("itemid_") ) {    
+                    $update = DB::table("internal_history")
+                                 ->where("id",$request->get("itemid_"))
+                                 ->update(["actioned"=>0]);
+               // } else {
+                    /*
+                    $update = DB::table("internal_history")
+                                 ->where("ref_id",$request->get("_id"))
+                                 ->where("empfrom",Auth::user()->id)
+                                 ->update(['actioned'=>0]);
+                    */
+               // }
+            // END
+
             // end update
+
             $data = DB::insert('insert into internal_history (ref_id, remarks, date_ff, date_forwared, days_count, department,stat, destination,classification,actioned,empto,empfrom) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
                 [
                 $request->get('_id'),
@@ -2854,7 +2869,7 @@ class InternalController extends Controller
                             ->orderBy('internals.day_count','desc')
                             ->orderBy('internals.created_at','desc')
                             ->paginate(10); 
-                } else if($_GET['action'] == 2) { // needs action
+                } else if($_GET['action'] == 2) { // needs action 
                     // ->where('internals.doc_receive',$search)
                     $data = DB::table('internal_departments')
                             ->join('internals','internal_departments.ff_id','=','internals.id')
@@ -2890,7 +2905,6 @@ class InternalController extends Controller
                 // action = 2 -> forwarded to you       :: in web url 2
                 // action = 1 -> completed              :: in web url 1
                 // action = 3 -> you forwarded          :: in web url 3
-
                     if ($_GET['action'] == 111111111) { // forwarded to you
                         $data = DB::table('internal_departments')
                             ->join('internals','internal_departments.ff_id','=','internals.id')

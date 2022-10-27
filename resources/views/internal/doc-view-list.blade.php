@@ -1092,19 +1092,19 @@ $(document).ready(function(e){
                                             <div style='display: contents;' class='theactionbtns'>
                                                 @if($d->confi_name == Auth::user()->f_name && $d->classification == 1 || $d->classification == 1 && Auth::user()->access_level==5)
                                                     <?php if ($window == "internal") { ?>
-                                                        <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                        <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}/?i={{$d->id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
                                                     <?php } else if ($window == "external") { ?>
-                                                        <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                        <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}/?i={{$d->id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
                                                     <?php } else if ($window == "outgoing") { ?>
-                                                        <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                        <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}/?i={{$d->id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
                                                     <?php } ?>
                                                 @elseif($d->classification != 1)
                                                     <?php if ($window == "internal") { ?>
-                                                        <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                        <a href="{{url('/internal-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}/?i={{$d->id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
                                                     <?php } else if ($window == "external") { ?>
-                                                        <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                        <a href="{{url('/external-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}/?i={{$d->id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
                                                     <?php } else if ($window == "outgoing") { ?>
-                                                        <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
+                                                        <a href="{{url('/outgoing-document-track-list-view/view-document-tracking')}}/{{$d->ref_id}}/?i={{$d->id}}" id="{{$d->id}}" class="btn btn-small btn-default"><span class="fa fa-envelope-open-o" aria-hidden="true"></span>View</a>
                                                     <?php } ?>
                                                 @endif
                                                 @if($d->status=='complete' && Auth::user()->division == $d->dept)
@@ -1113,11 +1113,11 @@ $(document).ready(function(e){
                                                     @endif
                                                 @else
                                                     @if($d->confi_name == Auth::user()->f_name && $d->classification == 1)
-                                                        <a href="#" id="{{$d->ref_id}}" class="btn-ff btn btn-default"><span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward </a>
+                                                        <a href="#" id="{{$d->ref_id}}" data-itemid="{{$d->id}}" class="btn-ff btn btn-default forwardcid"><span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward </a>
                                                     @elseif($d->confi_name != Auth::user()->f_name && $d->classification == 1)
-                                                        <a href="#" id="{{$d->ref_id}}" class="btn-ff btn btn-default"><span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward</a>
+                                                        <a href="#" id="{{$d->ref_id}}" data-itemid="{{$d->id}}" class="btn-ff btn btn-default forwardcid"><span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward</a>
                                                     @elseif($d->classification != 1)
-                                                        <a href="#" id="{{$d->ref_id}}" class="btn-ff btn btn-default"><span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward</a>
+                                                        <a href="#" id="{{$d->ref_id}}" data-itemid="{{$d->id}}" class="btn-ff btn btn-default forwardcid"><span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward</a>
                                                     @endif
 
                                                     @if(Auth::user()->access_level==5)
@@ -1696,6 +1696,7 @@ $(document).ready(function(e){
         var x_id        =   $('input#_id').val();
         var rem         =   $('textarea#remarks').val();
 
+        var itemid      = $(document).find(".forwardcid").data("itemid");
         /*
         var faction     =   $('input#for_appro_action').val();
         var finfo       =   $('input#for_info').val();
@@ -1774,7 +1775,7 @@ $(document).ready(function(e){
 
         //    return;
         // send email
-            forwardtoemps(0,CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr);
+            forwardtoemps(0,CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr,itemid);
         //     document.getElementById('busywait').style.display = "none"; 
         //    window.location.reload();
             e.preventDefault();
@@ -1783,7 +1784,7 @@ $(document).ready(function(e){
         
     });
     
-    function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr) {
+    function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr,itemid) {
 
         var typeinput = null;
             typeinput = $(document).find("#type_input").val();
@@ -1814,7 +1815,8 @@ $(document).ready(function(e){
                        for_signature:fsignature,
                        for_instruction:finstruction,
                        confi:recipients_lists[startswith],
-                       _classification:pr},
+                       _classification:pr,
+                       itemid_:itemid},
 
                 success: function(response){
                     console.log(response);
@@ -1834,7 +1836,7 @@ $(document).ready(function(e){
 
                     if (startswith < recipients_lists.length-1) {
                         var thenewstart = startswith+1;
-                        forwardtoemps(thenewstart, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr);
+                        forwardtoemps(thenewstart, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr,itemid);
                     }
 
                     if (startswith == recipients_lists.length-1) {
