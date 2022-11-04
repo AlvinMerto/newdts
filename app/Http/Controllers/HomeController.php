@@ -185,6 +185,10 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function secretary() {
+        return view("admin.secretaryview");
+    }
+
     public function tracking_number()
     {
 

@@ -42,6 +42,10 @@ Route::get("/test",function(){
 	echo "hello world";
 });
 
+// secretary's view
+Route::get("/secretary",[HomeController::class,"secretary"]);
+// end
+
 Auth::routes();
 
 //\\hide external//\\

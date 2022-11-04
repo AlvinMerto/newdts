@@ -1101,13 +1101,13 @@ margin-top: 10px;
                         <td class="p-3" style="border-top: solid thin #fff;">
                             <span style="float: left;" class="mr-3">
                             @if(Auth::user()->access_level==4)
-                                <a href="javascript:void(0);" class="go_approve btn btn-small btn-default mr-3"><span class="fa fa-smile-o" aria-hidden="true"></span> Approve</a>
+                                <!--a href="javascript:void(0);" class="go_approve btn btn-small btn-default mr-3"><span class="fa fa-smile-o" aria-hidden="true"></span> Approve</a>
 
-                                <a href="javascript:void(0);" class="go_disapprove btn btn-small btn-default mr-3"><span class="fa fa-frown-o" aria-hidden="true"></span> Disapprove</a>
+                                <a href="javascript:void(0);" class="go_disapprove btn btn-small btn-default mr-3"><span class="fa fa-frown-o" aria-hidden="true"></span> Disapprove</a-->
                             @elseif(Auth::user()->access_level==5 and Auth::user()->division=='AD')
-                                <a href="javascript:void(0);" class="go_approve btn btn-small btn-default mr-3"><span class="fa fa-smile-o" aria-hidden="true"></span> Approve</a>
+                                <!--a href="javascript:void(0);" class="go_approve btn btn-small btn-default mr-3"><span class="fa fa-smile-o" aria-hidden="true"></span> Approve</a>
 
-                                <a href="javascript:void(0);" class="go_disapprove btn btn-small btn-default mr-3"><span class="fa fa-frown-o" aria-hidden="true"></span> Disapprove</a>
+                                <a href="javascript:void(0);" class="go_disapprove btn btn-small btn-default mr-3"><span class="fa fa-frown-o" aria-hidden="true"></span> Disapprove</a-->
                             @endif
 
                             <!--a href="javascript:void(0);" class="go_complete btn btn-small btn-success mr-3"><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a-->
