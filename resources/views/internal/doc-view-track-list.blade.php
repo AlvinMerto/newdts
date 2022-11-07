@@ -976,6 +976,7 @@ margin-top: 10px;
                     <td class="p-3" style="border-bottom: none; background: #f2f2f2">
                         <p> Division </p>
                         <select id='divisionselect' class='btn btn-default' style='width: 100%;'>
+                            <!--option selected='selected'> -- please select </option-->
                             <?php 
                                 if ($div->count()>0) {
                                     foreach($div as $d) {
@@ -1261,7 +1262,7 @@ margin-top: 10px;
         // set the default value
         // division            
             var defval = $(document).find("#divisionselect").val();
-        //    getUserList(false,defval);
+            getUserList(false,defval);
 
             $(document).find("#ff_divisions").val(defval);
 
@@ -1519,7 +1520,12 @@ margin-top: 10px;
             var id   = $(this).attr("id");
             var alvel = $('input#q_user_level').val(); 
 
-            //alert(alvel);
+            // set default 
+            //    var theval = $(this).val();
+            //    alert(theval);
+            //    getUserList(false, theval);
+            //    $(document).find("#ff_divisions").val( theval );
+            // end setting default
 
             var typeofinput = null;
             typeofinput = $(document).find("#type_input").val();
