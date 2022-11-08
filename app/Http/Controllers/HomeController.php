@@ -200,18 +200,21 @@ class HomeController extends Controller
                 $data = DB::table("internal_history")
                         ->join("internals","internals.id","=","internal_history.ref_id")
                         ->where(["internal_history.ref_id"=>$id])
+                        ->orderBy("internal_history.id","ASC")
                         ->get();
                 break;
             case "external":
                  $data = DB::table("external_history")
                         ->join("externals","externals.id","=","external_history.ref_id")
                         ->where(["external_history.ref_id"=>$id])
+                        ->orderBy("external_history.id","ASC")
                         ->get();
                 break;
             case "outgoing":
                  $data = DB::table("outgoing_history")
                         ->join("outgoings","outgoings.id","=","outgoing_history.ref_id")
                         ->where(["outgoing_history.ref_id"=>$id])
+                        ->orderBy("outgoing_history.id","ASC")
                         ->get();
                 break;
         }

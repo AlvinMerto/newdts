@@ -18,7 +18,12 @@
 		}
 
 		.logopic {
-			width: 6%;
+			width: 10%;
+		}
+
+		#startprinthere {
+			height: 100%;
+			border: 1px solid #ccc;
 		}
 	</style>
 </head>
@@ -46,14 +51,14 @@
 						?>
 					</td>
 			</tr>
-			<tr>
+			<!--tr>
 				<th> Document Type: </th>
 				<td colspan="3">
 					<?php
-						echo $data[0]->type;
+						// echo $data[0]->type;
 					?>
 				</td>
-			</tr>
+			</tr-->
 			<tr>
 				<th> Subject: </th>
 				<td colspan="3">
@@ -66,21 +71,32 @@
 		<table>
 			<thead>
 				<th> DATE </th>
-				<th colspan='2'> ROUTING </th>
+				<!--th colspan='2'> ROUTING </th-->
+				<th> FROM </th>
+				<th> TO </th>
 				<th> REMARKS </th>
 			</thead>
 			<tbody>
 				<?php 
-					if (count($data)>0) {
+					if (count($data)>=1) {
+						echo "<tr>";
+							echo "<td> {$data[1]->date_forwared} </td>";
+							echo "<td> RECORDS </td>";
+							echo "<td> OED </td>";
+							echo "<td> {$data[1]->remarks} </td>";
+						echo "</tr>";
+
+						/*
 						foreach($data as $d) {
 							echo "<tr>";
 								echo "<td> {$d->date_forwared} </td>";
-								// echo "<td> {$d->empto} </td>";
-								// echo "<td> {$d->empfrom} </td>";
-								echo "<td colspan='2'> {$d->destination} </td>";
-								echo "<td> {$d->remarks} </td>";
+								echo "<td> RECORDS </td>";
+								echo "<td> OED </td>";
+								// echo "<td colspan='2'> {$d->destination} </td>";
+								echo "<td>  </td>";
 							echo "</tr>";
 						}
+						*/
 					}
 				?>
 				<!--tr>
