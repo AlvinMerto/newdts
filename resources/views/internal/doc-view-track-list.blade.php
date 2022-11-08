@@ -129,6 +129,8 @@ border-radius: 4px;
     text-align: center;
     font-size: 15px;
     position: relative;
+    border: 1px solid #ccc;
+    margin-bottom: -1px;
 }
 
 .theboxtab ul li a {
@@ -444,11 +446,16 @@ margin-top: 10px;
                                                     <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
                                                         <i class="fa fa-file-excel-o"></i> Export to Excel</button> 
                                                     
-                                                    <a href="javascript:void(0);" class="go_complete btn btn-small btn-success mr-3" style='margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
+                                                    <button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn_printroutslip btn btn-default pl-3 pr-3" style="font-size: 12px; ">
+                                                        <span class="fa fa-print" aria-hidden="true"></span> Print Routing slip </button>
 
-                                                    <button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;">
-                                                        <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document</button>
-   
+                                                    <iframe style='display:none;' id='routingslipprinter'></iframe>
+
+                                                    <button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px;">
+                                                        <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document </button>
+                                                    
+                                                    <a href="javascript:void(0);" class="go_complete btn btn-small btn-success mr-3" style='margin-right: -4px !important; float:right;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
+
                                                     <?php if ($window == "external") { ?>
                                                         <!--a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a-->
                                                     <?php } else { ?>
@@ -740,11 +747,16 @@ margin-top: 10px;
                                                     <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
                                                         <i class="fa fa-file-excel-o"></i> Export to Excel</button> 
                                                     
-                                                    <a href="javascript:void(0);" data-dataid="{{$d->ref_id}}" class="go_complete btn btn-small btn-success mr-3" style='margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
+                                                    <!--button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn_printroutslip btn btn-default pl-3 pr-3" style="font-size: 12px; ">
+                                                        <span class="fa fa-print" aria-hidden="true"></span> Print Routing slip </button>
 
-                                                    <button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;">
-                                                        <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document</button>
-   
+                                                    <iframe style='display:none;' id='routingslipprinter'></iframe-->
+
+                                                    <button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; ">
+                                                        <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document </button>
+                                                    
+                                                    <a href="javascript:void(0);" data-dataid="{{$d->ref_id}}" class="go_complete btn btn-small btn-success mr-3" style='float: right; margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
+
                                                     <?php if ($window == "external") { ?>
                                                         <!--a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a-->
                                                     <?php } else { ?>
@@ -862,11 +874,16 @@ margin-top: 10px;
                                                     <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
                                                         <i class="fa fa-file-excel-o"></i> Export to Excel</button> 
                                                     
-                                                    <a href="javascript:void(0);" data-dataid="{{$d->ref_id}}" class="go_complete btn btn-small btn-success mr-3" style='margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
+                                                    <!--button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn_printroutslip btn btn-default pl-3 pr-3" style="font-size: 12px; ">
+                                                        <span class="fa fa-print" aria-hidden="true"></span> Print Routing slip </button>
 
-                                                    <button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px; margin-right: 10px; margin-left:5px;">
-                                                        <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document</button>
-   
+                                                    <iframe style='display:none;' id='routingslipprinter'></iframe-->
+
+                                                    <button id="{{$d->ref_id}}" class="btn-ff btn btn-primary pl-3 pr-3" style="font-size: 12px;">
+                                                        <span class="fa fa-paper-plane-o" aria-hidden="true"></span> Forward this document </button>
+                                                    
+                                                    <a href="javascript:void(0);" data-dataid="{{$d->ref_id}}" class="go_complete btn btn-small btn-success mr-3" style='float: right; margin-right: -4px !important;'><span class="fa fa-check-square-o" aria-hidden="true"></span> Complete</a>
+
                                                     <?php if ($window == "external") { ?>
                                                         <!--a href="{{ url('/external-document-new-entry') }}" style="font-size: 12px; float: right;" class="btn btn-medium btn-default"><i class="fa fa-edit"></i> New External Entry</a-->
                                                     <?php } else { ?>
@@ -1274,6 +1291,23 @@ margin-top: 10px;
                 $(document).find("#insfor").text("for "+thename);
             });
 
+        // end 
+
+        // printing of routing slip 
+        // btn_printroutslip
+        $(document).on("click",".btn_printroutslip",function(){
+            // routingslipprinter
+            // /print/routingslip
+            var typeofinput = null;
+                typeofinput = $(document).find("#type_input").val();
+
+            var id   = $(this).data("itemid");
+            var from = typeofinput;
+
+            var link = "{{ url('/print/routingslip') }}/?id="+id+"&from="+from;
+
+            $(document).find("#routingslipprinter").attr({"src":link});
+        });
         // end 
 
         $(document).on("click","#addthisemp",function(){

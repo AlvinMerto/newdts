@@ -189,6 +189,36 @@ class HomeController extends Controller
         return view("admin.secretaryview");
     }
 
+    public function printroutingslip() {
+        $data = [];
+
+        $id   = $_GET['id'];
+        $from = $_GET['from'];
+
+        switch($from) {
+            case "internal":
+                $data = DB::table("internal_history")
+                        ->join("internals","internals.id","=","internal_history.ref_id")
+                        ->where(["internal_history.ref_id"=>$id])
+                        ->get();
+                break;
+            case "external":
+                 $data = DB::table("external_history")
+                        ->join("externals","externals.id","=","external_history.ref_id")
+                        ->where(["external_history.ref_id"=>$id])
+                        ->get();
+                break;
+            case "outgoing":
+                 $data = DB::table("outgoing_history")
+                        ->join("outgoings","outgoings.id","=","outgoing_history.ref_id")
+                        ->where(["outgoing_history.ref_id"=>$id])
+                        ->get();
+                break;
+        }
+
+        return view("admin.routingslip", compact('data'));
+    }
+
     public function tracking_number()
     {
 

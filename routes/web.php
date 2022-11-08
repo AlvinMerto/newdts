@@ -50,6 +50,11 @@ Auth::routes();
 
 //\\hide external//\\
 //<< external >>
+
+// routing slip printer 
+Route::get('/print/routingslip',[HomeController::class,"printroutingslip"]);
+// end 
+
 Route::get('/external-document-new-entry', [ExternalController::class, 'new_document']);
 
 Route::post('/external-document/save-entry', [ExternalController::class, 'save_new_documnent']);

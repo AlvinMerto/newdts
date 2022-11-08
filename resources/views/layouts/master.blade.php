@@ -69,6 +69,7 @@
         padding: 5px;
         border: none;
         font-size: 12px !important;
+        border-bottom: 1px solid #ccc;
        }
 
        tr.border_bottom td {
