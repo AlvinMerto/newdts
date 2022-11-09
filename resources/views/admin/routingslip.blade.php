@@ -41,10 +41,6 @@
 			    background: #FFF; 
 			    font-size: 9.5pt;
 			}
-
-			table {
-				page-break-before:always;
-			}
 		}
 	</style>
 </head>
