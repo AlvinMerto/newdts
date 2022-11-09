@@ -29,7 +29,7 @@
 
 		#startprinthere {
 			height: inherit;
-			border: 1px solid #ccc;
+			/*border: 1px solid #ccc;*/
 			overflow: hidden;
 		}
 
@@ -96,17 +96,18 @@
 			<thead>
 				<th style='width: 15%;'> DATE </th>
 				<!--th colspan='2'> ROUTING </th-->
-				<th style='width: 10%;'> FROM </th>
-				<th style='width: 10%;'> TO </th>
+				<th style='width: 15%;'> FROM </th>
+				<th style='width: 15%;'> TO </th>
 				<th> REMARKS </th>
 			</thead>
 			<tbody>
 				<?php 
 					if (count($data)>=1) {
+						list($first, $second) = explode("@", $data[1]->date_forwared);
 						echo "<tr>";
 							// {$data[1]->date_forwared}
 							// echo "<td> ".date("M. d, Y", strtotime($data[1]->date_forwared))." </td>";
-							echo "<td> {$data[1]->date_forwared} </td>";
+							echo "<td> ".date("M. d, Y", strtotime($first))." @ {$second} </td>";
 							echo "<td> RECORDS </td>";
 							echo "<td> OED </td>";
 							echo "<td> {$data[1]->remarks} </td>";
