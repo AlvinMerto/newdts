@@ -64,18 +64,28 @@ $(document).ready(function(e){
 				    				//echo $trackinglist[0]->barcode; 
 				    				
 				    				if (count($trackinglist)>0) {
-				    					// $lastnumber = substr($trackinglist[0]->barcode,6,strlen($trackinglist[0]->barcode)-1);
-				    					list($first,$second,$third,$lastnumber)	= explode("-",$trackinglist[0]->barcode);
-				    					
-				    					if ($trackingseries != date("m")) {
-				    						$trackingseries = date("m");
-				    						$lastnumber = 1;
+				    					if (strrchr($trackinglist[0]->barcode,"-")) {
+				    						list($first,$second,$third,$lastnumber)	= explode("-",$trackinglist[0]->barcode);
 				    					} else {
-				    						$lastnumber++;
+					    					// 2022101	
+				    						$first  = substr($trackinglist[0]->barcode,2,4); // year
+				    						$second = substr($trackinglist[0]->barcode,5,6); // month / trackinglist 
+				    						$third  = null;
+				    						$lastnumber = substr($trackinglist[0]->barcode,6, strlen($trackinglist[0]->barcode)); // the series
 				    					}
-				    					
-				    					$barcode = date("y")."-".$trackingseries."-".date("d")."-".$lastnumber;
-				    					
+
+				    					if ($trackingseries != date("m")) {
+					    					$trackingseries = date("m");
+					    					$lastnumber 	= 1;
+					    				} else {
+					    					$lastnumber++;
+					    				}
+					    					
+					    					$barcode = date("y")."-".$trackingseries."-".date("d")."-".$lastnumber;
+				    				} else {
+				    					// if the tracking list equals zero
+				    					$lastnumber = 1;
+				    					$barcode 	= date("y")."-".date("m")."-".date("d")."-".$lastnumber;
 				    				}
 				    			?>
 				    			<td><input class="form-control" style="" type="text" name="barcode" id="barcode" value="<?php echo $barcode; ?>" placeholder="Barcode Number" onblur="checkDuplicate();"></td>
