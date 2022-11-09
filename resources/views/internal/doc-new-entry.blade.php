@@ -95,7 +95,9 @@ $(document).ready(function(e){
 				    				//echo $trackinglist[0]->barcode; 
 				    				
 				    				if (count($trackinglist)>0) {
-				    					$lastnumber = substr($trackinglist[0]->barcode,6,strlen($trackinglist[0]->barcode)-1);
+				    					// $lastnumber = substr($trackinglist[0]->barcode,6,strlen($trackinglist[0]->barcode)-1);
+				    					list($first,$second,$third,$lastnumber)	= explode("-",$trackinglist[0]->barcode);
+				    					
 				    					if ($trackingseries != date("m")) {
 				    						$trackingseries = date("m");
 				    						$lastnumber = 1;
