@@ -75,7 +75,7 @@ $(document).ready(function(e){
 				    						$lastnumber++;
 				    					}
 				    					
-				    					$barcode = date("Y").$trackingseries.$lastnumber;
+				    					$barcode = date("y")."-".$trackingseries."-".date("d")."-".$lastnumber;
 				    					
 				    				}
 				    			?>
