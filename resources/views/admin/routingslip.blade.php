@@ -6,6 +6,11 @@
 			font-size: .9rem;
 		}
 
+		body {
+			height: 100%;
+			margin: 0px;
+		}
+
 		table {
 			width: 100%;
 			border-collapse: collapse;
@@ -23,8 +28,23 @@
 		}
 
 		#startprinthere {
-			height: 100%;
+			height: inherit;
 			border: 1px solid #ccc;
+			overflow: hidden;
+		}
+
+		@media print { 
+			body {
+				margin: 0px;
+				height:100%; 
+			    overflow: hidden;
+			    background: #FFF; 
+			    font-size: 9.5pt;
+			}
+
+			table {
+				page-break-before:always;
+			}
 		}
 	</style>
 </head>
@@ -88,12 +108,13 @@
 				<?php 
 					if (count($data)>=1) {
 						echo "<tr>";
+							// {$data[1]->date_forwared}
+							// echo "<td> ".date("M. d, Y", strtotime($data[1]->date_forwared))." </td>";
 							echo "<td> {$data[1]->date_forwared} </td>";
 							echo "<td> RECORDS </td>";
 							echo "<td> OED </td>";
 							echo "<td> {$data[1]->remarks} </td>";
 						echo "</tr>";
-
 						/*
 						foreach($data as $d) {
 							echo "<tr>";
@@ -105,6 +126,15 @@
 							echo "</tr>";
 						}
 						*/
+					}
+
+					for($i=0;$i<=10;$i++) {
+						echo "<tr>";
+							echo "<td> &nbsp; </td>";
+							echo "<td> &nbsp; </td>";
+							echo "<td> &nbsp; </td>";
+							echo "<td> &nbsp; </td>";
+						echo "</tr>";
 					}
 				?>
 				<!--tr>
