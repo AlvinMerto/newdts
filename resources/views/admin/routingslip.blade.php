@@ -3,6 +3,7 @@
 	<style>
 		* {
 			font-family: calibri;
+			font-size: .9rem;
 		}
 
 		table {
@@ -42,7 +43,7 @@
 					<td> 
 						<?php
 							if (count($data)>0) {
-								echo $data[0]->briefer_number;
+								echo $data[0]->barcode;
 							}
 						?>
 					</td>
@@ -68,7 +69,8 @@
 				<td colspan="3">
 					<?php
 						if (count($data)>0) {
-							echo $data[0]->doctitle;
+							echo "[".$data[0]->agency."] ";
+							echo $data[0]->description;
 						}
 					?>
 				</td>
