@@ -41,13 +41,17 @@
 				<th> Control No. </th>
 					<td> 
 						<?php
-							echo $data[0]->briefer_number;
+							if (count($data)>0) {
+								echo $data[0]->briefer_number;
+							}
 						?>
 					</td>
 				<th> Date Received: </th>
 					<td>
 						<?php
-							echo date("M. d, Y", strtotime($data[0]->doc_receive));
+							if (count($data)>0) {
+								echo date("M. d, Y", strtotime($data[0]->doc_receive));
+							}
 						?>
 					</td>
 			</tr>
@@ -63,17 +67,19 @@
 				<th> Subject: </th>
 				<td colspan="3">
 					<?php
-						echo $data[0]->doctitle;
+						if (count($data)>0) {
+							echo $data[0]->doctitle;
+						}
 					?>
 				</td>
 			</tr>
 		</table>
 		<table>
 			<thead>
-				<th> DATE </th>
+				<th style='width: 15%;'> DATE </th>
 				<!--th colspan='2'> ROUTING </th-->
-				<th> FROM </th>
-				<th> TO </th>
+				<th style='width: 10%;'> FROM </th>
+				<th style='width: 10%;'> TO </th>
 				<th> REMARKS </th>
 			</thead>
 			<tbody>
