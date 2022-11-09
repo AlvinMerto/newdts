@@ -40,8 +40,9 @@ class InternalController extends Controller
                     ->orderBy('users.division', 'asc')
                     ->get();
 
+        $trackinglist = DB::table('tracking_number')->where('id', DB::raw("(select max(`id`) from tracking_number)"))->get();
         
-    	return view('internal.doc-new-entry',compact('userlist','lib','div'));
+    	return view('internal.doc-new-entry',compact('userlist','lib','div', 'trackinglist'));
     }
 
     public function save_new_documnent(Request $request)
@@ -129,7 +130,9 @@ class InternalController extends Controller
                 $cc = $c->project_count;
             }
 
-            $docs = 'MinDA-'.Carbon::now()->format('Y').'-'.str_pad($cc, 5, '0', STR_PAD_LEFT);
+            //$docs = 'MinDA-'.Carbon::now()->format('Y').'-'.str_pad($cc, 5, '0', STR_PAD_LEFT);
+            // Carbon::now()->format('Y')."".
+            $docs   = Carbon::now()->format("m");
 
             $track = DB::insert('insert into tracking_number (ref_id,tracking_series,barcode,doctitle,docdescription,doctype) values (?, ?, ?, ?, ?, ?)',
                 [

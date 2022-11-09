@@ -35,8 +35,9 @@ class OutgoingController extends Controller
                     ->orderBy('courier.id','asc')
                     ->get();
         
+        $trackinglist = DB::table('tracking_number')->where('id', DB::raw("(select max(`id`) from tracking_number)"))->get();
         // return view('internal.doc-new-entry',compact('userlist','lib','div','courier'));
-    	return view('outgoing.doc-new-entry',compact('userlist','lib','courier'));
+    	return view('outgoing.doc-new-entry',compact('userlist','lib','courier','trackinglist'));
     }
 
     public function save_new_documnent(Request $request)
@@ -91,6 +92,17 @@ class OutgoingController extends Controller
                 Auth::user()->division,
                 'pending',
             ]);
+
+        $docs   = Carbon::now()->format("m");
+        $track = DB::insert('insert into tracking_number (ref_id,tracking_series,barcode,doctitle,docdescription,doctype) values (?, ?, ?, ?, ?, ?)',
+                [
+                    $data->id,
+                    $docs,
+                    $request->get('barcode'),
+                    $request->get('doctitle'),
+                    $request->get('docdesc'),
+                    'Outgoing',
+                ]);
 
         $classification =  $request->get('docclassification');
         $confidential =  $request->get('ff_employee');

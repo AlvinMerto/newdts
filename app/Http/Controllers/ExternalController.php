@@ -37,7 +37,8 @@ class ExternalController extends Controller
                     ->orderBy('library.id','asc')
                     ->get();
 
-    	return view('external.doc-new-entry',compact('userlist','div','lib'));
+        $trackinglist = DB::table('tracking_number')->where('id', DB::raw("(select max(`id`) from tracking_number)"))->get();
+    	return view('external.doc-new-entry',compact('userlist','div','lib','trackinglist'));
     }
 
     public function save_new_documnent(Request $request)
@@ -127,7 +128,8 @@ class ExternalController extends Controller
                 $cc = $c->project_count;
             }
 
-            $docs = 'MinDA-'.Carbon::now()->format('Y').'-'.str_pad($cc, 5, '0', STR_PAD_LEFT);
+            //$docs = 'MinDA-'.Carbon::now()->format('Y').'-'.str_pad($cc, 5, '0', STR_PAD_LEFT);
+            $docs   = Carbon::now()->format("m");
 
             $track = DB::insert('insert into tracking_number (ref_id,tracking_series,barcode,doctitle,docdescription,doctype) values (?, ?, ?, ?, ?, ?)',
                 [

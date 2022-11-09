@@ -58,7 +58,25 @@ $(document).ready(function(e){
 				    			<td><input class="form-control" style="" type="text" name="briefer" id="briefer" value="" placeholder="Briefer Number"></td>
 				    		</tr>--}}
 				    		<tr>
-				    			<td><input class="form-control" style="" type="text" name="barcode" id="barcode" value="" placeholder="Barcode Number" onblur="checkDuplicate();"></td>
+				    			<?php 
+				    				$trackingseries = $trackinglist[0]->tracking_series;
+				    				$barcode        = "";
+				    				//echo $trackinglist[0]->barcode; 
+				    				
+				    				if (count($trackinglist)>0) {
+				    					$lastnumber = substr($trackinglist[0]->barcode,6,strlen($trackinglist[0]->barcode)-1);
+				    					if ($trackingseries != date("m")) {
+				    						$trackingseries = date("m");
+				    						$lastnumber = 1;
+				    					} else {
+				    						$lastnumber++;
+				    					}
+				    					
+				    					$barcode = date("Y").$trackingseries.$lastnumber;
+				    					
+				    				}
+				    			?>
+				    			<td><input class="form-control" style="" type="text" name="barcode" id="barcode" value="<?php echo $barcode; ?>" placeholder="Barcode Number" onblur="checkDuplicate();"></td>
 				    		</tr>
 				    		<tr>
 				    			<td>
