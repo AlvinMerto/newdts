@@ -308,11 +308,12 @@ class HomeController extends Controller
                     ->get();
 
         //dd($data);
+        
         $papcode = DB::table('users')
                     ->groupBy('users.division')
                     ->orderBy('division','asc')
                     ->get();
-
+        
         if(Auth::user()->access_level == 5)
         {
             return view('admin.admin-control',compact('data','papcode','userlist','datefilter','employees'));
@@ -381,6 +382,19 @@ class HomeController extends Controller
                         ->update(["users.email" => $email]);
 
             return response()->json(["updatedrow" => $data]);
+        }
+    }
+
+    public function updateposition(Request $req) {
+        if (request()->ajax()) {
+            $id       = $req->input("id");
+            $position = $req->input("position");
+
+            $data     = DB::table("users")
+                        ->where("users.id",$id)
+                        ->update(["users.position" => $position]);
+
+            return response()->json(["updatedrow" => $data ]);
         }
     }
 

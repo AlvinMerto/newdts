@@ -286,6 +286,7 @@ Route::post("/admin/updateemail", [HomeController::class,"updateemail"]);
 Route::post("/admin/updatepassword",[SettingController::class,"updatepassword"]);
 Route::post("/admin/updatefullname",[HomeController::class,"updatefullname"]);
 Route::post("/admin/addname", [HomeController::class,"addname"]);
+Route::post("/admin/updateposition",[HomeController::class,"updateposition"]);
 
 // get history of actions thru ajax
 Route::post("/admin/gethistory",[HomeController::class,"gethistory"]);

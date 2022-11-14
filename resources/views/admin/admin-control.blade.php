@@ -94,7 +94,7 @@ $(document).ready(function(e){
                                     <tr>
                                         <td class="d-flex" style="border-bottom: 1px solid #0080FF;">
                                             <div class="sidebar-form" style="width: 200px; margin-left: 5px; border-color: #bbb;">
-                                                    <div class="input-group whiteboxes">
+                                                <div class="input-group whiteboxes">
                                                         <input list="typelists" type='text' placeholder="Filter by Division" name="division" id="division" class="form-control">
                                                         <span class="input-group-btn">
                                                             <button type="submit" name="search" id="search-btn-type" class="searchbtn-type btn btn-flat" >
@@ -158,23 +158,19 @@ $(document).ready(function(e){
                                     $class = null;
                                     if ( strlen(trim($user->division)) == 0 ) {
                                         $class = "inactive";
-                                        
                                     } else {
                                         $class = null;
 
-                                        if (count($thedivision) > 0) {
-                                            if (!in_array($user->division, $thedivision)) {
-                                                array_push($thedivision,$user->division);
-                                            }
-                                        } else {
-                                            array_push($thedivision,$user->division);
-                                        }
+                                        //if (count($thedivision) > 0) {
+                                           //if (!in_array($user->division, $thedivision)) {
+                                                //array_push($thedivision,$user->division);
+                                            //}
+                                        //} else {
+                                            //array_push($thedivision,$user->division);
+                                        //}
                                     }
-                                    
-
                                 ?>
                                 <tr class='<?php echo $class; ?>'>
-                                        
                                         <td>{{$user->f_name}}</td>
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->position}}</td>
@@ -198,6 +194,8 @@ $(document).ready(function(e){
                                 </tr>
                                 @endforeach
                                 <?php 
+
+                                    /*
                                     if (isset($thedivs)) {
                                         $thenewdivs = [];
 
@@ -212,6 +210,13 @@ $(document).ready(function(e){
                                         }
 
                                         $thedivision = $thenewdivs;
+                                    }
+                                    */
+
+                                    foreach($papcode as $pc) {
+                                        if (strlen($pc->division)>0) {
+                                            array_push($thedivision,$pc->division);
+                                        }
                                     }
                                 ?>
                             </table>
@@ -301,25 +306,31 @@ $(document).ready(function(e){
                         }
                     ?>
                 </select> <br/>
-                <button class='btn btn-primary setasactive' style="margin-top: 5px;"> Update office </button> 
+                <button class='btn btn-primary setasactive' style="margin-top: 5px;"> Office </button> 
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Update email </h4> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Email </h4> </td>
             <td> 
                 <input type='text' id='theemail' class="form-control"/> <button class='btn btn-primary updateemail' style='margin-top: 5px;' > Update Email </button> 
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Update Name </h4> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Name </h4> </td>
             <td> 
                 <input type='text' id='thefullname' class="form-control"/> <button class='btn btn-primary updatefullname' style='margin-top: 5px;' > Update fullname </button> 
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Update password </h4> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Password </h4> </td>
             <td> 
                 <input type='password' id='password' class="form-control"/> <button class='btn btn-primary updatepassword' style='margin-top: 5px;' > Update Password </button> 
+            </td>  
+        </tr>
+        <tr>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Position </h4> </td>
+            <td> 
+                <input type='text' id='position' class="form-control"/> <button class='btn btn-primary updateposition' style='margin-top: 5px;' > Update Position </button> 
             </td>  
         </tr>
         <tr>
@@ -497,6 +508,28 @@ $(document).ready(function(e){
                     window.location.reload();
                 }, error: function() {
                     alert('error updating the password');
+                }
+            });
+        });
+
+        $(document).on("click",".updateposition",function(){
+            var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
+            
+            $(document).find(".statustxt").html("updating please wait.")
+
+            if (theselectedid == null) { alert("no ID is selected"); return; }
+            var position = $(document).find("#position").val();
+
+            $.ajax({
+                url : "{{ url('/admin/updateposition') }}",
+                type: "POST",
+                data : { _token: CSRF_TOKEN , id: theselectedid , position : position },
+                dataType: "json",
+                success : function(data) {
+                    alert("Update successful! number of row updated: "+data['updatedrow']);
+                    window.location.reload();
+                }, error: function() {
+                    alert('error updating the position');
                 }
             });
         });
