@@ -308,11 +308,13 @@ class HomeController extends Controller
                     ->get();
 
         //dd($data);
-        
+        /*
         $papcode = DB::table('users')
                     ->groupBy('users.division')
                     ->orderBy('division','asc')
                     ->get();
+        */
+        $papcode = DB::table("pap_codes")->get();
         
         if(Auth::user()->access_level == 5)
         {
@@ -324,7 +326,7 @@ class HomeController extends Controller
 
     public function addname(Request $req) {
         if (request()->ajax()) {
-            
+             
              $data = DB::insert('insert into users (name, f_name) values (?,?)',[$req->input("username"),$req->input("fullname")]);
 
              return response()->json(['inserted' => $data]);
@@ -474,6 +476,56 @@ class HomeController extends Controller
         return view('admin.admin-control',compact('data','papcode','userlist','datefilter','employees'));
     }
 
+    public function getdivisionoffice(Request $req) {
+        if (request()->ajax()) {
+            $id     = $req->get("id");
+            
+            $data   = DB::table("pap_codes")
+                        ->where("id",$id)
+                        ->get();
+
+            return response()->JSON(['data'=>$data]);
+        }
+    }
+
+    public function updatedivoffice(Request $req) {
+        if (request()->ajax()) {
+            $id       = $req->get("id");
+            $div      = $req->get("division");
+            $desc     = $req->get("respocenter");
+
+            // $data     = DB::insert("insert into pap_codes (division,respocenter) values (?,?)",["division"=>$div,"respocenter"=>$desc]);
+            $data     = DB::table("pap_codes")
+                        ->where("pap_codes.id",$id)
+                        ->update(["division"=>$div,"respocenter"=>$desc]);
+
+            return response()->JSON(['updatedrow'=>$data]);
+        }
+    }
+
+    public function addnewdivoffice(Request $req) {
+        if (request()->ajax()){
+            $div      = $req->get("division");
+            $desc     = $req->get("respocenter");
+
+            $data     = DB::insert("insert into pap_codes (division,respocenter) values(?,?)",[$div,$desc]);
+
+            return response()->JSON(["updatedrow"=>$data]);
+        }
+    }
+
+    public function deletedivoff(Request $req) {
+        if (request()->ajax()) {
+            $id   = $req->get("id");
+
+            $data = DB::table("pap_codes")
+                    ->where("id",$id)
+                    ->delete();
+
+            return response()->JSON(["updatedrow"=>$data]);
+        }
+    }
+
     public function filter_by_name($name)
     {
         $userlist = DB::table('users')
@@ -516,10 +568,14 @@ class HomeController extends Controller
                     ->get();
 
         //dd($data);
+        /*
         $papcode = DB::table('users')
                     ->groupBy('users.division')
                     ->orderBy('division','asc')
                     ->get();
+        */
+
+        $papcode = DB::table("pap_codes")->get();
 
         $data = DB::table('users')
                 ->groupBy('users.division')

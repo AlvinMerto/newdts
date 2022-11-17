@@ -287,6 +287,11 @@ Route::post("/admin/updatepassword",[SettingController::class,"updatepassword"])
 Route::post("/admin/updatefullname",[HomeController::class,"updatefullname"]);
 Route::post("/admin/addname", [HomeController::class,"addname"]);
 Route::post("/admin/updateposition",[HomeController::class,"updateposition"]);
+Route::post("/admin/addnewdivoffice",[HomeController::class,"addnewdivoffice"]);
+Route::post("/admin/deletedivoffice",[HomeController::class,"deletedivoff"]);
+
+Route::post("/admin/getdivisionoffice",[HomeController::class,"getdivisionoffice"]);
+Route::post("/admin/updatedivoffice",[HomeController::class,"updatedivoffice"]);
 
 // get history of actions thru ajax
 Route::post("/admin/gethistory",[HomeController::class,"gethistory"]);

@@ -76,6 +76,56 @@ $(document).ready(function(e){
     .userslist thead tr th {
           font-size: 15px;
     }
+
+    .listofofficesdivs {
+
+    }
+
+    .listofofficesdivs ul{
+        padding: 0px 0px 0px 17px;
+    }
+
+    .listofofficesdivs ul li{
+        list-style: none;
+        border-bottom: 1px solid #ccc;
+        margin-top: -1px;
+        padding: 5px 0px;
+    }
+
+    .listofofficesdivs ul li:hover {
+        cursor: pointer;
+        background: #ccc;
+    }
+    
+    .hidewindow {
+        display:none;
+    }
+
+    #addtextbtn:hover {
+        color:#333;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .htext {
+        margin: 5px 0px 5px 16px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 7px;
+        padding-top: 7px;
+    }
+
+    .removemargin {
+        margin-left:0px !important;
+    }
+
+    #deletedivoff {
+        margin-left: 15px;
+    }
+
+    #deletedivoff:hover {
+        cursor: pointer;
+        color:red;
+    }
 </style>
 
 <input type="hidden" name="type_input" id="type_input" value="adminv">
@@ -83,7 +133,7 @@ $(document).ready(function(e){
     <div class="row justify-content-center" style="width: 100%">
         <div class="col-md-8" style="width: 100%">
             <div class="card mt-3">
-                <div class="card-header bg-default" style="font-size: 17px;  color: #6a6868;font-weight: normal;">Employees Lists | <a href='#' id='addnewbtn'/> Add New </a></div>
+                <div class="card-header bg-default" style="font-size: 17px;  color: #6a6868;font-weight: normal;">Employees Lists | <a href='#' id='addnewbtn'/> Add New </a>| <a href='#' id='addnewofficedivbtn'/> Add Office/Division </a></div>
                     <div class="card-body" style="display: flex; justify-content: center; padding: 0px;">
 
                         <section style="width: 100%">
@@ -251,7 +301,7 @@ $(document).ready(function(e){
       <table border="1px #fff solid;" style="align-self: center;" class='settingstbl'>
         <tr>
             <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;">
-                <h4> Access Level </h4>
+                <h5> Access Level </h5>
             </td>
             <td> 
                 <p>
@@ -290,11 +340,11 @@ $(document).ready(function(e){
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Set as inactive </h4> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Set as inactive </h5> </td>
             <td> <button class='btn btn-default setinactive'> Set Inactive </button> </td>
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Set as active </h4> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Set as active </h5> </td>
             <td> 
 
                 <select class='btn btn-default' id='officeactive'>
@@ -306,36 +356,36 @@ $(document).ready(function(e){
                         }
                     ?>
                 </select> <br/>
-                <button class='btn btn-primary setasactive' style="margin-top: 5px;"> Office </button> 
+                <button class='btn btn-primary setasactive' style="margin-top: 5px;"> Update </button> 
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Email </h4> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Email </h5> </td>
             <td> 
                 <input type='text' id='theemail' class="form-control"/> <button class='btn btn-primary updateemail' style='margin-top: 5px;' > Update Email </button> 
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Name </h4> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Name </h5> </td>
             <td> 
                 <input type='text' id='thefullname' class="form-control"/> <button class='btn btn-primary updatefullname' style='margin-top: 5px;' > Update fullname </button> 
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Password </h4> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Password </h5> </td>
             <td> 
                 <input type='password' id='password' class="form-control"/> <button class='btn btn-primary updatepassword' style='margin-top: 5px;' > Update Password </button> 
             </td>  
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h4> Position </h4> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Position </h5> </td>
             <td> 
                 <input type='text' id='position' class="form-control"/> <button class='btn btn-primary updateposition' style='margin-top: 5px;' > Update Position </button> 
             </td>  
         </tr>
         <tr>
-            <td style="text-align: right; padding-right: 20px; width: 25%;"> <h4> Account Status </h4> </td>
-            <td> <h4 id='accountstatus'> </h4> </td>
+            <td style="text-align: right; padding-right: 20px; width: 25%;"> <h5> Account Status </h5> </td>
+            <td> <h5 id='accountstatus'> </h5> </td>
         </tr>
     </table>
 
@@ -372,6 +422,57 @@ $(document).ready(function(e){
   </div>
 </div>
 
+<div class="modal fade" id="addnewofficediv" tabindex="-1" role="dialog"aria-labelledby="edit-modal-label" aria-hidden="true">
+  <div class="modal-dialog  modal-lg" style="min-width: auto; max-width: 50%"  role="document">
+    <div class="modal-content">
+      <div class="modal-header"><span style="font-size: 18px; color: #0B2161; text-align: center;"><strong> Add New Office/Division </strong> | <small id='addtextbtn' style='color:red;'> Add </small></span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closemodal('addnew');"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class='thebody'>
+        <div class='row'>
+            <div class='col-md-4 listofofficesdivs'>
+                <h4 class='htext'> List of Office and Divisions </h4>
+                <ul>
+                    <?php 
+                        foreach($papcode as $pp) {
+                            echo "<li data-papid='{$pp->id}'>";
+                                echo $pp->division;
+                            echo "</li>";
+                        }
+                    ?>
+                </ul>
+            </div>
+            <div class='col-md-4'>
+                <div id='updatewindow' class='hidewindow'>
+                    <h4 class='htext removemargin'> Update </h4>
+                    <div class="mb-3">
+                        <label for="divisioncodetext" class="form-label">Division Code</label>
+                        <input type='text' class='form-control' id='divisioncodetext'/> 
+                    </div>
+                    <div class="mb-3">
+                        <label for="divisiondescription" class="form-label">Division Description</label>
+                        <textarea class='form-control' id='divisiondescription'></textarea>
+                    </div>
+                    <button class='btn btn-primary' id='updateoffdiv'> Update </button> <span id='deletedivoff'> Delete </span>                    
+                </div>
+                <div id='addnewwindow' class='hidewindow'>
+                    <h4 class='htext removemargin'> Add New Office/Division </h4>
+                    <div class="mb-3">
+                        <label for="addnewtextbox" class="form-label">Division Code</label>
+                        <input type='text' class='form-control' id='addnewtextbox'/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="desctxtbox" class="form-label">Division Description</label>
+                        <textarea id='desctxtbox' class='form-control'></textarea>
+                    </div>
+                    <button class='btn btn-primary' id='addnewoffdiv'> Add New </button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script>
     $(document).ready(function() {
@@ -403,8 +504,109 @@ $(document).ready(function(e){
             $("#addnew").modal("show");
         });
 
+        var divoffid = null;
+
+        $(document).on("click",".listofofficesdivs ul li",function(){
+           $(document).find("#updatewindow").show();
+           $(document).find("#addnewwindow").hide();
+
+           var id          = divoffid = $(this).data("papid");
+
+           var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
+           $.ajax({
+                url     : "{{ url('/admin/getdivisionoffice') }}",
+                type    : "POST",
+                data    : { _token: CSRF_TOKEN , id : id },
+                dataType: "json",
+                success : function(data) {
+                    $(document).find("#divisioncodetext").val( data['data'][0]['division'] );
+                    $(document).find("#divisiondescription").val( data['data'][0]['respocenter'] );
+                    //window.location.reload();
+                }, error: function() {
+                    alert('error');
+                }
+            });
+        });
+
+        $(document).on("click","#addtextbtn",function(){
+           $(document).find("#updatewindow").hide();
+           $(document).find("#addnewwindow").show();
+        });
+
         $(document).on("click","#addnewemp",function(){
             addnewempfunc();
+        });
+
+        $(document).on("click","#addnewofficedivbtn",function(){
+            $("#addnewofficediv").modal("show");
+        });
+
+        $(document).on("click","#updateoffdiv",function(){
+            var CSRF_TOKEN    = $('meta[name="csrf-token"]').attr('content');
+
+            var theselectedid = divoffid;
+            var divoff        = $(document).find("#divisioncodetext").val();
+            var desc          = $(document).find("#divisiondescription").val();
+
+            // updatedivoffice
+
+            $.ajax({
+                url      : "{{ url('/admin/updatedivoffice') }}",
+                type     : "POST",
+                data     : { _token: CSRF_TOKEN , id: theselectedid , division : divoff , respocenter : desc },
+                dataType : "json",
+                success  : function(data){
+                    alert("Update successful! number of row updated: "+data['updatedrow']);
+                    window.location.reload();
+                }, error : function(){
+                    alert("error");
+                }
+            });
+            
+        });
+
+        $(document).on("click","#addnewoffdiv",function(){
+            var CSRF_TOKEN    = $('meta[name="csrf-token"]').attr('content');
+
+            var offdiv        = $(document).find("#addnewtextbox").val();
+            var offdesc       = $(document).find("#desctxtbox").val();
+
+            $.ajax({
+                url      : "{{ url('/admin/addnewdivoffice') }}",
+                type     : "POST",
+                data     : { _token: CSRF_TOKEN , division : offdiv , respocenter : offdesc },
+                dataType : "json",
+                success  : function(data){
+                    alert("New office/division inserted");
+                    window.location.reload();
+                }, error : function(){
+                    alert("error");
+                }
+            });
+        });
+
+        $(document).on("click","#deletedivoff",function(){
+            var CSRF_TOKEN    = $('meta[name="csrf-token"]').attr('content');
+            var theselectedid = divoffid;
+
+            var conf = confirm("Are you sure you want to delete?");
+
+            if (!conf) {
+                return;
+            }
+
+            $.ajax({
+                url      : "{{ url('/admin/deletedivoffice') }}",
+                type     : "POST",
+                data     : { _token: CSRF_TOKEN , id : theselectedid },
+                dataType : "json",
+                success  : function(data){
+                    alert("New office/division deleted");
+                    window.location.reload();
+                }, error : function(){
+                    alert("error");
+                }
+            }); 
         });
 
         $(document).on("click",".setinactive", function(){

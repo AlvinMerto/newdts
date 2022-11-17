@@ -1312,19 +1312,8 @@ margin-top: 10px;
 
         $(document).on("click","#addthisemp",function(){
             var theemp = $(document).find("#ff_employees").val();
-                         $(document).find("#ff_employees").val("");
-
-                $("<p>"+theemp+"</p>")
-                    .on("click", function(){
-                        var conf = confirm("are you sure you want to remove?");
-
-                        if (conf) { // confirmed delete
-                            $(this).remove();
-                        }
-                    }).appendTo("#recipientsbox");
-
-                //$("<p>"+theemp+"</p>").appendTo("#listofpeople");
-
+            $(document).find("#ff_employees").val("");
+            addthisemp_func(theemp);
         });
 
         $(document).on("change","#divisionselect",function(){
@@ -1514,6 +1503,19 @@ margin-top: 10px;
         
         //alert(id);
         window.location = "{{ url('/export-excel-internal/excel-file-report/document-tracking') }}/"+id;
+    }
+
+    function addthisemp_func(theemp) {
+        $("<p>"+theemp+"</p>")
+            .on("click", function(){
+                var conf = confirm("are you sure you want to remove?");
+
+                    if (conf) { // confirmed delete
+                        $(this).remove();
+                    }
+                }).appendTo("#recipientsbox");
+
+            //$("<p>"+theemp+"</p>").appendTo("#listofpeople");
     }
 
 
@@ -1939,7 +1941,7 @@ margin-top: 10px;
 
     });
 
-    function getUserList(ul, div = false){
+    function getUserList(ul, div = false, add = false){
         
         var u = null;
 
@@ -1957,10 +1959,12 @@ margin-top: 10px;
                 url: "{{ url('/get-users') }}/"+u,
                 context: document.body,
                 success: function(data){
-                  console.log(data);
-
                     $('#userlist').find('option').remove();
                     $.each(data.data, function(key, value) {
+                            if (value.position == 1 || value.position == "1") {
+                                addthisemp_func(value.f_name);     
+                                //alert(value.position+"="+value.f_name)
+                            }
                             
                             $('#userlist').append(`<option value="${value.f_name}">${value.f_name}</option>`);
                         
