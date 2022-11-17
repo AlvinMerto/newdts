@@ -308,13 +308,13 @@ class HomeController extends Controller
                     ->get();
 
         //dd($data);
-        /*
+        
         $papcode = DB::table('users')
                     ->groupBy('users.division')
                     ->orderBy('division','asc')
                     ->get();
-        */
-        $papcode = DB::table("pap_codes")->get();
+        
+        //$papcode = DB::table("pap_codes")->get();
         
         if(Auth::user()->access_level == 5)
         {
