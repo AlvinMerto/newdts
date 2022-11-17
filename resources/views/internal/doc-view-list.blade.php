@@ -1562,7 +1562,9 @@ $(document).ready(function(e){
         $(document).on("click","#addthisemp",function(){
             var theemp = $(document).find("#ff_employees").val();
                          $(document).find("#ff_employees").val("");
-
+                         
+                addthisemp_func(theemp);
+            /*
                 $("<p>"+theemp+"</p>")
                     .on("click", function(){
                         var conf = confirm("are you sure you want to remove?");
@@ -1571,6 +1573,7 @@ $(document).ready(function(e){
                             $(this).remove();
                         }
                     }).appendTo("#recipientsbox");
+            */
         });
 
         $(document).on("change","#divisionselect",function(){
@@ -1784,6 +1787,19 @@ $(document).ready(function(e){
         
     });
     
+    function addthisemp_func(theemp) {
+        $("<p>"+theemp+"</p>")
+            .on("click", function(){
+                var conf = confirm("are you sure you want to remove?");
+
+                    if (conf) { // confirmed delete
+                        $(this).remove();
+                    }
+                }).appendTo("#recipientsbox");
+
+            //$("<p>"+theemp+"</p>").appendTo("#listofpeople");
+    }
+
     function forwardtoemps(startswith, CSRF_TOKEN,x_id,rem,dept,faction,finfo,fguidance,freference,freview,fsignature,finstruction,confiname,pr,itemid) {
 
         var typeinput = null;
@@ -2536,7 +2552,10 @@ function getUserList(ul, div = false){
 
                     $('#userlist').find('option').remove();
                     $.each(data.data, function(key, value) {
-                            
+                            if (value.position == 1 || value.position == "1") {
+                                addthisemp_func(value.f_name);     
+                                //alert(value.position+"="+value.f_name)
+                            }
                             $('#userlist').append(`<option value="${value.f_name}">${value.f_name}</option>`);
                         
                     });

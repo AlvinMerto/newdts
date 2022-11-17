@@ -380,7 +380,9 @@ $(document).ready(function(e){
         <tr>
             <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Position </h5> </td>
             <td> 
-                <input type='text' id='position' class="form-control"/> <button class='btn btn-primary updateposition' style='margin-top: 5px;' > Update Position </button> 
+                <input type='text' id='position' class="form-control"/> <small> **Please note that if you set the position to 1, the user will be the default recipient to all documents routed to that division or office** </small>
+                <br/>
+                <button class='btn btn-primary updateposition' style='margin-top: 5px;' > Update Position </button> 
             </td>  
         </tr>
         <tr>
