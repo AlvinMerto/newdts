@@ -503,6 +503,19 @@ class HomeController extends Controller
         }
     }
 
+    public function updateusername(Request $req) {
+        if (request()->ajax()){
+            $id       = $req->get("id");
+            $username = $req->get("username");
+
+            $data     = DB::table("users")
+                        ->where("id",$id)
+                        ->update(["name"=>$username]);
+
+            return response()->JSON(["updatedrow"=>$data]);
+        }
+    }
+
     public function addnewdivoffice(Request $req) {
         if (request()->ajax()){
             $div      = $req->get("division");

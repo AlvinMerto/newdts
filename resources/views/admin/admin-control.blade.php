@@ -237,7 +237,11 @@ $(document).ready(function(e){
                                             ?>
                                         </td>
                                         <td>
-                                            <a href="javascript:void(0);" class="alevel btn btn-small btn-primary mr-3" id="{{$user->id}}" data-status='{{$class}}' data-email='{{$user->email}}' data-fullname='{{$user->f_name}}'>
+                                            <a href="javascript:void(0);" class="alevel btn btn-small btn-primary mr-3" id="{{$user->id}}" 
+                                               data-status='{{$class}}' 
+                                               data-email='{{$user->email}}' 
+                                               data-fullname='{{$user->f_name}}'
+                                               data-username='{{$user->name}}'>
                                                 <span class="fa fa-expeditedssl" aria-hidden="true"></span> see actions
                                             </a>
                                         </td>                             
@@ -366,9 +370,15 @@ $(document).ready(function(e){
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Name </h5> </td>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Full Name </h5> </td>
             <td> 
                 <input type='text' id='thefullname' class="form-control"/> <button class='btn btn-primary updatefullname' style='margin-top: 5px;' > Update fullname </button> 
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;padding-top: 0px;padding-right: 20px; width: 25%;"> <h5> Username </h5> </td>
+            <td> 
+                <input type='text' id='theusername' class="form-control"/> <button class='btn btn-primary updateusername' style='margin-top: 5px;' > Update username </button> 
             </td>
         </tr>
         <tr>
@@ -489,6 +499,7 @@ $(document).ready(function(e){
             // setting the defaults
                 $(document).find("#theemail").val( $(this).data("email") );
                 $(document).find("#thefullname").val( $(this).data("fullname") );
+                $(document).find("#theusername").val( $(this).data("username") );
             // end 
 
             if ($(this).data('status') == "inactive"){
@@ -692,6 +703,28 @@ $(document).ready(function(e){
                     alert('error in setting the user as active');
                 }
             });
+        });
+
+        $(document).on("click",".updateusername",function(){
+            var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
+
+            $(document).find(".statustxt").html("updating please wait.")
+
+            if (theselectedid == null) { alert("no ID is selected"); return; }
+            var username   = $(document).find("#theusername").val();
+
+            $.ajax({
+                url : "{{ url('/admin/updateusername') }}",
+                type: "POST",
+                data : { _token: CSRF_TOKEN , id: theselectedid , username : username },
+                dataType: "json",
+                success : function(data) {
+                    alert("Update successful! number of row updated: "+data['updatedrow']);
+                    window.location.reload();
+                }, error: function() {
+                    alert('error updating the username');
+                }
+            }); 
         });
 
          $(document).on("click",".updatepassword", function(){
