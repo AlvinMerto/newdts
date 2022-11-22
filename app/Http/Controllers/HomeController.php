@@ -27,7 +27,6 @@ class HomeController extends Controller
     public function index()
     {
 
-
         $docs = DB::table('externals')
                 ->get();
 
@@ -179,14 +178,82 @@ class HomeController extends Controller
                         ->update([
                             'days_count'=>$outgoingdiffx,
                         ]);
-
         }
         
         return view('home');
     }
 
+    public function toexcel() {
+        
+    }
+
     public function secretary() {
         return view("admin.secretaryview");
+    }
+
+    public function outgoinglists() {
+        return view("outgoing.outgoinglists");
+    }
+
+    public function internallists_pending() {
+        $type  = "pending";
+        $data  = DB::table("internals")
+                    ->where("status",$type)
+                    ->orderBy("internals.day_count","DESC")
+                    ->get();
+                 
+        return view("internal.internallists", compact("data","type"));
+    }
+
+    public function internallists_complete() {
+        $type  = "complete";
+        $data  = DB::table("internals")
+                    ->where("status",$type)
+                    ->orderBy("internals.day_count","DESC")
+                    ->get();
+                 
+        return view("internal.internallists", compact("data","type"));
+    }
+
+    public function externallists_pending() {
+        $type  = "pending";
+        $data  = DB::table("externals")
+                    ->where("status",$type)
+                    ->orderBy("externals.day_count","DESC")
+                    ->get();
+                 
+        return view("internal.internallists", compact("data","type"));
+    }
+
+    public function externallists_complete() {
+       $type  = "complete";
+        $data  = DB::table("externals")
+                    ->where("status",$type)
+                    ->orderBy("externals.day_count","DESC")
+                    ->get();
+                 
+        return view("internal.internallists", compact("data","type"));
+    }
+
+    public function outgoinglists_pending() {
+        $type  = "pending";
+        $data  = DB::table("outgoings")
+                    ->where("status",$type)
+                    ->orderBy("outgoings.day_count","DESC")
+                    ->get();
+                 
+        return view("internal.internallists", compact("data","type"));
+    }
+
+
+    public function outgoinglists_complete() {
+        $type  = "complete";
+        $data  = DB::table("outgoings")
+                    ->where("status",$type)
+                    ->orderBy("outgoings.day_count","DESC")
+                    ->get();
+                 
+        return view("internal.internallists", compact("data","type"));
     }
 
     public function printroutingslip() {

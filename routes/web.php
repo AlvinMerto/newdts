@@ -28,7 +28,7 @@ Route::get('/', function(){
 });
 */
 
- Route::get('/',[HomeController::class, 'index'])->name('home');
+Route::get('/',[HomeController::class, 'index'])->name('home');
 
 /*
 Route::get("/", function(){
@@ -37,6 +37,18 @@ Route::get("/", function(){
 */
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// outgoing
+Route::get("/home/outgoing_pending",[HomeController::class,"outgoinglists_pending"]);
+Route::get("/home/outgoing_complete",[HomeController::class,"outgoinglists_complete"]);
+
+// internal
+Route::get("/home/internal_pending",[HomeController::class,"internallists_pending"]);
+Route::get("/home/internal_complete",[HomeController::class,"internallists_complete"]);
+
+// external
+Route::get("/home/external_pending",[HomeController::class,"externallists_pending"]);
+Route::get("/home/external_complete",[HomeController::class,"externallists_complete"]);
 
 Route::get("/test",function(){
 	echo "hello world";
@@ -358,3 +370,5 @@ Route::get('/acknowledment-receipt/{id}',[ReportController::class, 'acknowledgem
 Route::get('/barcode-reader',[HomeController::class, 'barcode']);
 
 Route::get('/sendMail-data',[MailController::class, 'external_confirmation']);
+
+// Route::post("/downloaddata",[]);

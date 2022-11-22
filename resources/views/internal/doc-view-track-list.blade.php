@@ -1495,14 +1495,24 @@ margin-top: 10px;
 
     function export_excel()
     {
+        var typeofinput = null;
+            typeofinput = $(document).find("#type_input").val();
 
         var url = window.location.pathname;
         var arr = (window.location.pathname).split("/");
         //var id = (arr[arr.length-2]);
-        var id = (arr[arr.length-1]);
+        // alert(arr[3]); return;
+        var id  = (arr[arr.length-2]);
         
-        //alert(id);
-        window.location = "{{ url('/export-excel-internal/excel-file-report/document-tracking') }}/"+id;
+        // alert(id); return;
+
+        if (typeofinput == "internal") {
+            window.location = "{{ url('/export-excel-internal/excel-file-report/document-tracking') }}/"+id;
+        } else if (typeofinput == "external") {
+            window.location = "{{ url('/export-excel-external/excel-file-report/document-tracking') }}/"+id;
+        } else if (typeofinput == "outgoing") {
+            window.location = "{{ url('/export-excel-outgoing/excel-file-report/document-tracking/') }}/"+id;
+        }
     }
 
     function addthisemp_func(theemp) {

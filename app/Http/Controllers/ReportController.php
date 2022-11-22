@@ -2600,4 +2600,11 @@ class ReportController extends Controller
 			return redirect('/'.$filename);
 
     }
+
+    // this method is used by the HRIS system..
+    // parameters to this method is sent from HRIS via post REST api
+	    public function toexcel() {
+
+	    }
+    // end method 
 }
