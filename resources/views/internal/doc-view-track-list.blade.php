@@ -442,9 +442,9 @@ margin-top: 10px;
                                                         <?php } else if ($window == "outgoing") { ?>
                                                             <a href="{{url('/outgoing-document-list-view')}}" style="font-size: 12px; " class="btn btn-medium btn-default"><i class="fa fa-chevron-left"></i> Back</a>
                                                         <?php } ?>
-
-                                                    <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
-                                                        <i class="fa fa-file-excel-o"></i> Export to Excel</button> 
+                                                    <!-- export to excel -->
+                                                    <button onclick="export_excel('{{$d->ref_id}}');" data-refid="{{$d->ref_id}}" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
+                                                        <i class="fa fa-file-excel-o"></i> Export to Excel 1</button> 
                                                     
                                                     <button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn_printroutslip btn btn-default pl-3 pr-3" style="font-size: 12px; ">
                                                         <span class="fa fa-print" aria-hidden="true"></span> Print Routing slip </button>
@@ -744,7 +744,7 @@ margin-top: 10px;
                                                             <a href="{{url('/outgoing-document-list-view')}}" style="font-size: 12px; " class="btn btn-medium btn-default"><i class="fa fa-chevron-left"></i> Back</a>
                                                         <?php } ?>
 
-                                                    <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
+                                                    <button onclick="export_excel('{{$d->ref_id}}');" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
                                                         <i class="fa fa-file-excel-o"></i> Export to Excel</button> 
                                                     
                                                     <!--button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn_printroutslip btn btn-default pl-3 pr-3" style="font-size: 12px; ">
@@ -871,7 +871,7 @@ margin-top: 10px;
                                                             <a href="{{url('/outgoing-document-list-view')}}" style="font-size: 12px; " class="btn btn-medium btn-default"><i class="fa fa-chevron-left"></i> Back</a>
                                                         <?php } ?>
 
-                                                    <button onclick="export_excel();" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
+                                                    <button onclick="export_excel('{{$d->ref_id}}');" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
                                                         <i class="fa fa-file-excel-o"></i> Export to Excel</button> 
                                                     
                                                     <!--button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn_printroutslip btn btn-default pl-3 pr-3" style="font-size: 12px; ">
@@ -1493,7 +1493,7 @@ margin-top: 10px;
 
 });
 
-    function export_excel()
+    function export_excel(id = false)
     {
         var typeofinput = null;
             typeofinput = $(document).find("#type_input").val();
@@ -1502,10 +1502,11 @@ margin-top: 10px;
         var arr = (window.location.pathname).split("/");
         //var id = (arr[arr.length-2]);
         // alert(arr[3]); return;
-        var id  = (arr[arr.length-2]);
-        
-        alert(id); return;
-        
+        // var id  = (arr[arr.length-2]);
+        //var id = this.data("refid");
+
+      //  alert(id); return;
+
         if (typeofinput == "internal") {
             window.location = "{{ url('/export-excel-internal/excel-file-report/document-tracking') }}/"+id;
         } else if (typeofinput == "external") {
