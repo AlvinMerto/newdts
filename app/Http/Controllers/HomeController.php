@@ -210,11 +210,10 @@ class HomeController extends Controller
                     ->get();
         } else {
             $data  = DB::table("internals")
-                    ->join("internal_history","internals.id",'=','internal_history.ref_id')
-                    ->where("internals.status",$type)
-                    ->orWhere("internal_history.empto",Auth::user()->id)
+                    ->join('internal_history','internals.id','=','internal_history.ref_id')
+                    ->where("internals.status","<>","complete")
+                    ->where("internal_history.empto",Auth::user()->id)
                     ->orWhere("internal_history.empfrom",Auth::user()->id)
-                    ->Where("internals.status","on-going")
                     ->groupBy("internals.id")
                     ->orderBy("internals.day_count","DESC")
                     ->get();
@@ -225,12 +224,24 @@ class HomeController extends Controller
     public function internallists_complete() {
         $type  = "complete";
         $from  = "internal";
-        $data  = DB::table("internals")
+
+        if (Auth::user()->access_level >= 4) {
+            $data  = DB::table("internals")
                     ->join("internal_history","internals.id",'=','internal_history.ref_id')
                     ->where("internals.status",$type)
                     ->groupBy("internals.id")
                     ->orderBy("internals.day_count","DESC")
                     ->get();
+        } else {
+            $data  = DB::table("internals")
+                    ->join('internal_history','internals.id','=','internal_history.ref_id')
+                    ->where("internals.status","complete")
+                    ->where("internal_history.empto",Auth::user()->id)
+                    ->orWhere("internal_history.empfrom",Auth::user()->id)
+                    ->groupBy("internals.id")
+                    ->orderBy("internals.day_count","DESC")
+                    ->get();
+        }
                  
         return view("internal.internallists", compact("data","type","from"));
     }
@@ -238,13 +249,24 @@ class HomeController extends Controller
     public function externallists_pending() {
         $type  = "pending";
         $from  = "external";
-        $data  = DB::table("externals")
+
+        if (Auth::user()->access_level >= 4) {
+            $data  = DB::table("externals")
                     ->join("external_history","externals.id","=","external_history.ref_id")
-                    ->where("externals.status",$type)
-                    ->orWhere("externals.status","on-going")
+                    ->where("externals.status","<>","complete")
                     ->groupBy("externals.id")
                     ->orderBy("externals.day_count","DESC")
                     ->get();
+        } else {
+            $data  = DB::table("externals")
+                    ->join("external_history","externals.id","=","external_history.ref_id")
+                    ->where("externals.status","<>","complete")
+                    ->where("external_history.empto",Auth::user()->id)
+                    ->orWhere("external_history.empfrom",Auth::user()->id)
+                    ->groupBy("externals.id")
+                    ->orderBy("externals.day_count","DESC")
+                    ->get();
+        }
                  
         return view("internal.internallists", compact("data","type","from"));
     }
@@ -252,12 +274,24 @@ class HomeController extends Controller
     public function externallists_complete() {
        $type  = "complete";
        $from  = "external";
-       $data  = DB::table("externals")
+
+       if (Auth::user()->access_level >=4) {
+            $data  = DB::table("externals")
                     ->join("external_history","externals.id","=","external_history.ref_id")
                     ->where("externals.status",$type)
                     ->groupBy("externals.id")
                     ->orderBy("externals.day_count","DESC")
                     ->get();
+        } else {
+             $data  = DB::table("externals")
+                    ->join("external_history","externals.id","=","external_history.ref_id")
+                    ->where("externals.status",$type)
+                    ->where("external_history.empto",Auth::user()->id)
+                    ->orWhere("external_history.empfrom",Auth::user()->id)
+                    ->groupBy("externals.id")
+                    ->orderBy("externals.day_count","DESC")
+                    ->get();
+        }
                  
         return view("internal.internallists", compact("data","type","from"));
     }
@@ -265,13 +299,24 @@ class HomeController extends Controller
     public function outgoinglists_pending() {
         $type  = "pending";
         $from  = "outgoing";
-        $data  = DB::table("outgoings")
+
+        if (Auth::user()->access_level >=4) {
+            $data  = DB::table("outgoings")
                     ->join("outgoing_history","outgoings.id","=","outgoing_history.ref_id")
-                    ->where("outgoings.status",$type)
-                    ->orWhere("outgoings.status","on-going")
+                    ->where("outgoings.status","<>","complete")
                     ->groupBy("outgoings.id")
                     ->orderBy("outgoings.day_count","DESC")
                     ->get();
+        } else {
+            $data  = DB::table("outgoings")
+                    ->join("outgoing_history","outgoings.id","=","outgoing_history.ref_id")
+                    ->where("outgoings.status","<>","complete")
+                    ->where("outgoing_history.empto",Auth::user()->id)
+                    ->orWhere("outgoing_history.empfrom",Auth::user()->id)
+                    ->groupBy("outgoings.id")
+                    ->orderBy("outgoings.day_count","DESC")
+                    ->get();
+        }
                  
         return view("internal.internallists", compact("data","type","from"));
     }
@@ -280,12 +325,24 @@ class HomeController extends Controller
     public function outgoinglists_complete() {
         $type  = "complete";
         $from  = "outgoing";
-        $data  = DB::table("outgoings")
+
+        if (Auth::user()->access_level >=4) {
+            $data  = DB::table("outgoings")
                     ->join("outgoing_history","outgoings.id","=","outgoing_history.ref_id")
                     ->where("outgoings.status",$type)
                     ->groupBy("outgoings.id")
                     ->orderBy("outgoings.day_count","DESC")
                     ->get();
+        } else {
+            $data  = DB::table("outgoings")
+                    ->join("outgoing_history","outgoings.id","=","outgoing_history.ref_id")
+                    ->where("outgoings.status",$type)
+                    ->where("outgoing_history.empto",Auth::user()->id)
+                    ->orWhere("outgoing_history.empfrom",Auth::user()->id)
+                    ->groupBy("outgoings.id")
+                    ->orderBy("outgoings.day_count","DESC")
+                    ->get();
+        }
                  
         return view("internal.internallists", compact("data","type"));
     }
