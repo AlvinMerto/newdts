@@ -2603,8 +2603,10 @@ class ReportController extends Controller
 
     // this method is used by the HRIS system..
     // parameters to this method is sent from HRIS via post REST api
+    /*
 	    public function toexcel() {
 
 	    }
+	*/
     // end method 
 }
