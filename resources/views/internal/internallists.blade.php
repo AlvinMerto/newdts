@@ -21,7 +21,7 @@
 
 			<?php if (strtolower($type) !='complete') { ?>
 				<th> Document Forwarded</th>
-				<th> Number of daysss </th>
+				<th> Number of days </th>
 				<!--th> Status </th-->
 			<?php } ?>
 			<th> </th>
