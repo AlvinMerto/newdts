@@ -209,7 +209,6 @@ class HomeController extends Controller
                     ->orderBy("internals.day_count","DESC")
                     ->get();
         } else {
-            echo "here";
             $data  = DB::table("internals")
                     ->join("internal_history","internals.id",'=','internal_history.ref_id')
                     ->where("internals.status",$type)
