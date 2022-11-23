@@ -444,7 +444,7 @@ margin-top: 10px;
                                                         <?php } ?>
                                                     <!-- export to excel -->
                                                     <button onclick="export_excel('{{$d->ref_id}}');" data-refid="{{$d->ref_id}}" class="btnExport btn btn-medium btn-default" style="font-size: 12px;">
-                                                        <i class="fa fa-file-excel-o"></i> Export to Excel 1</button> 
+                                                        <i class="fa fa-file-excel-o"></i> Export to Excel </button> 
                                                     
                                                     <button id="{{$d->ref_id}}" data-itemid='{{$d->id}}' class="btn_printroutslip btn btn-default pl-3 pr-3" style="font-size: 12px; ">
                                                         <span class="fa fa-print" aria-hidden="true"></span> Print Routing slip </button>
