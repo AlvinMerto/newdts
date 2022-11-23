@@ -1505,7 +1505,7 @@ margin-top: 10px;
         var id  = (arr[arr.length-2]);
         
         alert(id); return;
-
+        
         if (typeofinput == "internal") {
             window.location = "{{ url('/export-excel-internal/excel-file-report/document-tracking') }}/"+id;
         } else if (typeofinput == "external") {
