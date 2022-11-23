@@ -71,6 +71,7 @@ class ReportController extends Controller
                     //->groupBy('internals.barcode')
                     ->orderBy('internal_history.id','desc')
                     ->get();
+                    
         $datefilter = DB::table('internals')
                         ->groupBy('internals.doc_receive')
                         ->orderBy('internals.id','asc')
