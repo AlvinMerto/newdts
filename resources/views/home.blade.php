@@ -215,6 +215,15 @@
             //document.getElementById("totlapprove").innerHTML=totapprove;
    			//document.getElementById("totldisapprove").innerHTML=totdisapprove;
 
+   $(document).on("click",".trtrigger",function(){
+   		var href = $(this).data("href");
+
+   		// window.location.href = href;
+   		window.open(
+			  href,
+			  '_blank' // <- This is what makes it open in a new window.
+			);
+   });
 });
 
 	 function display(tabid) {

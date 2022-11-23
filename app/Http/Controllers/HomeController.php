@@ -180,11 +180,12 @@ class HomeController extends Controller
                         ]);
         }
         
+
         return view('home');
     }
 
     public function toexcel() {
-        
+
     }
 
     public function secretary() {
@@ -197,59 +198,93 @@ class HomeController extends Controller
 
     public function internallists_pending() {
         $type  = "pending";
-        $data  = DB::table("internals")
-                    ->where("status",$type)
+        $from  = "internal";
+
+        if (Auth::user()->access_level >=4 ) {
+            $data  = DB::table("internals")
+                    ->join("internal_history","internals.id",'=','internal_history.ref_id')
+                    ->where("internals.status",$type)
+                    ->orWhere("internals.status","on-going")
+                    ->groupBy("internals.id")
                     ->orderBy("internals.day_count","DESC")
                     ->get();
-                 
-        return view("internal.internallists", compact("data","type"));
+        } else {
+            echo "here";
+            $data  = DB::table("internals")
+                    ->join("internal_history","internals.id",'=','internal_history.ref_id')
+                    ->where("internals.status",$type)
+                    ->orWhere("internal_history.empto",Auth::user()->id)
+                    ->orWhere("internal_history.empfrom",Auth::user()->id)
+                    ->Where("internals.status","on-going")
+                    ->groupBy("internals.id")
+                    ->orderBy("internals.day_count","DESC")
+                    ->get();
+        }
+        return view("internal.internallists", compact("data","type","from"));
     }
 
     public function internallists_complete() {
         $type  = "complete";
+        $from  = "internal";
         $data  = DB::table("internals")
-                    ->where("status",$type)
+                    ->join("internal_history","internals.id",'=','internal_history.ref_id')
+                    ->where("internals.status",$type)
+                    ->groupBy("internals.id")
                     ->orderBy("internals.day_count","DESC")
                     ->get();
                  
-        return view("internal.internallists", compact("data","type"));
+        return view("internal.internallists", compact("data","type","from"));
     }
 
     public function externallists_pending() {
         $type  = "pending";
+        $from  = "external";
         $data  = DB::table("externals")
-                    ->where("status",$type)
+                    ->join("external_history","externals.id","=","external_history.ref_id")
+                    ->where("externals.status",$type)
+                    ->orWhere("externals.status","on-going")
+                    ->groupBy("externals.id")
                     ->orderBy("externals.day_count","DESC")
                     ->get();
                  
-        return view("internal.internallists", compact("data","type"));
+        return view("internal.internallists", compact("data","type","from"));
     }
 
     public function externallists_complete() {
        $type  = "complete";
-        $data  = DB::table("externals")
-                    ->where("status",$type)
+       $from  = "external";
+       $data  = DB::table("externals")
+                    ->join("external_history","externals.id","=","external_history.ref_id")
+                    ->where("externals.status",$type)
+                    ->groupBy("externals.id")
                     ->orderBy("externals.day_count","DESC")
                     ->get();
                  
-        return view("internal.internallists", compact("data","type"));
+        return view("internal.internallists", compact("data","type","from"));
     }
 
     public function outgoinglists_pending() {
         $type  = "pending";
+        $from  = "outgoing";
         $data  = DB::table("outgoings")
-                    ->where("status",$type)
+                    ->join("outgoing_history","outgoings.id","=","outgoing_history.ref_id")
+                    ->where("outgoings.status",$type)
+                    ->orWhere("outgoings.status","on-going")
+                    ->groupBy("outgoings.id")
                     ->orderBy("outgoings.day_count","DESC")
                     ->get();
                  
-        return view("internal.internallists", compact("data","type"));
+        return view("internal.internallists", compact("data","type","from"));
     }
 
 
     public function outgoinglists_complete() {
         $type  = "complete";
+        $from  = "outgoing";
         $data  = DB::table("outgoings")
-                    ->where("status",$type)
+                    ->join("outgoing_history","outgoings.id","=","outgoing_history.ref_id")
+                    ->where("outgoings.status",$type)
+                    ->groupBy("outgoings.id")
                     ->orderBy("outgoings.day_count","DESC")
                     ->get();
                  
