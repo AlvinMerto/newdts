@@ -201,6 +201,7 @@ class HomeController extends Controller
         $from  = "internal";
 
         if (Auth::user()->access_level >=4 ) {
+            echo "here";
             $data  = DB::table("internals")
                     ->join("internal_history","internals.id",'=','internal_history.ref_id')
                     ->where("internals.status",$type)

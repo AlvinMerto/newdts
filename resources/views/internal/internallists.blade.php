@@ -21,7 +21,7 @@
 
 			<?php if (strtolower($type) !='complete') { ?>
 				<th> Document Forwarded</th>
-				<th> Number of days </th>
+				<th> Number of daysss </th>
 				<!--th> Status </th-->
 			<?php } ?>
 			<th> </th>
@@ -67,7 +67,8 @@
 				echo "</tr>";
 				$count++;
 			}
-		?>		
+		?>	
+		
 		</tbody>
 	<?php } else { ?>
 		<tbody>
@@ -75,3 +76,4 @@
 		<tbody>
 	<?php } ?>
 </table>
+
